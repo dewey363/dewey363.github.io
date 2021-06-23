@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title"></h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="go-字符串格式化">Go 字符串格式化</h1>
+<p>Go对字符串格式化提供了良好的支持。下面我们看些常用的字符串格式化的例子。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;os&#34;</span>
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">point</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span> <span style="color:#66d9ef">int</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#75715e">// Go提供了几种打印格式，用来格式化一般的Go值，例如
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 下面的%v打印了一个point结构体的对象的值
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">point</span>{<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>}
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%v\n&#34;</span>, <span style="color:#a6e22e">p</span>)
+
+	<span style="color:#75715e">// 如果所格式化的值是一个结构体对象，那么`%+v`的格式化输出
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 将包括结构体的成员名称和值
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%+v\n&#34;</span>, <span style="color:#a6e22e">p</span>)
+
+	<span style="color:#75715e">// `%#v`格式化输出将输出一个值的Go语法表示方式。
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%#v\n&#34;</span>, <span style="color:#a6e22e">p</span>)
+
+	<span style="color:#75715e">// 使用`%T`来输出一个值的数据类型
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%T\n&#34;</span>, <span style="color:#a6e22e">p</span>)
+
+	<span style="color:#75715e">// 格式化布尔型变量
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%t\n&#34;</span>, <span style="color:#66d9ef">true</span>)
+
+	<span style="color:#75715e">// 有很多的方式可以格式化整型，使用`%d`是一种
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 标准的以10进制来输出整型的方式
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%d\n&#34;</span>, <span style="color:#ae81ff">123</span>)
+
+	<span style="color:#75715e">// 这种方式输出整型的二进制表示方式
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%b\n&#34;</span>, <span style="color:#ae81ff">14</span>)
+
+	<span style="color:#75715e">// 这里打印出该整型数值所对应的字符
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%c\n&#34;</span>, <span style="color:#ae81ff">33</span>)
+
+	<span style="color:#75715e">// 使用`%x`输出一个值的16进制表示方式
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%x\n&#34;</span>, <span style="color:#ae81ff">456</span>)
+
+	<span style="color:#75715e">// 浮点型数值也有几种格式化方法。最基本的一种是`%f`
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%f\n&#34;</span>, <span style="color:#ae81ff">78.9</span>)
+
+	<span style="color:#75715e">// `%e`和`%E`使用科学计数法来输出整型
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%e\n&#34;</span>, <span style="color:#ae81ff">123400000.0</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%E\n&#34;</span>, <span style="color:#ae81ff">123400000.0</span>)
+
+	<span style="color:#75715e">// 使用`%s`输出基本的字符串
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%s\n&#34;</span>, <span style="color:#e6db74">&#34;\&#34;string\&#34;&#34;</span>)
+
+	<span style="color:#75715e">// 输出像Go源码中那样带双引号的字符串，需使用`%q`
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%q\n&#34;</span>, <span style="color:#e6db74">&#34;\&#34;string\&#34;&#34;</span>)
+
+	<span style="color:#75715e">// `%x`以16进制输出字符串，每个字符串的字节用两个字符输出
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%x\n&#34;</span>, <span style="color:#e6db74">&#34;hex this&#34;</span>)
+
+	<span style="color:#75715e">// 使用`%p`输出一个指针的值
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%p\n&#34;</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>)
+
+	<span style="color:#75715e">// 当输出数字的时候，经常需要去控制输出的宽度和精度。
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 可以使用一个位于%后面的数字来控制输出的宽度，默认
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 情况下输出是右对齐的，左边加上空格
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;|%6d|%6d|\n&#34;</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">345</span>)
+
+	<span style="color:#75715e">// 你也可以指定浮点数的输出宽度，同时你还可以指定浮点数
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 的输出精度
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;|%6.2f|%6.2f|\n&#34;</span>, <span style="color:#ae81ff">1.2</span>, <span style="color:#ae81ff">3.45</span>)
+
+	<span style="color:#75715e">// To left-justify, use the `-` flag.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;|%-6.2f|%-6.2f|\n&#34;</span>, <span style="color:#ae81ff">1.2</span>, <span style="color:#ae81ff">3.45</span>)
+
+	<span style="color:#75715e">// 你也可以指定输出字符串的宽度来保证它们输出对齐。默认
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 情况下，输出是右对齐的
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;|%6s|%6s|\n&#34;</span>, <span style="color:#e6db74">&#34;foo&#34;</span>, <span style="color:#e6db74">&#34;b&#34;</span>)
+
+	<span style="color:#75715e">// 为了使用左对齐你可以在宽度之前加上`-`号
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;|%-6s|%-6s|\n&#34;</span>, <span style="color:#e6db74">&#34;foo&#34;</span>, <span style="color:#e6db74">&#34;b&#34;</span>)
+
+	<span style="color:#75715e">// `Printf`函数的输出是输出到命令行`os.Stdout`的，你
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 可以用`Sprintf`来将格式化后的字符串赋值给一个变量
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;a %s&#34;</span>, <span style="color:#e6db74">&#34;string&#34;</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s</span>)
+
+	<span style="color:#75715e">// 你也可以使用`Fprintf`来将格式化后的值输出到`io.Writers`
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Fprintf</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stderr</span>, <span style="color:#e6db74">&#34;an %s\n&#34;</span>, <span style="color:#e6db74">&#34;error&#34;</span>)
+}
+</code></pre></div><p>运行结果</p>
+<pre><code>{1 2}
+{x:1 y:2}
+main.point{x:1, y:2}
+main.point
+true
+123
+1110
+!
+1c8
+78.900000
+1.234000e+08
+1.234000E+08
+&quot;string&quot;
+&quot;\&quot;string\&quot;&quot;
+6865782074686973
+0x103a10c0
+|    12|   345|
+|  1.20|  3.45|
+|1.20  |3.45  |
+|   foo|     b|
+|foo   |b     |
+a string
+an error
+</code></pre>
+		</div>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

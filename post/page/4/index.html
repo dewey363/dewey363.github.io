@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Posts - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+		<link rel="alternate" type="application/rss+xml" href="/post/index.xml" title="我的博客">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main list" role="main">
+	<header class="main__header">
+		<h1 class="main__title">Posts</h1>
+	</header><article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%E5%8C%96/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 字符串格式化 Go对字符串格式化提供了良好的支持。下面我们看些常用的字符串格式化的例子。
+package main import &#34;fmt&#34; import &#34;os&#34; type point struct { x, y int } func main() { // Go提供了几种打印格式，用来格式化一般的Go值，例如 	// 下面的%v打印了一个point结构体的对象的值 	p := point{1, 2} fmt.Printf(&#34;%v\n&#34;, p) // 如果所格式化的值是一个结构体对象，那么`%+v`的格式化输出 	// 将包括结构体的成员名称和值 	fmt.Printf(&#34;%+v\n&#34;, p) // `%#v`格式化输出将输出一个值的Go语法表示方式。 	fmt.Printf(&#34;%#v\n&#34;, p) // 使用`%T`来输出一个值的数据类型 	fmt.Printf(&#34;%T\n&#34;, p) // 格式化布尔型变量 	fmt.Printf(&#34;%t\n&#34;, true) // 有很多的方式可以格式化整型，使用`%d`是一种 	// 标准的以10进制来输出整型的方式 	fmt.Printf(&#34;%d\n&#34;, 123) // 这种方式输出整型的二进制表示方式 	fmt.Printf(&#34;%b\n&#34;, 14) // 这里打印出该整型数值所对应的字符 	fmt.
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E5%B7%A5%E4%BD%9C%E6%B1%A0/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 工作池 在这个例子中，我们来看一下如何使用gorouotine和channel来实现工作池。
+package main import &#34;fmt&#34; import &#34;time&#34; // 我们将在worker函数里面运行几个并行实例，这个函数从jobs通道 // 里面接受任务，然后把运行结果发送到results通道。每个job我们 // 都休眠一会儿，来模拟一个耗时任务。 func worker(id int, jobs &lt;-chan int, results chan&lt;- int) { for j := range jobs { fmt.Println(&#34;worker&#34;, id, &#34;processing job&#34;, j) time.Sleep(time.Second) results &lt;- j * 2 } } func main() { // 为了使用我们的工作池，我们需要发送工作和接受工作的结果，  // 这里我们定义两个通道，一个jobs，一个results  jobs := make(chan int, 100) results := make(chan int, 100) // 这里启动3个worker协程，一开始的时候worker阻塞执行，因为  // jobs通道里面还没有工作任务  for w := 1; w &lt;= 3; w++ { go worker(w, jobs, results) } // 这里我们发送9个任务，然后关闭通道，告知任务发送完成  for j := 1; j &lt;= 9; j++ { jobs &lt;- j } close(jobs) // 然后我们从results里面获得结果  for a := 1; a &lt;= 9; a++ { &lt;-results } 运行结果
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E5%B8%B8%E9%87%8F/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go常量 Go支持定义字符常量，字符串常量，布尔型常量和数值常量。
+使用const关键字来定义常量。
+package main import &#34;fmt&#34; import &#34;math&#34; // &#34;const&#34; 关键字用来定义常量 const s string = &#34;constant&#34; func main() { fmt.Println(s) // &#34;const&#34;关键字可以出现在任何&#34;var&#34;关键字出现的地方 	// 区别是常量必须有初始值 	const n = 500000000 // 常量表达式可以执行任意精度数学计算 	const d = 3e20 / n fmt.Println(d) // 数值型常量没有具体类型，除非指定一个类型 	// 比如显式类型转换 	fmt.Println(int64(d)) // 数值型常量可以在程序的逻辑上下文中获取类型 	// 比如变量赋值或者函数调用。 	// 例如，对于math包中的Sin函数,它需要一个float64类型的变量 	fmt.Println(math.Sin(n)) } 输出结果为
+constant 6e+11 600000000000 -0.28470407323754404 
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E5%B9%B6%E8%A1%8C%E5%8A%9F%E8%83%BD/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 并行功能 goroutine是一个轻量级的线程。
+package main import &#34;fmt&#34; func f(from string) { for i := 0; i &lt; 3; i++ { fmt.Println(from, &#34;:&#34;, i) } } func main() { // 假设我们有一个函数叫做f(s) 	// 这里我们使用通常的同步调用来调用函数 	f(&#34;direct&#34;) // 为了能够让这个函数以协程(goroutine)方式 	// 运行使用go f(s) 	// 这个协程将和调用它的协程并行执行 	go f(&#34;goroutine&#34;) // 你也可以为匿名函数开启一个协程运行 	go func(msg string) { fmt.Println(msg) }(&#34;going&#34;) // 上面的协程在调用之后就异步执行了，所以程序不用等待它们执行完成 	// 就跳到这里来了，下面的Scanln用来从命令行获取一个输入，然后才 	// 让main函数结束 	// 如果没有下面的Scanln语句，程序到这里会直接退出，而上面的协程还 	// 没有来得及执行完，你将无法看到上面两个协程运行的结果 	var input string fmt.
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E5%B9%B6%E8%A1%8C%E9%80%9A%E9%81%93channel/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 并行通道Channel Channel是连接并行协程(goroutine)的通道。你可以向一个通道写入数据然后从另外一个通道读取数据。
+package main import &#34;fmt&#34; func main() { // 使用`make(chan 数据类型)`来创建一个Channel 	// Channel的类型就是它们所传递的数据的类型 	messages := make(chan string) // 使用`channel &lt;-`语法来向一个Channel写入数据 	// 这里我们从一个新的协程向messages通道写入数据ping 	go func() { messages &lt;- &#34;ping&#34; }() // 使用`&lt;-channel`语法来从Channel读取数据 	// 这里我们从main函数所在的协程来读取刚刚写入 	// messages通道的数据 	msg := &lt;-messages fmt.Println(msg) } 运行结果
+ping 当我们运行程序的时候，数据ping成功地从一个协程传递到了另外一个协程。 默认情况下，协程之间的通信是同步的，也就是说数据的发送端和接收端必须配对使用。Channel的这种特点使得我们可以不用在程序结尾添加额外的代码也能够获取协程发送端发来的信息。因为程序执行到msg:=&lt;-messages的时候被阻塞了，直到获得发送端发来的信息才继续执行。
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E6%89%93%E7%82%B9%E5%99%A8/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 打点器 Timer是让你等待一段时间然后去做一件事情，这件事情只会做一次。而Ticker是让你按照一定的时间间隔循环往复地做一件事情，除非你手动停止它。
+package main import &#34;time&#34; import &#34;fmt&#34; func main() { // Ticker使用和Timer相似的机制，同样是使用一个通道来发送数据。 	// 这里我们使用range函数来遍历通道数据，这些数据每隔500毫秒被 	// 发送一次，这样我们就可以接收到 	ticker := time.NewTicker(time.Millisecond * 500) go func() { for t := range ticker.C { fmt.Println(&#34;Tick at&#34;, t) } }() // Ticker和Timer一样可以被停止。一旦Ticker停止后，通道将不再 	// 接收数据，这里我们将在1500毫秒之后停止 	time.Sleep(time.Millisecond * 1500) ticker.Stop() fmt.Println(&#34;Ticker stopped&#34;) } 输出结果
+Tick at 2014-02-18 05:42:50.363640783 +0800 CST Tick at 2014-02-18 05:42:50.863793985 +0800 CST Tick at 2014-02-18 05:42:51.363532887 +0800 CST Ticker stopped 在这个例子中，我们让Ticker一个独立协程上每隔500毫秒执行一次，然后在main函数所在协程上等待1500毫秒，然后停止Ticker。所以只输出了3次Ticker at信息。
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E6%8C%87%E9%92%88/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 指针 Go支持指针，可以用来给函数传递变量的引用。
+package main import &#34;fmt&#34; // 我们用两个不同的例子来演示指针的用法 // zeroval函数有一个int类型参数，这个时候传递给函数的是变量的值 func zeroval(ival int) { ival = 0 } // zeroptr函数的参数是int类型指针，这个时候传递给函数的是变量的地址 // 在函数内部对这个地址所指向的变量的任何修改都会反映到原来的变量上。 func zeroptr(iptr *int) { *iptr = 0 } func main() { i := 1 fmt.Println(&#34;initial:&#34;, i) zeroval(i) fmt.Println(&#34;zeroval:&#34;, i) // &amp;操作符用来取得i变量的地址 	zeroptr(&amp;i) fmt.Println(&#34;zeroptr:&#34;, i) // 指针类型也可以输出 	fmt.Println(&#34;pointer:&#34;, &amp;i) } 输出结果为
+initial: 1 zeroval: 1 zeroptr: 0 pointer: 0xc084000038 
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E6%8E%92%E5%BA%8F/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 排序 Go的sort包实现了内置数据类型和用户自定义数据类型的排序功能。我们先看看内置数据类型的排序。
+package main import &#34;fmt&#34; import &#34;sort&#34; func main() { // 这些排序方法都是针对内置数据类型的。 	// 这里的排序方法都是就地排序，也就是说排序改变了 	// 切片内容，而不是返回一个新的切片 	strs := []string{&#34;c&#34;, &#34;a&#34;, &#34;b&#34;} sort.Strings(strs) fmt.Println(&#34;Strings:&#34;, strs) // 对于整型的排序 	ints := []int{7, 2, 4} sort.Ints(ints) fmt.Println(&#34;Ints: &#34;, ints) // 我们还可以检测切片是否已经排序好 	s := sort.IntsAreSorted(ints) fmt.Println(&#34;Sorted: &#34;, s) } 输出结果
+Strings: [a b c] Ints: [2 4 7] Sorted: true 
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E6%8E%A5%E5%8F%A3/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 接口 接口是一个方法签名的集合。 所谓方法签名，就是指方法的声明，而不包括实现。
+package main import &#34;fmt&#34; import &#34;math&#34; // 这里定义了一个最基本的表示几何形状的方法的接口 type geometry interface { area() float64 perim() float64 } // 这里我们要让正方形square和圆形circle实现这个接口 type square struct { width, height float64 } type circle struct { radius float64 } // 在Go中实现一个接口，只要实现该接口定义的所有方法即可 // 下面是正方形实现的接口 func (s square) area() float64 { return s.width * s.height } func (s square) perim() float64 { return 2*s.width + 2*s.height } // 圆形实现的接口 func (c circle) area() float64 { return math.
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E6%95%B0%E5%80%BC/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		#Go数值
+Go有很多种数据类型，包括字符串类型，整型，浮点型，布尔型等等，这里有几个基础的例子。
+package main import &#34;fmt&#34; func main() { // 字符串可以使用&#34;+&#34;连接 	fmt.Println(&#34;go&#34; + &#34;lang&#34;) //整型和浮点型 	fmt.Println(&#34;1+1 =&#34;, 1+1) fmt.Println(&#34;7.0/3.0 =&#34;, 7.0/3.0) // 布尔型的几种操作符 	fmt.Println(true &amp;&amp; false) fmt.Println(true || false) fmt.Println(!true) } 输出结果为
+golang 1+1 = 2 7.0/3.0 = 2.3333333333333335 false true false 
+	</div>
+</article>
+
+</main>
+
+<div class="pagination">
+	<a class="pagination__item pagination__item--prev btn" href="/post/page/3/">«</a>
+	<span class="pagination__item pagination__item--current">4/8</span>
+	<a class="pagination__item pagination__item--next btn" href="/post/page/5/">»</a>
+</div>
+
+		</div>
+		
+
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

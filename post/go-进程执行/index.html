@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title"></h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="go-进程执行">Go 进程执行</h1>
+<p>在上面的例子中，我们演示了一下如何去触发执行一个外部的进程。我们这样做的原因是我们希望从Go进程里面可以访问外部进程的信息。但有的时候，我们仅仅希望执行一个外部进程来替代当前的Go进程。这个时候，我们需要使用Go提供的<code>exec</code>函数。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;syscall&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;os&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;os/exec&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#75715e">// 本例中，我们使用`ls`来演示。Go需要一个该命令
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 的完整路径，所以我们使用`exec.LookPath`函数来
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 找到它
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">binary</span>, <span style="color:#a6e22e">lookErr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">exec</span>.<span style="color:#a6e22e">LookPath</span>(<span style="color:#e6db74">&#34;ls&#34;</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">lookErr</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		panic(<span style="color:#a6e22e">lookErr</span>)
+	}
+	<span style="color:#75715e">// `Exec`函数需要一个切片参数，我们给ls命令一些
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 常见的参数。注意，第一个参数必须是程序名称
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">args</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;ls&#34;</span>, <span style="color:#e6db74">&#34;-a&#34;</span>, <span style="color:#e6db74">&#34;-l&#34;</span>, <span style="color:#e6db74">&#34;-h&#34;</span>}
+
+	<span style="color:#75715e">// `Exec`还需要一些环境变量，这里我们提供当前的
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 系统环境
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">env</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Environ</span>()
+
+	<span style="color:#75715e">// 这里是`os.Exec`调用。如果一切顺利，我们的原
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 进程将终止，然后启动一个新的ls进程。如果有
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 错误发生，我们将获得一个返回值
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">execErr</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">syscall</span>.<span style="color:#a6e22e">Exec</span>(<span style="color:#a6e22e">binary</span>, <span style="color:#a6e22e">args</span>, <span style="color:#a6e22e">env</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">execErr</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		panic(<span style="color:#a6e22e">execErr</span>)
+	}
+}
+</code></pre></div><p>运行结果</p>
+<pre><code>total 16
+drwxr-xr-x  4 mark 136B Oct 3 16:29 .
+drwxr-xr-x 91 mark 3.0K Oct 3 12:50 ..
+-rw-r--r--  1 mark 1.3K Oct 3 16:28 execing-processes.go
+</code></pre><p>注意，Go没有提供Unix下面经典的fork函数。通常这也不是一个问题，因为进程触发和进程执行已经覆盖了fork的大多数功能。</p>
+
+		</div>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

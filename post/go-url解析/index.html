@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title"></h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="go-url解析">Go URL解析</h1>
+<p>URL提供了一种统一访问资源的方式。我们来看一下Go里面如何解析URL。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;net/url&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;strings&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#75715e">// 我们将解析这个URL，它包含了模式，验证信息，
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 主机，端口，路径，查询参数和查询片段
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;postgres://user:pass@host.com:5432/path?k=v#f&#34;</span>
+
+	<span style="color:#75715e">// 解析URL，并保证没有错误
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">Parse</span>(<span style="color:#a6e22e">s</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		panic(<span style="color:#a6e22e">err</span>)
+	}
+
+	<span style="color:#75715e">// 可以直接访问解析后的模式
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">Scheme</span>)
+
+	<span style="color:#75715e">// User包含了所有的验证信息，使用
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// Username和Password来获取单独的信息
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">User</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">User</span>.<span style="color:#a6e22e">Username</span>())
+	<span style="color:#a6e22e">p</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">User</span>.<span style="color:#a6e22e">Password</span>()
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">p</span>)
+
+	<span style="color:#75715e">// Host包含了主机名和端口，如果需要可以
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 手动分解主机名和端口
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">Host</span>)
+	<span style="color:#a6e22e">h</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">Host</span>, <span style="color:#e6db74">&#34;:&#34;</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">h</span>[<span style="color:#ae81ff">0</span>])
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">h</span>[<span style="color:#ae81ff">1</span>])
+
+	<span style="color:#75715e">// 这里我们解析出路径和`#`后面的片段
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">Path</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">Fragment</span>)
+
+	<span style="color:#75715e">// 为了得到`k=v`格式的查询参数，使用RawQuery。你可以将
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 查询参数解析到一个map里面。这个map为字符串作为key，
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 字符串切片作为value。
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">RawQuery</span>)
+	<span style="color:#a6e22e">m</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">ParseQuery</span>(<span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">RawQuery</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">m</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">m</span>[<span style="color:#e6db74">&#34;k&#34;</span>][<span style="color:#ae81ff">0</span>])
+}
+</code></pre></div><p>运行结果</p>
+<pre><code>postgres
+user:pass
+user
+pass
+host.com:5432
+host.com
+5432
+/path
+f
+k=v
+map[k:[v]]
+v
+</code></pre>
+		</div>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

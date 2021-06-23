@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title"></h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="go-切片">Go 切片</h1>
+<p>切片是Go语言的关键类型之一，它提供了比数组更多的功能。</p>
+<p>示例1：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#75715e">// 和数组不同的是，切片的长度是可变的。
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 我们可以使用内置函数make来创建一个长度不为零的切片
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 这里我们创建了一个长度为3，存储字符串的切片，切片元素
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 默认为零值，对于字符串就是&#34;&#34;。
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">string</span>, <span style="color:#ae81ff">3</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;emp:&#34;</span>, <span style="color:#a6e22e">s</span>)
+
+	<span style="color:#75715e">// 可以使用和数组一样的方法来设置元素值或获取元素值
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">s</span>[<span style="color:#ae81ff">0</span>] = <span style="color:#e6db74">&#34;a&#34;</span>
+	<span style="color:#a6e22e">s</span>[<span style="color:#ae81ff">1</span>] = <span style="color:#e6db74">&#34;b&#34;</span>
+	<span style="color:#a6e22e">s</span>[<span style="color:#ae81ff">2</span>] = <span style="color:#e6db74">&#34;c&#34;</span>
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;set:&#34;</span>, <span style="color:#a6e22e">s</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;get:&#34;</span>, <span style="color:#a6e22e">s</span>[<span style="color:#ae81ff">2</span>])
+
+	<span style="color:#75715e">// 可以用内置函数len获取切片的长度
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;len:&#34;</span>, len(<span style="color:#a6e22e">s</span>))
+
+	<span style="color:#75715e">// 切片还拥有一些数组所没有的功能。
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 例如我们可以使用内置函数append给切片追加值，然后
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 返回一个拥有新切片元素的切片。
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 注意append函数不会改变原切片，而是生成了一个新切片，
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 我们需要用原来的切片来接收这个新切片
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">s</span> = append(<span style="color:#a6e22e">s</span>, <span style="color:#e6db74">&#34;d&#34;</span>)
+	<span style="color:#a6e22e">s</span> = append(<span style="color:#a6e22e">s</span>, <span style="color:#e6db74">&#34;e&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;apd:&#34;</span>, <span style="color:#a6e22e">s</span>)
+
+	<span style="color:#75715e">// 另外我们还可以从一个切片拷贝元素到另一个切片
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 下面的例子就是创建了一个和切片s长度相同的新切片
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 然后使用内置的copy函数来拷贝s的元素到c中。
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">string</span>, len(<span style="color:#a6e22e">s</span>))
+	copy(<span style="color:#a6e22e">c</span>, <span style="color:#a6e22e">s</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;cpy:&#34;</span>, <span style="color:#a6e22e">c</span>)
+
+	<span style="color:#75715e">// 切片还支持一个取切片的操作 &#34;slice[low:high]&#34;
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 获取的新切片包含元素&#34;slice[low]&#34;，但是不包含&#34;slice[high]&#34;
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 下面的例子就是取一个新切片，元素包括&#34;s[2]&#34;，&#34;s[3]&#34;，&#34;s[4]&#34;。
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">l</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s</span>[<span style="color:#ae81ff">2</span>:<span style="color:#ae81ff">5</span>]
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;sl1:&#34;</span>, <span style="color:#a6e22e">l</span>)
+
+	<span style="color:#75715e">// 如果省略low，默认从0开始，不包括&#34;slice[high]&#34;元素
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">l</span> = <span style="color:#a6e22e">s</span>[:<span style="color:#ae81ff">5</span>]
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;sl2:&#34;</span>, <span style="color:#a6e22e">l</span>)
+
+	<span style="color:#75715e">// 如果省略high，默认为len(slice)，包括&#34;slice[low]&#34;元素
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">l</span> = <span style="color:#a6e22e">s</span>[<span style="color:#ae81ff">2</span>:]
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;sl3:&#34;</span>, <span style="color:#a6e22e">l</span>)
+
+	<span style="color:#75715e">// 我们可以同时声明和初始化一个切片
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">t</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;g&#34;</span>, <span style="color:#e6db74">&#34;h&#34;</span>, <span style="color:#e6db74">&#34;i&#34;</span>}
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;dcl:&#34;</span>, <span style="color:#a6e22e">t</span>)
+
+	<span style="color:#75715e">// 我们也可以创建多维切片，和数组不同的是，切片元素的长度也是可变的。
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">twoD</span> <span style="color:#f92672">:=</span> make([][]<span style="color:#66d9ef">int</span>, <span style="color:#ae81ff">3</span>)
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">3</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+		<span style="color:#a6e22e">innerLen</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+		<span style="color:#a6e22e">twoD</span>[<span style="color:#a6e22e">i</span>] = make([]<span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">innerLen</span>)
+		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">j</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">j</span> &lt; <span style="color:#a6e22e">innerLen</span>; <span style="color:#a6e22e">j</span><span style="color:#f92672">++</span> {
+			<span style="color:#a6e22e">twoD</span>[<span style="color:#a6e22e">i</span>][<span style="color:#a6e22e">j</span>] = <span style="color:#a6e22e">i</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">j</span>
+		}
+	}
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;2d: &#34;</span>, <span style="color:#a6e22e">twoD</span>)
+}
+</code></pre></div><p>输出结果为</p>
+<pre><code>emp: [  ]
+set: [a b c]
+get: c
+len: 3
+apd: [a b c d e f]
+cpy: [a b c d e f]
+sl1: [c d e]
+sl2: [a b c d e]
+sl3: [c d e f]
+dcl: [g h i]
+2d:  [[0] [1 2] [2 3 4]]
+</code></pre><p>数组和切片的定义方式的区别在于<code>[]</code>之中是否有<code>固定长度</code>或者推断长度标志符<code>...</code>。</p>
+<p>示例2：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">s1</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">int</span>, <span style="color:#ae81ff">0</span>)
+	<span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">s1</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s1</span>)
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">s</span> []<span style="color:#66d9ef">int</span>) {
+	<span style="color:#a6e22e">s</span> = append(<span style="color:#a6e22e">s</span>, <span style="color:#ae81ff">3</span>)
+	<span style="color:#75715e">//因为原来分配的空间不够，所以在另外一个地址又重新分配了空间，所以原始地址的数据没有变
+</span><span style="color:#75715e"></span>}
+
+</code></pre></div><p>输出结果为：</p>
+<pre><code>[]
+</code></pre><p>若改为：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
+<span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">s1</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">int</span>, <span style="color:#ae81ff">0</span>)
+	<span style="color:#a6e22e">s1</span> = <span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">s1</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s1</span>)
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">s</span> []<span style="color:#66d9ef">int</span>) []<span style="color:#66d9ef">int</span> {
+	<span style="color:#a6e22e">s</span> = append(<span style="color:#a6e22e">s</span>, <span style="color:#ae81ff">3</span>)
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>
+}
+</code></pre></div><p>输出结果为：</p>
+<pre><code>[3]//正确结果
+</code></pre><p>示例3：</p>
+<p>cap是slice的最大容量，append函数添加元素，如果超过原始slice的容量，会重新分配底层数组。</p>
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+func main() {
+	s1 := make([]int, 3, 6)
+	fmt.Println(&quot;s1= &quot;, s1, len(s1), cap(s1))
+	s2 := append(s1, 1, 2, 3)
+	fmt.Println(&quot;s1= &quot;, s1, len(s1), cap(s1))
+	fmt.Println(&quot;s2= &quot;, s2, len(s2), cap(s2))
+	s3 := append(s2, 4, 5, 6)
+	fmt.Println(&quot;s1= &quot;, s1, len(s1), cap(s1))
+	fmt.Println(&quot;s2= &quot;, s2, len(s2), cap(s2))
+	fmt.Println(&quot;s3= &quot;, s3, len(s3), cap(s3))
+
+}
+</code></pre><p>输出结果为：</p>
+<pre><code>s1=  [0 0 0] 3 6
+s1=  [0 0 0] 3 6
+s2=  [0 0 0 1 2 3] 6 6
+s1=  [0 0 0] 3 6
+s2=  [0 0 0 1 2 3] 6 6
+s3=  [0 0 0 1 2 3 4 5 6] 9 12
+</code></pre><p>示例4：</p>
+<p>指向同一底层数组的slice之间copy时，允许存在重叠。copy数组时，受限于src和dst数组的长度最小值。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">s1</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>}
+	<span style="color:#a6e22e">s2</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">int</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">20</span>)
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>
+	<span style="color:#a6e22e">n</span> = copy(<span style="color:#a6e22e">s2</span>, <span style="color:#a6e22e">s1</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">n</span>, <span style="color:#a6e22e">s2</span>, len(<span style="color:#a6e22e">s2</span>), cap(<span style="color:#a6e22e">s2</span>))
+
+	<span style="color:#a6e22e">s3</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s1</span>[<span style="color:#ae81ff">4</span>:<span style="color:#ae81ff">6</span>]
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">n</span>, <span style="color:#a6e22e">s3</span>, len(<span style="color:#a6e22e">s3</span>), cap(<span style="color:#a6e22e">s3</span>))
+
+	<span style="color:#a6e22e">n</span> = copy(<span style="color:#a6e22e">s3</span>, <span style="color:#a6e22e">s1</span>[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">5</span>])
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">n</span>, <span style="color:#a6e22e">s3</span>, len(<span style="color:#a6e22e">s3</span>), cap(<span style="color:#a6e22e">s3</span>))
+}
+
+</code></pre></div><p>输出结果：</p>
+<pre><code>3 [0 1 2] 3 20
+3 [4 5] 2 6
+2 [1 2] 2 6
+</code></pre>
+		</div>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

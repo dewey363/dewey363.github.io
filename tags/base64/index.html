@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Base64 - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+		<link rel="alternate" type="application/rss+xml" href="/tags/base64/index.xml" title="我的博客">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main list" role="main">
+	<header class="main__header">
+		<h1 class="main__title">Base64</h1>
+	</header><article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-base64%E7%BC%96%E7%A0%81/" rel="bookmark">
+			Go Base64编码
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go Base64编码  Go提供了对base64编码和解码的内置支持  package main // 这种导入包的语法将默认的base64起了一个别名b64，这样 // 我们在下面就可以直接使用b64表示这个包，省点输入量 import b64 &#34;encoding/base64&#34; import &#34;fmt&#34; func main() { // 这里是我们用来演示编码和解码的字符串 	data := &#34;abc123!?$*&amp;()&#39;-=@~&#34; // Go支持标准的和兼容URL的base64编码。 	// 我们这里使用标准的base64编码，这个 	// 函数需要一个`[]byte`参数，所以将这 	// 个字符串转换为字节数组 	sEnc := b64.StdEncoding.EncodeToString([]byte(data)) fmt.Println(sEnc) // 解码一个base64编码可能返回一个错误， 	// 如果你不知道输入是否是正确的base64 	// 编码，你需要检测一些解码错误 	sDec, _ := b64.StdEncoding.DecodeString(sEnc) fmt.Println(string(sDec)) fmt.Println() // 使用兼容URL的base64编码和解码 	uEnc := b64.URLEncoding.EncodeToString([]byte(data)) fmt.Println(uEnc) uDec, _ := b64.URLEncoding.DecodeString(uEnc) fmt.Println(string(uDec)) } 运行结果
+	</div>
+</article>
+
+</main>
+
+
+		</div>
+		
+
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

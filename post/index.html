@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Posts - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+		<link rel="alternate" type="application/rss+xml" href="/post/index.xml" title="我的博客">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main list" role="main">
+	<header class="main__header">
+		<h1 class="main__title">Posts</h1>
+	</header><article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-base64%E7%BC%96%E7%A0%81/" rel="bookmark">
+			Go Base64编码
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go Base64编码  Go提供了对base64编码和解码的内置支持  package main // 这种导入包的语法将默认的base64起了一个别名b64，这样 // 我们在下面就可以直接使用b64表示这个包，省点输入量 import b64 &#34;encoding/base64&#34; import &#34;fmt&#34; func main() { // 这里是我们用来演示编码和解码的字符串 	data := &#34;abc123!?$*&amp;()&#39;-=@~&#34; // Go支持标准的和兼容URL的base64编码。 	// 我们这里使用标准的base64编码，这个 	// 函数需要一个`[]byte`参数，所以将这 	// 个字符串转换为字节数组 	sEnc := b64.StdEncoding.EncodeToString([]byte(data)) fmt.Println(sEnc) // 解码一个base64编码可能返回一个错误， 	// 如果你不知道输入是否是正确的base64 	// 编码，你需要检测一些解码错误 	sDec, _ := b64.StdEncoding.DecodeString(sEnc) fmt.Println(string(sDec)) fmt.Println() // 使用兼容URL的base64编码和解码 	uEnc := b64.URLEncoding.EncodeToString([]byte(data)) fmt.Println(uEnc) uDec, _ := b64.URLEncoding.DecodeString(uEnc) fmt.Println(string(uDec)) } 运行结果
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-build-%E4%B8%8D%E5%90%8C%E5%B9%B3%E5%8F%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/" rel="bookmark">
+			Go build跨平台交叉编译
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Golang 支持在一个平台下生成另一个平台可执行程序的交叉编译功能。  Mac下编译Linux, Windows平台的64位可执行程序：  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build test.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build test.go  Linux下编译Mac, Windows平台的64位可执行程序：  CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build test.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build test.go  Windows下编译Mac, Linux平台的64位可执行程序：  SET CGO_ENABLED=0 SET GOOS=darwin3 SET GOARCH=amd64 go build main.go SET CGO_ENABLED=0 SET GOOS=linux SET GOARCH=amd64 go build main.go   GOOS：目标可执行程序运行操作系统，支持 darwin，freebsd，linux，windows
+  GOARCH：目标可执行程序操作系统构架，包括 386，amd64，arm
+  Golang version 1.5以前版本在首次交叉编译时还需要配置交叉编译环境：
+  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 .
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-for%E5%BE%AA%E7%8E%AF/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go for循环 for循环是Go语言唯一的循环结构。这里有三个基本的for循环类型。
+package main import &#34;fmt&#34; func main() { // 最基本的一种，单一条件循环  // 这个可以代替其他语言的while循环  i := 1 for i &lt;= 3 { fmt.Println(i) i = i + 1 } // 经典的循环条件初始化/条件判断/循环后条件变化  for j := 7; j &lt;= 9; j++ { fmt.Println(j) } // 无条件的for循环是死循环，除非你使用break跳出循环或者  // 使用return从函数返回  for { fmt.Println(&#34;loop&#34;) break } } 输出结果
+1 2 3 7 8 9 loop 在后面的例子中，你将会看到其他的循环方式，比如使用range函数循环数组，切片和字典，或者用select函数循环channel通道。
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-json%E6%94%AF%E6%8C%81/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go JSON支持 Go内置了对JSON数据的编码和解码，这些数据的类型包括内置数据类型和自定义数据类型。
+package main import &#34;encoding/json&#34; import &#34;fmt&#34; import &#34;os&#34; // 我们使用两个结构体来演示自定义数据类型的JSON数据编码和解码。 type Response1 struct { Page int Fruits []string } type Response2 struct { Page int `json:&#34;page&#34;` Fruits []string `json:&#34;fruits&#34;` } func main() { // 首先我们看一下将基础数据类型编码为JSON数据 	bolB, _ := json.Marshal(true) fmt.Println(string(bolB)) intB, _ := json.Marshal(1) fmt.Println(string(intB)) fltB, _ := json.Marshal(2.34) fmt.Println(string(fltB)) strB, _ := json.Marshal(&#34;gopher&#34;) fmt.Println(string(strB)) // 这里是将切片和字典编码为JSON数组或对象 	slcD := []string{&#34;apple&#34;, &#34;peach&#34;, &#34;pear&#34;} slcB, _ := json.
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-line-filters/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go Line Filters Line Filters翻译一下大概是行数据过滤器。简单一点就是一个程序从标准输入stdin读取数据，然后处理一下，将处理的结果输出到标准输出stdout。grep和sed就是常见的行数据过滤器。 这里有一个行数据过滤器的例子，是把一个输入文本转换为大写的文本。你可以使用这种方式来实现你自己的Go Line Filters。
+package main import ( &#34;bufio&#34; &#34;fmt&#34; &#34;os&#34; &#34;strings&#34; ) func main() { // 使用缓冲scanner来包裹无缓冲的`os.Stdin`可以让我们 	// 方便地使用`Scan`方法，这个方法会将scanner定位到下 	// 一行的位置 	scanner := bufio.NewScanner(os.Stdin) for scanner.Scan() { // `Text`方法从输入中返回当前行 	ucl := strings.ToUpper(scanner.Text()) // 输出转换为大写的行 	fmt.Println(ucl) } // 在`Scan`过程中，检查错误。文件结束不会被当作一个错误 	if err := scanner.Err(); err != nil { fmt.Fprintln(os.Stderr, &#34;error:&#34;, err) os.Exit(1) } } 运行结果
+hello world HELLO WORLD how are you HOW ARE YOU 
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-modules%E4%BD%BF%E7%94%A8/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		# Go Modules使用教程 引入 https://talks.godoc.org/github.com/myitcv/talks/2018-08-15-glug-modules/main.slide#1
+Go Modules介绍 Modules是Go 1.11中新增的实验性功能，基于vgo演变而来，是一个新型的包管理工具。
+常见的包管理工具  govendor dep glide godep  这些包管理工具都是基于GOPATH或者vendor目录，并不能很好的解决不同版本依赖问题。Modules是在GOPATH之外一套新的包管理方式。
+如何激活Modules 首先要把go升级到1.11。
+升级后，可以设置通过一个环境变量GO111MODULE来激活modules：
+ GO111MODULE=off，go命令行将不会支持module功能，寻找依赖包的方式将会沿用旧版本那种通过vendor目录或者GOPATH模式来查找。 GO111MODULE=on，go命令行会使用modules，而一点也不会去GOPATH目录下查找。 GO111MODULE=auto，默认值，go命令行将会根据当前目录来决定是否启用module功能。这种情况下可以分为两种情形：当前目录在GOPATH/src之外且该目录包含go.mod文件，或者当前文件在包含go.mod文件的目录下面。  当module功能启用时，GOPATH在项目构建过程中不再担当import的角色，但它仍然存储下载的依赖包，具体位置在$GOPATH/pkg/mod。
+初始化Modules Go1.11新增了命令go mod来支持Modules的使用。
+&gt; go help mod Go mod provides access to operations on modules. Note that support for modules is built into all the go commands, not just &#39;go mod&#39;. For example, day-to-day adding, removing, upgrading, and downgrading of dependencies should be done using &#39;go get&#39;.
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-panic/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go Panic Panic表示的意思就是有些意想不到的错误发生了。通常我们用来表示程序正常运行过程中不应该出现的，或者我们没有处理好的错误。
+package main import &#34;os&#34; func main() { // 我们使用panic来检查预期不到的错误  panic(&#34;a problem&#34;) // Panic的通常使用方法就是如果一个函数  // 返回一个我们不知道怎么处理的错误的  // 时候，直接终止执行。  _, err := os.Create(&#34;/tmp/file&#34;) if err != nil { panic(err) } } 运行结果
+panic: a problem goroutine 1 [running]: runtime.panic(0x44e060, 0xc0840031b0) C:/Users/ADMINI~1/AppData/Local/Temp/2/bindist667667715/go/src/pkg/runtime/panic.c:266 +0xc8 main.main() D:/GoDoc/go_panic.go:8 +0x58 exit status 2 和其他的编程语言不同的是，Go并不使用exception来处理错误，而是通过函数返回值返回错误代码。
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-range%E5%87%BD%E6%95%B0/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go range函数 range函数是个神奇而有趣的内置函数，你可以使用它来遍历数组，切片和字典。
+当用于遍历数组和切片的时候，range函数返回索引和元素；
+当用于遍历字典的时候，range函数返回字典的键和值。
+package main import &#34;fmt&#34; func main() { // 这里我们使用range来计算一个切片的所有元素和 	// 这种方法对数组也适用 	nums := []int{2, 3, 4} sum := 0 for _, num := range nums { sum += num } fmt.Println(&#34;sum:&#34;, sum) // range 用来遍历数组和切片的时候返回索引和元素值 	// 如果我们不要关心索引可以使用一个下划线(_)来忽略这个返回值 	// 当然我们有的时候也需要这个索引 	for i, num := range nums { if num == 3 { fmt.Println(&#34;index:&#34;, i) } } // 使用range来遍历字典的时候，返回键值对。 	kvs := map[string]string{&#34;a&#34;: &#34;apple&#34;, &#34;b&#34;: &#34;banana&#34;} for k, v := range kvs { fmt.
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-sha1-%E6%95%A3%E5%88%97/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go SHA1 散列 SHA1散列经常用来计算二进制或者大文本数据的短标识值。git版本控制系统用SHA1来标识受版本控制的文件和目录。这里介绍Go中如何计算SHA1散列值。 Go在crypto/*包里面实现了几个常用的散列函数。
+package main import &#34;crypto/sha1&#34; import &#34;fmt&#34; func main() { s := &#34;sha1 this string&#34; // 生成一个hash的模式是`sha1.New()`，`sha1.Write(bytes)` 	// 然后是`sha1.Sum([]byte{})`，下面我们开始一个新的hash 	// 示例 	h := sha1.New() // 写入要hash的字节，如果你的参数是字符串，使用`[]byte(s)` 	// 把它强制转换为字节数组 	h.Write([]byte(s)) // 这里计算最终的hash值，Sum的参数是用来追加而外的字节到要 	// 计算的hash字节里面，一般来讲，如果上面已经把需要hash的 	// 字节都写入了，这里就设为nil就可以了 	bs := h.Sum(nil) // SHA1散列值经常以16进制的方式输出，例如git commit就是 	// 这样，所以可以使用`%x`来将散列结果格式化为16进制的字符串 	fmt.Println(s) fmt.Printf(&#34;%x\n&#34;, bs) } 运行结果
+sha1 this string cf23df2207d99a74fbe169e3eba035e633b65d94 
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-string%E4%B8%8Ebyte%E5%88%87%E7%89%87%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		#Go String与Byte切片之间的转换
+String转换到Byte数组时，每个byte(byte类型其实就是uint8)保存字符串对应字节的数值。
+注意Go的字符串是UTF-8编码的，每个字符长度是不确定的，一些字符可能是1、2、3或者4个字节结尾。
+示例1：
+package main import &#34;fmt&#34; func main() { s1 := &#34;abcd&#34; b1 := []byte(s1) fmt.Println(b1) // [97 98 99 100]  s2 := &#34;中文&#34; b2 := []byte(s2) fmt.Println(b2) // [228 184 173 230 150 135], unicode，每个中文字符会由三个byte组成  r1 := []rune(s1) fmt.Println(r1) // [97 98 99 100], 每个字一个数值  r2 := []rune(s2) fmt.Println(r2) // [20013 25991], 每个字一个数值  } 
+	</div>
+</article>
+
+</main>
+
+<div class="pagination">
+	<span class="pagination__item pagination__item--current">1/8</span>
+	<a class="pagination__item pagination__item--next btn" href="/post/page/2/">»</a>
+</div>
+
+		</div>
+		
+
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

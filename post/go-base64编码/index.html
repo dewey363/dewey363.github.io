@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Go Base64编码 - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="Go提供了对base64编码和解码的内置支持">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Go Base64编码</h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="go-base64编码">Go Base64编码</h1>
+<ul>
+<li>Go提供了对base64编码和解码的内置支持</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#75715e">// 这种导入包的语法将默认的base64起了一个别名b64，这样
+</span><span style="color:#75715e">// 我们在下面就可以直接使用b64表示这个包，省点输入量
+</span><span style="color:#75715e"></span><span style="color:#f92672">import</span> <span style="color:#a6e22e">b64</span> <span style="color:#e6db74">&#34;encoding/base64&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#75715e">// 这里是我们用来演示编码和解码的字符串
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">data</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;abc123!?$*&amp;()&#39;-=@~&#34;</span>
+
+	<span style="color:#75715e">// Go支持标准的和兼容URL的base64编码。
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 我们这里使用标准的base64编码，这个
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 函数需要一个`[]byte`参数，所以将这
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 个字符串转换为字节数组
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">sEnc</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">b64</span>.<span style="color:#a6e22e">StdEncoding</span>.<span style="color:#a6e22e">EncodeToString</span>([]byte(<span style="color:#a6e22e">data</span>))
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">sEnc</span>)
+
+	<span style="color:#75715e">// 解码一个base64编码可能返回一个错误，
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 如果你不知道输入是否是正确的base64
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 编码，你需要检测一些解码错误
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">sDec</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">b64</span>.<span style="color:#a6e22e">StdEncoding</span>.<span style="color:#a6e22e">DecodeString</span>(<span style="color:#a6e22e">sEnc</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(string(<span style="color:#a6e22e">sDec</span>))
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>()
+
+	<span style="color:#75715e">// 使用兼容URL的base64编码和解码
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">uEnc</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">b64</span>.<span style="color:#a6e22e">URLEncoding</span>.<span style="color:#a6e22e">EncodeToString</span>([]byte(<span style="color:#a6e22e">data</span>))
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">uEnc</span>)
+	<span style="color:#a6e22e">uDec</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">b64</span>.<span style="color:#a6e22e">URLEncoding</span>.<span style="color:#a6e22e">DecodeString</span>(<span style="color:#a6e22e">uEnc</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(string(<span style="color:#a6e22e">uDec</span>))
+}
+</code></pre></div><p>运行结果</p>
+<pre><code>YWJjMTIzIT8kKiYoKSctPUB+
+abc123!?$*&amp;()'-=@~
+
+YWJjMTIzIT8kKiYoKSctPUB-
+abc123!?$*&amp;()'-=@~
+</code></pre><p>这两种方法都将原数据编码为base64编码，区别在于标准的编码后面是<code>+</code>，而兼容URL的编码方式后面是<code>-</code>。</p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/base64%E7%BC%96%E7%A0%81/" rel="tag">Base64编码</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/base64/" rel="tag">Base64</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

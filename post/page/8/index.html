@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Posts - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+		<link rel="alternate" type="application/rss+xml" href="/post/index.xml" title="我的博客">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main list" role="main">
+	<header class="main__header">
+		<h1 class="main__title">Posts</h1>
+	</header><article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E9%9D%9E%E9%98%BB%E5%A1%9E%E9%80%9A%E9%81%93/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 非阻塞通道 默认情况下，通道发送和接收数据是阻塞的。然而我们可以使用select的一个default的选项来实现无阻塞发送或接收数据，甚至可以将多个select的case选项和default选项结合起来使用。
+package main import &#34;fmt&#34; func main() { messages := make(chan string) signals := make(chan bool) // 这里是一个非阻塞的从通道接收数据，如果messages通道有数据 	// 可以接收，那么select将运行`&lt;-messages`这个case，否则的话 	// 程序立刻执行default选项后面的语句 	select { case msg := &lt;-messages: fmt.Println(&#34;received message&#34;, msg) default: fmt.Println(&#34;no message received&#34;) } // 非阻塞通道发送数据也是一样的 	msg := &#34;hi&#34; select { case messages &lt;- msg: fmt.Println(&#34;sent message&#34;, msg) default: fmt.Println(&#34;no message sent&#34;) } // 在default前面，我们可以有多个case选项，从而实现多通道 	// 非阻塞的选择，这里我们尝试从messages和signals接收数据 	// 如果有数据可以接收，那么执行对应case后面的逻辑，否则立刻 	// 执行default选项后面的逻辑 	select { case msg := &lt;-messages: fmt.
+	</div>
+</article>
+
+</main>
+
+<div class="pagination">
+	<a class="pagination__item pagination__item--prev btn" href="/post/page/7/">«</a>
+	<span class="pagination__item pagination__item--current">8/8</span>
+</div>
+
+		</div>
+		
+
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

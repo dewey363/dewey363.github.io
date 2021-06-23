@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on 我的博客</title>
+    <link>http://dewey363.github.io/tags/</link>
+    <description>Recent content in Tags on 我的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 09 Mar 2019 00:00:00 +0000</lastBuildDate><atom:link href="http://dewey363.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Base64</title>
+      <link>http://dewey363.github.io/tags/base64/</link>
+      <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/tags/base64/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Base64编码</title>
+      <link>http://dewey363.github.io/tags/base64%E7%BC%96%E7%A0%81/</link>
+      <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/tags/base64%E7%BC%96%E7%A0%81/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>go build</title>
+      <link>http://dewey363.github.io/tags/go-build/</link>
+      <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/tags/go-build/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>go build交叉编译</title>
+      <link>http://dewey363.github.io/tags/go-build%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
+      <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/tags/go-build%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>交叉编译</title>
+      <link>http://dewey363.github.io/tags/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
+      <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/tags/%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>跨平台</title>
+      <link>http://dewey363.github.io/tags/%E8%B7%A8%E5%B9%B3%E5%8F%B0/</link>
+      <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/tags/%E8%B7%A8%E5%B9%B3%E5%8F%B0/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title"></h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="go-时间格式化和解析">Go 时间格式化和解析</h1>
+<p>Go使用模式匹配的方式来支持日期格式化和解析。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;time&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>
+
+	<span style="color:#75715e">// 这里有一个根据RFC3339来格式化日期的例子
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">t</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
+	<span style="color:#a6e22e">p</span>(<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Format</span>(<span style="color:#e6db74">&#34;2006-01-02T15:04:05Z07:00&#34;</span>))
+
+	<span style="color:#75715e">// Format 函数使用一种基于示例的模式匹配方式，
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 它使用已经格式化的时间模式来决定所给定参数
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 的输出格式
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">p</span>(<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Format</span>(<span style="color:#e6db74">&#34;3:04PM&#34;</span>))
+	<span style="color:#a6e22e">p</span>(<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Format</span>(<span style="color:#e6db74">&#34;Mon Jan _2 15:04:05 2006&#34;</span>))
+	<span style="color:#a6e22e">p</span>(<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Format</span>(<span style="color:#e6db74">&#34;2006-01-02T15:04:05.999999-07:00&#34;</span>))
+
+	<span style="color:#75715e">// 对于纯数字表示的时间来讲，你也可以使用标准
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 的格式化字符串的方式来格式化时间
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%d-%02d-%02dT%02d:%02d:%02d-00:00\n&#34;</span>,
+		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Year</span>(), <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Month</span>(), <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Day</span>(),
+		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Hour</span>(), <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Minute</span>(), <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Second</span>())
+
+	<span style="color:#75715e">// 时间解析也是采用一样的基于示例的方式
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">withNanos</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;2006-01-02T15:04:05.999999999-07:00&#34;</span>
+	<span style="color:#a6e22e">t1</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Parse</span>(
+		<span style="color:#a6e22e">withNanos</span>,
+		<span style="color:#e6db74">&#34;2012-11-01T22:08:41.117442+00:00&#34;</span>)
+	<span style="color:#a6e22e">p</span>(<span style="color:#a6e22e">t1</span>)
+	<span style="color:#a6e22e">kitchen</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;3:04PM&#34;</span>
+	<span style="color:#a6e22e">t2</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Parse</span>(<span style="color:#a6e22e">kitchen</span>, <span style="color:#e6db74">&#34;8:41PM&#34;</span>)
+	<span style="color:#a6e22e">p</span>(<span style="color:#a6e22e">t2</span>)
+
+	<span style="color:#75715e">// Parse将返回一个错误，如果所输入的时间格式不对的话
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">ansic</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;Mon Jan _2 15:04:05 2006&#34;</span>
+	<span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">e</span> = <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Parse</span>(<span style="color:#a6e22e">ansic</span>, <span style="color:#e6db74">&#34;8:41PM&#34;</span>)
+	<span style="color:#a6e22e">p</span>(<span style="color:#a6e22e">e</span>)
+
+	<span style="color:#75715e">// 你可以使用一些预定义的格式来格式化或解析时间
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">p</span>(<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Format</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Kitchen</span>))
+}
+</code></pre></div><p>运行结果</p>
+<pre><code>2014-03-03T22:39:31+08:00
+10:39PM
+Mon Mar  3 22:39:31 2014
+2014-03-03T22:39:31.647077+08:00
+2014-03-03T22:39:31-00:00
+2012-11-01 22:08:41.117442 +0000 +0000
+0000-01-01 20:41:00 +0000 UTC
+parsing time &quot;8:41PM&quot; as &quot;Mon Jan _2 15:04:05 2006&quot;: cannot parse &quot;8:41PM&quot; as &quot;Mon&quot;
+10:39PM
+</code></pre>
+		</div>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Base64 on 我的博客</title>
+    <link>http://dewey363.github.io/tags/base64/</link>
+    <description>Recent content in Base64 on 我的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 09 Mar 2019 00:00:00 +0000</lastBuildDate><atom:link href="http://dewey363.github.io/tags/base64/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go Base64编码</title>
+      <link>http://dewey363.github.io/post/go-base64%E7%BC%96%E7%A0%81/</link>
+      <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-base64%E7%BC%96%E7%A0%81/</guid>
+      <description>Go Base64编码  Go提供了对base64编码和解码的内置支持  package main // 这种导入包的语法将默认的base64起了一个别名b64，这样 // 我们在下面就可以直接使用b64表示这个包，省点输入量 import b64 &amp;#34;encoding/base64&amp;#34; import &amp;#34;fmt&amp;#34; func main() { // 这里是我们用来演示编码和解码的字符串 	data := &amp;#34;abc123!?$*&amp;amp;()&amp;#39;-=@~&amp;#34; // Go支持标准的和兼容URL的base64编码。 	// 我们这里使用标准的base64编码，这个 	// 函数需要一个`[]byte`参数，所以将这 	// 个字符串转换为字节数组 	sEnc := b64.StdEncoding.EncodeToString([]byte(data)) fmt.Println(sEnc) // 解码一个base64编码可能返回一个错误， 	// 如果你不知道输入是否是正确的base64 	// 编码，你需要检测一些解码错误 	sDec, _ := b64.StdEncoding.DecodeString(sEnc) fmt.Println(string(sDec)) fmt.Println() // 使用兼容URL的base64编码和解码 	uEnc := b64.URLEncoding.EncodeToString([]byte(data)) fmt.Println(uEnc) uDec, _ := b64.URLEncoding.DecodeString(uEnc) fmt.Println(string(uDec)) } 运行结果</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Posts - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+		<link rel="alternate" type="application/rss+xml" href="/post/index.xml" title="我的博客">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main list" role="main">
+	<header class="main__header">
+		<h1 class="main__title">Posts</h1>
+	</header><article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E6%95%B0%E5%AD%97%E8%A7%A3%E6%9E%90/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 数字解析 从字符串解析出数字是一个基本的而且很常见的任务。 Go内置的strconv提供了数字解析功能。
+package main import &#34;strconv&#34; import &#34;fmt&#34; func main() { // 使用ParseFloat解析浮点数，64是说明使用多少位 	// 精度来解析 	f, _ := strconv.ParseFloat(&#34;1.234&#34;, 64) fmt.Println(f) // 对于ParseInt函数，0 表示从字符串推断整型进制， 	// 则表示返回结果的位数 	i, _ := strconv.ParseInt(&#34;123&#34;, 0, 64) fmt.Println(i) // ParseInt能够解析出16进制的数字 	d, _ := strconv.ParseInt(&#34;0x1c8&#34;, 0, 64) fmt.Println(d) // 还可以使用ParseUint函数 	u, _ := strconv.ParseUint(&#34;789&#34;, 0, 64) fmt.Println(u) // Atoi是解析10进制整型的快捷方法 	k, _ := strconv.Atoi(&#34;135&#34;) fmt.Println(k) // 解析函数在遇到无法解析的输入时，会返回错误 	_, e := strconv.
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E6%95%B0%E7%BB%84/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 数组  数组是一个具有相同数据类型的元素组成的固定长度的有序集合。 在Go语言中，数组是值类型，长度是类型的组成部分，也就是说&quot;[10]int&ldquo;和“[20]int”是完全不同的两种数组类型。 同类型的两个数组支持&rdquo;==&ldquo;和&rdquo;!=&ldquo;比较，但是不能比较大小。 数组作为参数时，函数内部不改变数组内部的值，除非是传入数组的指针。 数组的指针：*[3]int 指针数组：[2]*int  示例1：
+package main import &#34;fmt&#34; func main() { // 这里我们创建了一个具有5个元素的整型数组 	// 元素的数据类型和数组长度都是数组的一部分 	// 默认情况下，数组元素都是零值 	// 对于整数，零值就是0 	var a [5]int fmt.Println(&#34;emp:&#34;, a) // 我们可以使用索引来设置数组元素的值，就像这样 	// &#34;array[index] = value&#34; 或者使用索引来获取元素值， 	// 就像这样&#34;array[index]&#34; 	a[4] = 100 fmt.Println(&#34;set:&#34;, a) fmt.Println(&#34;get:&#34;, a[4]) // 内置的len函数返回数组的长度 	fmt.Println(&#34;len:&#34;, len(a)) // 这种方法可以同时定义和初始化一个数组 	b := [5]int{1, 2, 3, 4, 5} fmt.Println(&#34;dcl:&#34;, b) // 数组都是一维的，但是你可以把数组的元素定义为一个数组 	// 来获取多维数组结构 	var twoD [2][3]int for i := 0; i &lt; 2; i++ { for j := 0; j &lt; 3; j++ { twoD[i][j] = i + j } } fmt.
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E6%96%B9%E6%B3%95/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 方法 一般的函数定义叫做函数，定义在结构体上面的函数叫做该结构体的方法。
+示例1：
+package main import &#34;fmt&#34; type rect struct { width, height int } // 这个area方法有一个限定类型*rect， // 表示这个函数是定义在rect结构体上的方法 func (r *rect) area() int { return r.width * r.height } // 方法的定义限定类型可以为结构体类型 // 也可以是结构体指针类型 // 区别在于如果限定类型是结构体指针类型 // 那么在该方法内部可以修改结构体成员信息 func (r rect) perim() int { return 2*r.width + 2*r.height } func main() { r := rect{width: 10, height: 5} // 调用方法 	fmt.Println(&#34;area: &#34;, r.area()) fmt.Println(&#34;perim:&#34;, r.perim()) // Go语言会自动识别方法调用的参数是结构体变量还是 	// 结构体指针，如果你要修改结构体内部成员值，那么使用 	// 结构体指针作为函数限定类型，也就是说参数若是结构体 	//变量，仅仅会发生值拷贝。 	rp := &amp;r fmt.
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E6%97%B6%E9%97%B4/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 时间 Go提供了对时间和一段时间的支持。这里有一些例子。
+package main import &#34;fmt&#34; import &#34;time&#34; func main() { p := fmt.Println // 从获取当前时间开始 	now := time.Now() p(now) // 你可以提供年，月，日等来创建一个时间。当然时间 	// 总是会和地区联系在一起，也就是时区 	then := time.Date(2009, 11, 17, 20, 34, 58, 651387237, time.UTC) p(then) // 你可以获取时间的各个组成部分 	p(then.Year()) p(then.Month()) p(then.Day()) p(then.Hour()) p(then.Minute()) p(then.Second()) p(then.Nanosecond()) p(then.Location()) // 输出当天是周几，Monday-Sunday中的一个 	p(then.Weekday()) // 下面的几个方法判断两个时间的顺序，精确到秒 	p(then.Before(now)) p(then.After(now)) p(then.Equal(now)) // Sub方法返回两个时间的间隔(Duration) 	diff := now.Sub(then) p(diff) // 可以以不同的单位来计算间隔的大小 	p(diff.
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E6%97%B6%E9%97%B4%E6%88%B3/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 时间戳 程序的一个通常需求是计算从Unix起始时间开始到某个时刻的秒数，毫秒数，微秒数等。 我们来看看Go里面是怎么做的。
+package main import &#34;fmt&#34; import &#34;time&#34; func main() { // 使用Unix和UnixNano来分别获取从Unix起始时间 	// 到现在所经过的秒数和微秒数 	now := time.Now() secs := now.Unix() nanos := now.UnixNano() fmt.Println(now) // 注意这里没有UnixMillis方法，所以我们需要将 	// 微秒手动除以一个数值来获取毫秒 	millis := nanos / 1000000 fmt.Println(secs) fmt.Println(millis) fmt.Println(nanos) // 反过来，你也可以将一个整数秒数或者微秒数转换 	// 为对应的时间 	fmt.Println(time.Unix(secs, 0)) fmt.Println(time.Unix(0, nanos)) } 运行结果
+2014-03-02 23:11:31.118666918 +0800 CST 1393773091 1393773091118 1393773091118666918 2014-03-02 23:11:31 +0800 CST 2014-03-02 23:11:31.118666918 +0800 CST 
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%92%8C%E8%A7%A3%E6%9E%90/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 时间格式化和解析 Go使用模式匹配的方式来支持日期格式化和解析。
+package main import &#34;fmt&#34; import &#34;time&#34; func main() { p := fmt.Println // 这里有一个根据RFC3339来格式化日期的例子 	t := time.Now() p(t.Format(&#34;2006-01-02T15:04:05Z07:00&#34;)) // Format 函数使用一种基于示例的模式匹配方式， 	// 它使用已经格式化的时间模式来决定所给定参数 	// 的输出格式 	p(t.Format(&#34;3:04PM&#34;)) p(t.Format(&#34;Mon Jan _2 15:04:05 2006&#34;)) p(t.Format(&#34;2006-01-02T15:04:05.999999-07:00&#34;)) // 对于纯数字表示的时间来讲，你也可以使用标准 	// 的格式化字符串的方式来格式化时间 	fmt.Printf(&#34;%d-%02d-%02dT%02d:%02d:%02d-00:00\n&#34;, t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second()) // 时间解析也是采用一样的基于示例的方式 	withNanos := &#34;2006-01-02T15:04:05.999999999-07:00&#34; t1, e := time.Parse( withNanos, &#34;2012-11-01T22:08:41.117442+00:00&#34;) p(t1) kitchen := &#34;3:04PM&#34; t2, e := time.
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 正则表达式 Go内置了对正则表达式的支持，这里是一般的正则表达式常规用法的例子。
+package main import &#34;bytes&#34; import &#34;fmt&#34; import &#34;regexp&#34; func main() { // 测试模式是否匹配字符串，括号里面的意思是 	// 至少有一个a－z之间的字符存在 	match, _ := regexp.MatchString(&#34;p([a-z]+)ch&#34;, &#34;peach&#34;) fmt.Println(match) // 上面我们直接使用了字符串匹配的正则表达式， 	// 但是对于其他的正则匹配任务，你需要使用 	// `Compile`来使用一个优化过的正则对象 	r, _ := regexp.Compile(&#34;p([a-z]+)ch&#34;) // 正则结构体对象有很多方法可以使用，比如上面的例子 	// 也可以像下面这么写 	fmt.Println(r.MatchString(&#34;peach&#34;)) // 这个方法检测字符串参数是否存在正则所约束的匹配 	fmt.Println(r.FindString(&#34;peach punch&#34;)) // 这个方法查找第一次匹配的索引，并返回匹配字符串 	// 的起始索引和结束索引，而不是匹配的字符串 	fmt.Println(r.FindStringIndex(&#34;peach punch&#34;)) // 这个方法返回全局匹配的字符串和局部匹配的字符，比如 	// 这里会返回匹配`p([a-z]+)ch`的字符串 	// 和匹配`([a-z]+)`的字符串 	fmt.Println(r.FindStringSubmatch(&#34;peach punch&#34;)) // 和上面的方法一样，不同的是返回全局匹配和局部匹配的 	// 起始索引和结束索引 	fmt.
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E7%8A%B6%E6%80%81%E5%8D%8F%E7%A8%8B/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 状态协程 在上面的例子中，我们演示了如何通过使用mutex来在多个协程之间共享状态。另外一种方法是使用协程内置的同步机制来实现。这种基于通道的方法和Go的通过消息共享内存，保证每份数据为单独的协程所有的理念是一致的。
+package main import ( &#34;fmt&#34; &#34;math/rand&#34; &#34;sync/atomic&#34; &#34;time&#34; ) // 在这个例子中，将有一个单独的协程拥有这个状态。这样可以 // 保证这个数据不会被并行访问所破坏。为了读写这个状态，其 // 他的协程将向这个协程发送信息并且相应地接受返回信息。 // 这些`readOp`和`writeOp`结构体封装了这些请求和回复 type readOp struct { key int resp chan int } type writeOp struct { key int val int resp chan bool } func main() { // 我们将计算我们执行了多少次操作 	var ops int64 = 0 // reads和writes通道将被其他协程用来从中读取或写入数据 	reads := make(chan *readOp) writes := make(chan *writeOp) // 这个是拥有`state`的协程，`state`是一个协程的私有map 	// 变量。这个协程不断地`select`通道`reads`和`writes`， 	// 当有请求来临的时候进行回复。一旦有请求，首先执行所 	// 请求的操作，然后给`resp`通道发送一个表示请求成功的值。 	go func() { var state = make(map[int]int) for { select { case read := &lt;-reads: read.
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 环境变量 环境变量是一种很普遍的将配置信息传递给Unix程序的机制。
+package main import &#34;os&#34; import &#34;strings&#34; import &#34;fmt&#34; func main() { // 为了设置一个key/value对，使用`os.Setenv` 	// 为了获取一个key的value，使用`os.Getenv` 	// 如果所提供的key在环境变量中没有对应的value， 	// 那么返回空字符串 	os.Setenv(&#34;FOO&#34;, &#34;1&#34;) fmt.Println(&#34;FOO:&#34;, os.Getenv(&#34;FOO&#34;)) fmt.Println(&#34;BAR:&#34;, os.Getenv(&#34;BAR&#34;)) // 使用`os.Environ`来列出环境变量中所有的key/value对 	// 你可以使用`strings.Split`方法来将key和value分开 	// 这里我们打印所有的key 	fmt.Println() for _, e := range os.Environ() { pair := strings.Split(e, &#34;=&#34;) fmt.Println(pair[0]) } } 这里我们设置了FOO环境变量，所以我们取到了它的值，但是没有设置BAR环境变量，所以值为空。另外我们列出了系统的所有环境变量，当然这个输出根据不同的系统设置可能并不相同。
+输出结果
+FOO: 1 BAR: TERM_PROGRAM TERM SHELL TMPDIR Apple_PubSub_Socket_Render OLDPWD USER SSH_AUTH_SOCK __CF_USER_TEXT_ENCODING __CHECKFIX1436934 PATH PWD ITERM_PROFILE SHLVL COLORFGBG HOME ITERM_SESSION_ID LOGNAME LC_CTYPE GOPATH _ FOO 
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E7%BB%8F%E5%85%B8hello-world/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		我们的第一个例子是打印经典的“hello world”信息，我们先看下代码。
+package main import &#34;fmt&#34; func main() { fmt.Println(&#34;hello world&#34;) } 输出结果为：
+$ ls el_01_hello_world.go $ go build el_01_hello_world.go $ ls el_01_hello_world	el_01_hello_world.go $ ./el_01_hello_world hello world 为了使一个go文件能够编译为可执行文件，包名必须是main，然后我们导入提供格式化输出的fmt包，该程序的执行入口是func main()函数，在函数里面，我们使用fmt包提供的Println函数来输出&quot;hello world&quot;字符串。
+为了运行这个程序，我们可以使用go run el_01_hello_world.go来运行这个例子，这样是直接输出运行结果而不会产生任何中间文件。但是有的时候我们希望能够将程序编译为二进制文件保存起来，我们可以像上面一样使用go build el_01_hello_world.go来将源代码编译为二进制可执行文件。然后我们可以直接运行这个二进制可执行文件。
+好了，第一个例子就这样结束了。很简单。
+	</div>
+</article>
+
+</main>
+
+<div class="pagination">
+	<a class="pagination__item pagination__item--prev btn" href="/post/page/4/">«</a>
+	<span class="pagination__item pagination__item--current">5/8</span>
+	<a class="pagination__item pagination__item--next btn" href="/post/page/6/">»</a>
+</div>
+
+		</div>
+		
+
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

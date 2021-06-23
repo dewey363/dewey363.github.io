@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title"></h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="go-环境变量">Go 环境变量</h1>
+<p>环境变量是一种很普遍的将配置信息传递给Unix程序的机制。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;os&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;strings&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#75715e">// 为了设置一个key/value对，使用`os.Setenv`
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 为了获取一个key的value，使用`os.Getenv`
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 如果所提供的key在环境变量中没有对应的value，
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 那么返回空字符串
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Setenv</span>(<span style="color:#e6db74">&#34;FOO&#34;</span>, <span style="color:#e6db74">&#34;1&#34;</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;FOO:&#34;</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getenv</span>(<span style="color:#e6db74">&#34;FOO&#34;</span>))
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;BAR:&#34;</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Getenv</span>(<span style="color:#e6db74">&#34;BAR&#34;</span>))
+
+	<span style="color:#75715e">// 使用`os.Environ`来列出环境变量中所有的key/value对
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 你可以使用`strings.Split`方法来将key和value分开
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 这里我们打印所有的key
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>()
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Environ</span>() {
+		<span style="color:#a6e22e">pair</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">e</span>, <span style="color:#e6db74">&#34;=&#34;</span>)
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">pair</span>[<span style="color:#ae81ff">0</span>])
+	}
+}
+</code></pre></div><p>这里我们设置了FOO环境变量，所以我们取到了它的值，但是没有设置BAR环境变量，所以值为空。另外我们列出了系统的所有环境变量，当然这个输出根据不同的系统设置可能并不相同。</p>
+<p>输出结果</p>
+<pre><code>FOO: 1
+BAR:
+
+TERM_PROGRAM
+TERM
+SHELL
+TMPDIR
+Apple_PubSub_Socket_Render
+OLDPWD
+USER
+SSH_AUTH_SOCK
+__CF_USER_TEXT_ENCODING
+__CHECKFIX1436934
+PATH
+PWD
+ITERM_PROFILE
+SHLVL
+COLORFGBG
+HOME
+ITERM_SESSION_ID
+LOGNAME
+LC_CTYPE
+GOPATH
+_
+FOO
+</code></pre>
+		</div>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

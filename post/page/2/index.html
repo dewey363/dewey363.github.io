@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Posts - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+		<link rel="alternate" type="application/rss+xml" href="/post/index.xml" title="我的博客">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main list" role="main">
+	<header class="main__header">
+		<h1 class="main__title">Posts</h1>
+	</header><article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-switch%E8%AF%AD%E5%8F%A5/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go Switch语句 当条件判断分支太多的时候，我们会使用switch语句来优化逻辑。
+package main import &#34;fmt&#34; import &#34;time&#34; func main() { // 基础的switch用法 	i := 2 fmt.Print(&#34;write &#34;, i, &#34; as &#34;) switch i { case 1: fmt.Println(&#34;one&#34;) case 2: fmt.Println(&#34;two&#34;) case 3: fmt.Println(&#34;three&#34;) } // 你可以使用逗号来在case中分开多个条件。还可以使用default语句， 	// 当上面的case都没有满足的时候执行default所指定的逻辑块。 	switch time.Now().Weekday() { case time.Saturday, time.Sunday: fmt.Println(&#34;it&#39;s the weekend&#34;) default: fmt.Println(&#34;it&#39;s a weekday&#34;) } // 当switch没有跟表达式的时候，功能和if/else相同，这里我们 	// 还可以看到case后面的表达式不一定是常量。 	t := time.Now() switch { case t.Hour() &lt; 12: fmt.
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-url%E8%A7%A3%E6%9E%90/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go URL解析 URL提供了一种统一访问资源的方式。我们来看一下Go里面如何解析URL。
+package main import &#34;fmt&#34; import &#34;net/url&#34; import &#34;strings&#34; func main() { // 我们将解析这个URL，它包含了模式，验证信息， 	// 主机，端口，路径，查询参数和查询片段 	s := &#34;postgres://user:pass@host.com:5432/path?k=v#f&#34; // 解析URL，并保证没有错误 	u, err := url.Parse(s) if err != nil { panic(err) } // 可以直接访问解析后的模式 	fmt.Println(u.Scheme) // User包含了所有的验证信息，使用 	// Username和Password来获取单独的信息 	fmt.Println(u.User) fmt.Println(u.User.Username()) p, _ := u.User.Password() fmt.Println(p) // Host包含了主机名和端口，如果需要可以 	// 手动分解主机名和端口 	fmt.Println(u.Host) h := strings.Split(u.Host, &#34;:&#34;) fmt.Println(h[0]) fmt.Println(h[1]) // 这里我们解析出路径和`#`后面的片段 	fmt.
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E4%BA%92%E6%96%A5/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 互斥 上面的例子中，我们看过了如何在多个协程之间原子地访问计数器，对于更复杂的例子，我们可以使用Mutex来在多个协程之间安全地访问数据。
+package main import ( &#34;fmt&#34; &#34;math/rand&#34; &#34;runtime&#34; &#34;sync&#34; &#34;sync/atomic&#34; &#34;time&#34; ) func main() { // 这个例子的状态就是一个map  var state = make(map[int]int) // 这个`mutex`将同步对状态的访问  var mutex = &amp;sync.Mutex{} // ops将对状态的操作进行计数  var ops int64 = 0 // 这里我们启动100个协程来不断地读取这个状态  for r := 0; r &lt; 100; r++ { go func() { total := 0 for { // 对于每次读取，我们选取一个key来访问，  // mutex的`Lock`函数用来保证对状态的  // 唯一性访问，访问结束后，使用`Unlock`  // 来解锁，然后增加ops计数器  key := rand.
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E4%BF%9D%E7%95%99%E5%B0%8F%E6%95%B0%E7%82%B9/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go Base64编码 Go提供了对浮点数的处理
+package main import &#34;strconv&#34; import &#34;fmt&#34; func main() { //update by waj 18042593 告警数据精确到小数四位数 	smpl.V, _ = strconv.ParseFloat(fmt.Sprintf(&#34;%.4f&#34;, smpl.V), 64) } 运行结果
+待补充 
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 信号处理 有的时候我们希望Go能够智能地处理Unix信号。例如我们希望一个server接收到一个SIGTERM的信号时，能够自动地停止；或者一个命令行工具接收到一个SIGINT信号时，能够停止接收输入。现在我们来看下如何使用channel来处理信号。
+package main import &#34;fmt&#34; import &#34;os&#34; import &#34;os/signal&#34; import &#34;syscall&#34; func main() { // Go信号通知通过向一个channel发送``os.Signal`来实现。 	// 我们将创建一个channel来接受这些通知，同时我们还用 	// 一个channel来在程序可以退出的时候通知我们 	sigs := make(chan os.Signal, 1) done := make(chan bool, 1) // `signal.Notify`在给定的channel上面注册该channel 	// 可以接受的信号 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM) // 这个goroutine阻塞等待信号的到来，当信号到来的时候， 	// 输出该信号，然后通知程序可以结束了 	go func() { sig := &lt;-sigs fmt.Println() fmt.Println(sig) done &lt;- true }() // 程序将等待接受信号，然后退出 	fmt.Println(&#34;awaiting signal&#34;) &lt;-done fmt.Println(&#34;exiting&#34;) } 当运行程序的时候，程序将阻塞等待信号的到来，我们可以使用CTRL+C来发送一个SIGINT信号，这样程序就会输出interrupt后退出。
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E5%85%B3%E9%97%AD%E9%80%9A%E9%81%93/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 关闭通道 关闭通道的意思是该通道将不再允许写入数据。这个方法可以让通道数据的接受端知道数据已经全部发送完成了。
+package main import &#34;fmt&#34; // 在这个例子中，我们使用通道jobs在main函数所在的协程和一个数据 // 接收端所在的协程通信。当我们数据发送完成后，我们关闭jobs通道 func main() { jobs := make(chan int, 5) done := make(chan bool) // 这里是数据接收端协程，它重复使用`j, more := &lt;-jobs`来从通道 	// jobs获取数据，这里的more在通道关闭且通道中不再有数据可以接收的 	// 时候为false，我们通过判断more来决定所有的数据是否已经接收完成。 	// 如果所有数据接收完成，那么向done通道写入true 	go func() { for { j, more := &lt;-jobs if more { fmt.Println(&#34;received job&#34;, j) } else { fmt.Println(&#34;received all jobs&#34;) done &lt;- true return } } }() // 这里向jobs通道写入三个数据，然后关闭通道 	for j := 1; j &lt;= 3; j++ { jobs &lt;- j fmt.
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 写入文件 Go将数据写入文件的方法和上面介绍过的读取文件的方法很类似。
+package main import ( &#34;bufio&#34; &#34;fmt&#34; &#34;io/ioutil&#34; &#34;os&#34; ) func check(e error) { if e != nil { panic(e) } } func main() { // 首先看一下如何将一个字符串写入文件 	d1 := []byte(&#34;hello\ngo\n&#34;) err := ioutil.WriteFile(&#34;/tmp/dat1&#34;, d1, 0644) check(err) // 为了实现细颗粒度的写入，打开文件后再写入 	f, err := os.Create(&#34;/tmp/dat2&#34;) check(err) // 在打开文件后通常应该立刻使用defer来调用 	// 打开文件的Close方法，以保证main函数结束 	// 后，文件关闭 	defer f.Close() // 你可以写入字节切片 	d2 := []byte{115, 111, 109, 101, 10} n2, err := f.
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E5%87%BD%E6%95%B0%E5%91%BD%E5%90%8D%E8%BF%94%E5%9B%9E%E5%80%BC/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 函数命名返回值 函数接受参数。在 Go 中，函数可以返回多个“结果参数”，而不仅仅是一个值。它们可以像变量那样命名和使用。
+如果命名了返回值参数，一个没有参数的return语句，会将当前的值作为返回值返回。注意，如果遇到if等代码块和返回值同名，还需要显示写出返回值。
+package main import &#34;fmt&#34; func split(sum int) (x, y int) { x = sum * 4 / 9 y = sum - x return } func main() { fmt.Println(split(17)) } 运行结果
+7 10 
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E5%87%BD%E6%95%B0%E5%9B%9E%E8%B0%83/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 函数回调 Go支持函数回调，你可以把函数名称作为参数传递给另外一个函数，然后在别的地方实现这个函数。
+package main import &#34;fmt&#34; type Callback func(x, y int) int func main() { x, y := 1, 2 fmt.Println(test(x, y, add)) } //提供一个接口，让外部去实现 func test(x, y int, callback Callback) int { return callback(x, y) } func add(x, y int) int { return x + y } 运行结果
+3 
+	</div>
+</article>
+<article class="list__item post">
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/post/go-%E5%87%BD%E6%95%B0%E5%A4%9A%E8%BF%94%E5%9B%9E%E5%80%BC/" rel="bookmark">
+			
+			</a>
+		</h2>
+		
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Go 函数多返回值 Go语言内置支持多返回值，这个在Go语言中用的很多，比如一个函数同时返回结果和错误信息。
+package main import &#34;fmt&#34; // 这个函数的返回值为两个int func vals() (int, int) { return 3, 7 } func main() { // 获取函数的两个返回值 	a, b := vals() fmt.Println(a) fmt.Println(b) // 如果你只对多个返回值里面的几个感兴趣 	// 可以使用下划线(_)来忽略其他的返回值 	_, c := vals() fmt.Println(c) } 输出结果为
+3 7 7 
+	</div>
+</article>
+
+</main>
+
+<div class="pagination">
+	<a class="pagination__item pagination__item--prev btn" href="/post/">«</a>
+	<span class="pagination__item pagination__item--current">2/8</span>
+	<a class="pagination__item pagination__item--next btn" href="/post/page/3/">»</a>
+</div>
+
+		</div>
+		
+
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

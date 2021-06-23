@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title"></h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="go-原子计数器">Go 原子计数器</h1>
+<p>Go里面的管理协程状态的主要机制就是通道通讯。这些我们上面的例子介绍过。这里还有一些管理状态的机制，下面我们看看多协程原子访问计数器的例子，这个功能是由sync/atomic包提供的函数来实现的。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;time&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;sync/atomic&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;runtime&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#75715e">// 我们使用一个无符号整型来代表一个永远为正整数的counter
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ops</span> <span style="color:#66d9ef">uint64</span> = <span style="color:#ae81ff">0</span>
+
+	<span style="color:#75715e">// 为了模拟并行更新，我们使用50个协程来每隔1毫秒来
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 增加一下counter值，注意这里的50协程里面的for循环，
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 也就是说如果主协程不退出，这些协程将永远运行下去
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 所以这个程序每次输出的值有可能不一样
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">50</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+		<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+			<span style="color:#66d9ef">for</span> {
+				<span style="color:#75715e">// 为了能够保证counter值增加的原子性，我们使用
+</span><span style="color:#75715e"></span>				<span style="color:#75715e">// atomic包中的AddUint64方法，将counter的地址和
+</span><span style="color:#75715e"></span>				<span style="color:#75715e">// 需要增加的值传递给函数即可
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">AddUint64</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">ops</span>, <span style="color:#ae81ff">1</span>)
+
+				<span style="color:#75715e">// 允许其他的协程来处理
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Gosched</span>()
+			}
+		}()
+	}
+
+	<span style="color:#75715e">//等待1秒中，让协程有时间运行一段时间
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+
+	<span style="color:#75715e">// 为了能够在counter仍被其他协程更新值的同时安全访问counter值，
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 我们获取一个当前counter值的拷贝，这里就是opsFinal，需要把
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// ops的地址传递给函数`LoadUint64`
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">opsFinal</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">LoadUint64</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">ops</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;ops:&#34;</span>, <span style="color:#a6e22e">opsFinal</span>)
+}
+</code></pre></div><p>我们多运行几次，结果如下:</p>
+<pre><code>ops: 7499289
+ops: 7700843
+ops: 7342417
+</code></pre>
+		</div>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

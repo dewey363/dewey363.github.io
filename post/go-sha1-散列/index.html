@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title"></h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="go-sha1-散列">Go SHA1 散列</h1>
+<p>SHA1散列经常用来计算二进制或者大文本数据的短标识值。git版本控制系统用SHA1来标识受版本控制的文件和目录。这里介绍Go中如何计算SHA1散列值。
+Go在<code>crypto/*</code>包里面实现了几个常用的散列函数。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;crypto/sha1&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;sha1 this string&#34;</span>
+
+	<span style="color:#75715e">// 生成一个hash的模式是`sha1.New()`，`sha1.Write(bytes)`
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 然后是`sha1.Sum([]byte{})`，下面我们开始一个新的hash
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 示例
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">h</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sha1</span>.<span style="color:#a6e22e">New</span>()
+
+	<span style="color:#75715e">// 写入要hash的字节，如果你的参数是字符串，使用`[]byte(s)`
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 把它强制转换为字节数组
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#a6e22e">s</span>))
+
+	<span style="color:#75715e">// 这里计算最终的hash值，Sum的参数是用来追加而外的字节到要
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 计算的hash字节里面，一般来讲，如果上面已经把需要hash的
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 字节都写入了，这里就设为nil就可以了
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">bs</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">Sum</span>(<span style="color:#66d9ef">nil</span>)
+
+	<span style="color:#75715e">// SHA1散列值经常以16进制的方式输出，例如git commit就是
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 这样，所以可以使用`%x`来将散列结果格式化为16进制的字符串
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%x\n&#34;</span>, <span style="color:#a6e22e">bs</span>)
+}
+</code></pre></div><p>运行结果</p>
+<pre><code>sha1 this string
+cf23df2207d99a74fbe169e3eba035e633b65d94
+</code></pre>
+		</div>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

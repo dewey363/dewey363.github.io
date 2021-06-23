@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title"></h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="go-方法">Go 方法</h1>
+<p>一般的函数定义叫做函数，定义在结构体上面的函数叫做该结构体的方法。</p>
+<p>示例1：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">rect</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">width</span>, <span style="color:#a6e22e">height</span> <span style="color:#66d9ef">int</span>
+}
+
+<span style="color:#75715e">// 这个area方法有一个限定类型*rect，
+</span><span style="color:#75715e">// 表示这个函数是定义在rect结构体上的方法
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">rect</span>) <span style="color:#a6e22e">area</span>() <span style="color:#66d9ef">int</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">width</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">height</span>
+}
+
+<span style="color:#75715e">// 方法的定义限定类型可以为结构体类型
+</span><span style="color:#75715e">// 也可以是结构体指针类型
+</span><span style="color:#75715e">// 区别在于如果限定类型是结构体指针类型
+</span><span style="color:#75715e">// 那么在该方法内部可以修改结构体成员信息
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#a6e22e">rect</span>) <span style="color:#a6e22e">perim</span>() <span style="color:#66d9ef">int</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span><span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">width</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span><span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">height</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rect</span>{<span style="color:#a6e22e">width</span>: <span style="color:#ae81ff">10</span>, <span style="color:#a6e22e">height</span>: <span style="color:#ae81ff">5</span>}
+
+	<span style="color:#75715e">// 调用方法
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;area: &#34;</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">area</span>())
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;perim:&#34;</span>, <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">perim</span>())
+
+	<span style="color:#75715e">// Go语言会自动识别方法调用的参数是结构体变量还是
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 结构体指针，如果你要修改结构体内部成员值，那么使用
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 结构体指针作为函数限定类型，也就是说参数若是结构体
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">//变量，仅仅会发生值拷贝。
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">rp</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">r</span>
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;area: &#34;</span>, <span style="color:#a6e22e">rp</span>.<span style="color:#a6e22e">area</span>())
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;perim:&#34;</span>, <span style="color:#a6e22e">rp</span>.<span style="color:#a6e22e">perim</span>())
+}
+</code></pre></div><p>输出结果为</p>
+<pre><code>area:  50
+perim: 30
+area:  50
+perim: 30
+</code></pre><p>示例2：</p>
+<p>从某种意义上说，方法是函数的“语法糖”。当函数与某个特定的类型绑定，那么它就是一个方法。也证因为如此，我们可以将方法“还原”成函数。</p>
+<p>instance.method(args)-&gt;(type).func(instance,args)</p>
+<p>为了区别这两种方式，官方文档中将左边的称为<code>Method Value</code>，右边则是<code>Method Expression</code>。Method Value是包装后的状态对象，总是与特定的对象实例关联在一起（类似闭包，拐带私奔），而Method Expression函数将Receiver作为第一个显式参数，调用时需额外传递。</p>
+<p>注意：对于Method Expression，T仅拥有T Receiver方法，*T拥有（T+*T）所有方法。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;fmt&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Person</span>{<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#34;张三&#34;</span>}
+
+	<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">test</span>(<span style="color:#ae81ff">1</span>)
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">f1</span> <span style="color:#66d9ef">func</span>(<span style="color:#66d9ef">int</span>) = <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">test</span>
+	<span style="color:#a6e22e">f1</span>(<span style="color:#ae81ff">2</span>)
+	<span style="color:#a6e22e">Person</span>.<span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">p</span>, <span style="color:#ae81ff">3</span>)
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">f2</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">Person</span>, <span style="color:#66d9ef">int</span>) = <span style="color:#a6e22e">Person</span>.<span style="color:#a6e22e">test</span>
+	<span style="color:#a6e22e">f2</span>(<span style="color:#a6e22e">p</span>, <span style="color:#ae81ff">4</span>)
+
+}
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Person</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Id</span>   <span style="color:#66d9ef">int</span>
+	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">this</span> <span style="color:#a6e22e">Person</span>) <span style="color:#a6e22e">test</span>(<span style="color:#a6e22e">x</span> <span style="color:#66d9ef">int</span>) {
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Id:&#34;</span>, <span style="color:#a6e22e">this</span>.<span style="color:#a6e22e">Id</span>, <span style="color:#e6db74">&#34;Name&#34;</span>, <span style="color:#a6e22e">this</span>.<span style="color:#a6e22e">Name</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;x=&#34;</span>, <span style="color:#a6e22e">x</span>)
+}
+</code></pre></div><p>输出结果：</p>
+<pre><code>Id: 2 Name 张三
+x= 1
+Id: 2 Name 张三
+x= 2
+Id: 2 Name 张三
+x= 3
+Id: 2 Name 张三
+x= 4
+</code></pre><p>示例3：</p>
+<p>使用匿名字段，实现模拟继承。即可直接访问匿名字段（匿名类型或匿名指针类型）的方法这种行为类似“继承”。访问匿名字段方法时，有隐藏规则，这样我们可以实现override效果。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;fmt&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Student</span>{<span style="color:#a6e22e">Person</span>{<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#34;张三&#34;</span>}, <span style="color:#ae81ff">25</span>}
+	<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">test</span>()
+
+}
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Person</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Id</span>   <span style="color:#66d9ef">int</span>
+	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
+}
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Student</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">Person</span>
+	<span style="color:#a6e22e">Score</span> <span style="color:#66d9ef">int</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">this</span> <span style="color:#a6e22e">Person</span>) <span style="color:#a6e22e">test</span>() {
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;person test&#34;</span>)
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">this</span> <span style="color:#a6e22e">Student</span>) <span style="color:#a6e22e">test</span>() {
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;student test&#34;</span>)
+}
+
+</code></pre></div><p>输出结果为：</p>
+<pre><code>student test
+</code></pre>
+		</div>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title"></h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="go-错误处理">Go 错误处理</h1>
+<p>在Go里面通常采用显式返回错误代码的方式来进行错误处理。这个和Java或者Ruby里面使用异常或者是C里面运行正常返回结果，发生错误返回错误代码的方式不同。Go的这种错误处理的方式使得我们能够很容易看出哪些函数可能返回错误，并且能够像调用那些没有错误返回的函数一样调用。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;errors&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#75715e">// Go语言里面约定错误代码是函数的最后一个返回值，
+</span><span style="color:#75715e">// 并且类型是error，这是一个内置的接口
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">f1</span>(<span style="color:#a6e22e">arg</span> <span style="color:#66d9ef">int</span>) (<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">error</span>) {
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">arg</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">42</span> {
+
+		<span style="color:#75715e">// errors.New使用错误信息作为参数，构建一个基本的错误
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;can&#39;t work with 42&#34;</span>)
+
+	}
+
+	<span style="color:#75715e">// 返回错误为nil表示没有错误
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">arg</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span>, <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#75715e">// 你可以通过实现error接口的方法Error()来自定义错误
+</span><span style="color:#75715e">// 下面我们自定义一个错误类型来表示上面例子中的参数错误
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">argError</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">arg</span>  <span style="color:#66d9ef">int</span>
+	<span style="color:#a6e22e">prob</span> <span style="color:#66d9ef">string</span>
+}
+
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">argError</span>) <span style="color:#a6e22e">Error</span>() <span style="color:#66d9ef">string</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%d - %s&#34;</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">arg</span>, <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">prob</span>)
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">f2</span>(<span style="color:#a6e22e">arg</span> <span style="color:#66d9ef">int</span>) (<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">error</span>) {
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">arg</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">42</span> {
+
+		<span style="color:#75715e">// 这里我们使用&amp;argError语法来创建一个新的结构体对象，
+</span><span style="color:#75715e"></span>		<span style="color:#75715e">// 并且给它的成员赋值
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">argError</span>{<span style="color:#a6e22e">arg</span>, <span style="color:#e6db74">&#34;can&#39;t work with it&#34;</span>}
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">arg</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span>, <span style="color:#66d9ef">nil</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#75715e">// 下面的两个循环例子用来测试我们的带有错误返回值的函数
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 在for循环语句里面，使用了if来判断函数返回值是否为nil是
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// Go语言里面的一种约定做法。
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> []<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">42</span>} {
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">r</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">f1</span>(<span style="color:#a6e22e">i</span>); <span style="color:#a6e22e">e</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;f1 failed:&#34;</span>, <span style="color:#a6e22e">e</span>)
+		} <span style="color:#66d9ef">else</span> {
+			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;f1 worked:&#34;</span>, <span style="color:#a6e22e">r</span>)
+		}
+	}
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> []<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">42</span>} {
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">r</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">f2</span>(<span style="color:#a6e22e">i</span>); <span style="color:#a6e22e">e</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;f2 failed:&#34;</span>, <span style="color:#a6e22e">e</span>)
+		} <span style="color:#66d9ef">else</span> {
+			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;f2 worked:&#34;</span>, <span style="color:#a6e22e">r</span>)
+		}
+	}
+
+	<span style="color:#75715e">// 如果你需要使用自定义错误类型返回的错误数据，你需要使用类型断言
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 来获得一个自定义错误类型的实例才行。
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">f2</span>(<span style="color:#ae81ff">42</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">ae</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">e</span>.(<span style="color:#f92672">*</span><span style="color:#a6e22e">argError</span>); <span style="color:#a6e22e">ok</span> {
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">ae</span>.<span style="color:#a6e22e">arg</span>)
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">ae</span>.<span style="color:#a6e22e">prob</span>)
+	}
+}
+</code></pre></div><p>运行结果为</p>
+<pre><code>f1 worked: 10
+f1 failed: can't work with 42
+f2 worked: 10
+f2 failed: 42 - can't work with it
+42
+can't work with it
+</code></pre>
+		</div>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

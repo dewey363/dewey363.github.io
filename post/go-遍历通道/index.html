@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title"></h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="go-遍历通道">Go 遍历通道</h1>
+<p>我们知道range函数可以遍历数组，切片，字典等。这里我们还可以使用range函数来遍历通道以接收通道数据。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#75715e">// 我们遍历queue通道里面的两个数据
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">queue</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#ae81ff">2</span>)
+	<span style="color:#a6e22e">queue</span> <span style="color:#f92672">&lt;-</span> <span style="color:#e6db74">&#34;one&#34;</span>
+	<span style="color:#a6e22e">queue</span> <span style="color:#f92672">&lt;-</span> <span style="color:#e6db74">&#34;two&#34;</span>
+	close(<span style="color:#a6e22e">queue</span>)
+
+	<span style="color:#75715e">// range函数遍历每个从通道接收到的数据，因为queue再发送完两个
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 数据之后就关闭了通道，所以这里我们range函数在接收到两个数据
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 之后就结束了。如果上面的queue通道不关闭，那么range函数就不
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 会结束，从而在接收第三个数据的时候就阻塞了。
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">elem</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">queue</span> {
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">elem</span>)
+	}
+}
+</code></pre></div><p>运行结果</p>
+<pre><code>one
+two
+</code></pre><p>这个例子同时说明了，即使关闭了一个非空通道，我们仍然可以从通道里面接收到值。</p>
+
+		</div>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

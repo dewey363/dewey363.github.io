@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>go build交叉编译 on 我的博客</title>
+    <link>http://dewey363.github.io/tags/go-build%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
+    <description>Recent content in go build交叉编译 on 我的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 09 Mar 2019 00:00:00 +0000</lastBuildDate><atom:link href="http://dewey363.github.io/tags/go-build%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go build跨平台交叉编译</title>
+      <link>http://dewey363.github.io/post/go-build-%E4%B8%8D%E5%90%8C%E5%B9%B3%E5%8F%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
+      <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-build-%E4%B8%8D%E5%90%8C%E5%B9%B3%E5%8F%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
+      <description>Golang 支持在一个平台下生成另一个平台可执行程序的交叉编译功能。  Mac下编译Linux, Windows平台的64位可执行程序：  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build test.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build test.go  Linux下编译Mac, Windows平台的64位可执行程序：  CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build test.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build test.go  Windows下编译Mac, Linux平台的64位可执行程序：  SET CGO_ENABLED=0 SET GOOS=darwin3 SET GOARCH=amd64 go build main.go SET CGO_ENABLED=0 SET GOOS=linux SET GOARCH=amd64 go build main.go   GOOS：目标可执行程序运行操作系统，支持 darwin，freebsd，linux，windows
+  GOARCH：目标可执行程序操作系统构架，包括 386，amd64，arm
+  Golang version 1.5以前版本在首次交叉编译时还需要配置交叉编译环境：
+  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 .</description>
+    </item>
+    
+  </channel>
+</rss>

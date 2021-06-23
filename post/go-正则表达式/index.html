@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title"></h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="go-正则表达式">Go 正则表达式</h1>
+<p>Go内置了对正则表达式的支持，这里是一般的正则表达式常规用法的例子。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;bytes&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;regexp&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#75715e">// 测试模式是否匹配字符串，括号里面的意思是
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 至少有一个a－z之间的字符存在
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">match</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">regexp</span>.<span style="color:#a6e22e">MatchString</span>(<span style="color:#e6db74">&#34;p([a-z]+)ch&#34;</span>, <span style="color:#e6db74">&#34;peach&#34;</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">match</span>)
+
+	<span style="color:#75715e">// 上面我们直接使用了字符串匹配的正则表达式，
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 但是对于其他的正则匹配任务，你需要使用
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// `Compile`来使用一个优化过的正则对象
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">r</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">regexp</span>.<span style="color:#a6e22e">Compile</span>(<span style="color:#e6db74">&#34;p([a-z]+)ch&#34;</span>)
+
+	<span style="color:#75715e">// 正则结构体对象有很多方法可以使用，比如上面的例子
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 也可以像下面这么写
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">MatchString</span>(<span style="color:#e6db74">&#34;peach&#34;</span>))
+
+	<span style="color:#75715e">// 这个方法检测字符串参数是否存在正则所约束的匹配
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">FindString</span>(<span style="color:#e6db74">&#34;peach punch&#34;</span>))
+
+	<span style="color:#75715e">// 这个方法查找第一次匹配的索引，并返回匹配字符串
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 的起始索引和结束索引，而不是匹配的字符串
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">FindStringIndex</span>(<span style="color:#e6db74">&#34;peach punch&#34;</span>))
+
+	<span style="color:#75715e">// 这个方法返回全局匹配的字符串和局部匹配的字符，比如
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 这里会返回匹配`p([a-z]+)ch`的字符串
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 和匹配`([a-z]+)`的字符串
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">FindStringSubmatch</span>(<span style="color:#e6db74">&#34;peach punch&#34;</span>))
+
+	<span style="color:#75715e">// 和上面的方法一样，不同的是返回全局匹配和局部匹配的
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 起始索引和结束索引
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">FindStringSubmatchIndex</span>(<span style="color:#e6db74">&#34;peach punch&#34;</span>))
+
+	<span style="color:#75715e">// 这个方法返回所有正则匹配的字符，不仅仅是第一个
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">FindAllString</span>(<span style="color:#e6db74">&#34;peach punch pinch&#34;</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
+
+	<span style="color:#75715e">// 这个方法返回所有全局匹配和局部匹配的字符串起始索引
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 和结束索引
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">FindAllStringSubmatchIndex</span>(<span style="color:#e6db74">&#34;peach punch pinch&#34;</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
+
+	<span style="color:#75715e">// 为这个方法提供一个正整数参数来限制匹配数量
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">FindAllString</span>(<span style="color:#e6db74">&#34;peach punch pinch&#34;</span>, <span style="color:#ae81ff">2</span>))
+
+	<span style="color:#75715e">//上面我们都是用了诸如`MatchString`这样的方法，其实
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 我们也可以使用`[]byte`作为参数，并且使用`Match`
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 这样的方法名
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Match</span>([]byte(<span style="color:#e6db74">&#34;peach&#34;</span>)))
+
+	<span style="color:#75715e">// 当使用正则表达式来创建常量的时候，你可以使用`MustCompile`
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 因为`Compile`返回两个值
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">r</span> = <span style="color:#a6e22e">regexp</span>.<span style="color:#a6e22e">MustCompile</span>(<span style="color:#e6db74">&#34;p([a-z]+)ch&#34;</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">r</span>)
+
+	<span style="color:#75715e">// regexp包也可以用来将字符串的一部分替换为其他的值
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">ReplaceAllString</span>(<span style="color:#e6db74">&#34;a peach&#34;</span>, <span style="color:#e6db74">&#34;&lt;fruit&gt;&#34;</span>))
+
+	<span style="color:#75715e">// `Func`变量可以让你将所有匹配的字符串都经过该函数处理
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 转变为所需要的值
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">in</span> <span style="color:#f92672">:=</span> []byte(<span style="color:#e6db74">&#34;a peach&#34;</span>)
+	<span style="color:#a6e22e">out</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">ReplaceAllFunc</span>(<span style="color:#a6e22e">in</span>, <span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">ToUpper</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(string(<span style="color:#a6e22e">out</span>))
+}
+</code></pre></div><p>运行结果</p>
+<pre><code>true
+true
+peach
+[0 5]
+[peach ea]
+[0 5 1 3]
+[peach punch pinch]
+[[0 5 1 3] [6 11 7 9] [12 17 13 15]]
+[peach punch]
+true
+p([a-z]+)ch
+a &lt;fruit&gt;
+a PEACH
+</code></pre>
+		</div>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title"></h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="go-并行功能">Go 并行功能</h1>
+<p>goroutine是一个轻量级的线程。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">f</span>(<span style="color:#a6e22e">from</span> <span style="color:#66d9ef">string</span>) {
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">3</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">from</span>, <span style="color:#e6db74">&#34;:&#34;</span>, <span style="color:#a6e22e">i</span>)
+	}
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#75715e">// 假设我们有一个函数叫做f(s)
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 这里我们使用通常的同步调用来调用函数
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">f</span>(<span style="color:#e6db74">&#34;direct&#34;</span>)
+
+	<span style="color:#75715e">// 为了能够让这个函数以协程(goroutine)方式
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 运行使用go f(s)
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 这个协程将和调用它的协程并行执行
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">f</span>(<span style="color:#e6db74">&#34;goroutine&#34;</span>)
+
+	<span style="color:#75715e">// 你也可以为匿名函数开启一个协程运行
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">msg</span> <span style="color:#66d9ef">string</span>) {
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">msg</span>)
+	}(<span style="color:#e6db74">&#34;going&#34;</span>)
+
+	<span style="color:#75715e">// 上面的协程在调用之后就异步执行了，所以程序不用等待它们执行完成
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 就跳到这里来了，下面的Scanln用来从命令行获取一个输入，然后才
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 让main函数结束
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 如果没有下面的Scanln语句，程序到这里会直接退出，而上面的协程还
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 没有来得及执行完，你将无法看到上面两个协程运行的结果
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">input</span> <span style="color:#66d9ef">string</span>
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Scanln</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">input</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;done&#34;</span>)
+}
+</code></pre></div><p>运行结果</p>
+<pre><code>direct : 0
+direct : 1
+direct : 2
+goroutine : 0
+goroutine : 1
+goroutine : 2
+going
+ok
+done
+</code></pre>
+		</div>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

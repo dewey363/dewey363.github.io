@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title"></h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="go-进程触发">Go 进程触发</h1>
+<p>有的时候，我们需要从Go程序里面触发一个其他的非Go进程来执行。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;io/ioutil&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;os/exec&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#75715e">// 我们从一个简单的命令开始，这个命令不需要任何参数
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 或者输入，仅仅向stdout输出一些信息。`exec.Command`
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 函数创建了一个代表外部进程的对象
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">dateCmd</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">exec</span>.<span style="color:#a6e22e">Command</span>(<span style="color:#e6db74">&#34;date&#34;</span>)
+
+	<span style="color:#75715e">// `Output`是另一个运行命令时用来处理信息的函数，这个
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 函数等待命令结束，然后收集命令输出。如果没有错误发
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 生的话，`dateOut`将保存date的信息
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">dateOut</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">dateCmd</span>.<span style="color:#a6e22e">Output</span>()
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		panic(<span style="color:#a6e22e">err</span>)
+	}
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;&gt; date&#34;</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(string(<span style="color:#a6e22e">dateOut</span>))
+
+	<span style="color:#75715e">// 下面我们看一个需要从stdin输入数据的命令，我们将
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 数据输入传给外部进程的stdin，然后从它输出到stdout
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 的运行结果收集信息
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">grepCmd</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">exec</span>.<span style="color:#a6e22e">Command</span>(<span style="color:#e6db74">&#34;grep&#34;</span>, <span style="color:#e6db74">&#34;hello&#34;</span>)
+
+	<span style="color:#75715e">// 这里我们显式地获取input/output管道，启动进程，
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 向进程写入数据，然后读取输出结果，最后等待进程结束
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">grepIn</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grepCmd</span>.<span style="color:#a6e22e">StdinPipe</span>()
+	<span style="color:#a6e22e">grepOut</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">grepCmd</span>.<span style="color:#a6e22e">StdoutPipe</span>()
+	<span style="color:#a6e22e">grepCmd</span>.<span style="color:#a6e22e">Start</span>()
+	<span style="color:#a6e22e">grepIn</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#e6db74">&#34;hello grep\ngoodbye grep&#34;</span>))
+	<span style="color:#a6e22e">grepIn</span>.<span style="color:#a6e22e">Close</span>()
+	<span style="color:#a6e22e">grepBytes</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadAll</span>(<span style="color:#a6e22e">grepOut</span>)
+	<span style="color:#a6e22e">grepCmd</span>.<span style="color:#a6e22e">Wait</span>()
+
+	<span style="color:#75715e">// 在上面的例子中，我们忽略了错误检测，但是你一样可以
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 使用`if err!=nil`模式来进行处理。另外我们仅仅收集了
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// `StdoutPipe`的结果，同时你也可以用一样的方法来收集
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// `StderrPipe`的结果
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;&gt; grep hello&#34;</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(string(<span style="color:#a6e22e">grepBytes</span>))
+
+	<span style="color:#75715e">// 注意，我们在触发外部命令的时候，需要显式地提供
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 命令和参数信息。另外如果你想用一个命令行字符串
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 触发一个完整的命令，你可以使用bash的-c选项
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">lsCmd</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">exec</span>.<span style="color:#a6e22e">Command</span>(<span style="color:#e6db74">&#34;bash&#34;</span>, <span style="color:#e6db74">&#34;-c&#34;</span>, <span style="color:#e6db74">&#34;ls -a -l -h&#34;</span>)
+	<span style="color:#a6e22e">lsOut</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lsCmd</span>.<span style="color:#a6e22e">Output</span>()
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		panic(<span style="color:#a6e22e">err</span>)
+	}
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;&gt; ls -a -l -h&#34;</span>)
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(string(<span style="color:#a6e22e">lsOut</span>))
+}
+</code></pre></div><p>所触发的程序的执行结果和我们直接执行这些程序的结果是一样的。
+运行结果</p>
+<pre><code>&gt; date
+Wed Oct 10 09:53:11 PDT 2012
+&gt; grep hello
+hello grep
+&gt; ls -a -l -h
+drwxr-xr-x  4 mark 136B Oct 3 16:29 .
+drwxr-xr-x 91 mark 3.0K Oct 3 12:50 ..
+-rw-r--r--  1 mark 1.3K Oct 3 16:28 spawning-processes.go
+</code></pre>
+		</div>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

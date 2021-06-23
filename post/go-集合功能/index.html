@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title"></h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="go-集合功能">Go 集合功能</h1>
+<p>我们经常需要程序去处理一些集合数据，比如选出所有符合条件的数据或者使用一个自定义函数将一个集合元素拷贝到另外一个集合。</p>
+<p>在一些语言里面，通常是使用泛化数据结构或者算法。但是Go不支持泛化类型，在Go里面如果你的程序或者数据类型需要操作集合，那么通常是为集合提供一些操作函数。</p>
+<p>这里演示了一些操作strings切片的集合函数，你可以使用这些例子来构建你自己的函数。注意在有些情况下，使用内联集合操作代码会更清晰，而不是去创建新的帮助函数。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;strings&#34;</span>
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#75715e">// 返回t在vs中第一次出现的索引，如果没有找到t，返回－1
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Index</span>(<span style="color:#a6e22e">vs</span> []<span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">t</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">int</span> {
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">vs</span> {
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">v</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">t</span> {
+			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">i</span>
+		}
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+}
+
+<span style="color:#75715e">// 如果t存在于vs中，那么返回true，否则false
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Include</span>(<span style="color:#a6e22e">vs</span> []<span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">t</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Index</span>(<span style="color:#a6e22e">vs</span>, <span style="color:#a6e22e">t</span>) <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>
+}
+
+<span style="color:#75715e">// 如果使用vs中的任何一个字符串作为函数f的参数可以让f返回true，
+</span><span style="color:#75715e">// 那么返回true，否则false
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Any</span>(<span style="color:#a6e22e">vs</span> []<span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">f</span> <span style="color:#66d9ef">func</span>(<span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span>) <span style="color:#66d9ef">bool</span> {
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">vs</span> {
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">f</span>(<span style="color:#a6e22e">v</span>) {
+			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+		}
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+}
+
+<span style="color:#75715e">// 如果分别使用vs中所有的字符串作为f的参数都能让f返回true，
+</span><span style="color:#75715e">// 那么返回true，否则返回false
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">All</span>(<span style="color:#a6e22e">vs</span> []<span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">f</span> <span style="color:#66d9ef">func</span>(<span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span>) <span style="color:#66d9ef">bool</span> {
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">vs</span> {
+		<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">f</span>(<span style="color:#a6e22e">v</span>) {
+			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+		}
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+}
+
+<span style="color:#75715e">// 返回一个新的字符串切片，切片的元素为vs中所有能够让函数f
+</span><span style="color:#75715e">// 返回true的元素
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Filter</span>(<span style="color:#a6e22e">vs</span> []<span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">f</span> <span style="color:#66d9ef">func</span>(<span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span>) []<span style="color:#66d9ef">string</span> {
+	<span style="color:#a6e22e">vsf</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">string</span>, <span style="color:#ae81ff">0</span>)
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">vs</span> {
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">f</span>(<span style="color:#a6e22e">v</span>) {
+			<span style="color:#a6e22e">vsf</span> = append(<span style="color:#a6e22e">vsf</span>, <span style="color:#a6e22e">v</span>)
+		}
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">vsf</span>
+}
+
+<span style="color:#75715e">// 返回一个bool类型切片，切片的元素为vs中所有字符串作为f函数
+</span><span style="color:#75715e">// 参数所返回的结果
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Map</span>(<span style="color:#a6e22e">vs</span> []<span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">f</span> <span style="color:#66d9ef">func</span>(<span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span>) []<span style="color:#66d9ef">string</span> {
+	<span style="color:#a6e22e">vsm</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">string</span>, len(<span style="color:#a6e22e">vs</span>))
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">vs</span> {
+		<span style="color:#a6e22e">vsm</span>[<span style="color:#a6e22e">i</span>] = <span style="color:#a6e22e">f</span>(<span style="color:#a6e22e">v</span>)
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">vsm</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+	<span style="color:#75715e">// 来，试试我们的字符串切片操作函数
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">strs</span> = []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;peach&#34;</span>, <span style="color:#e6db74">&#34;apple&#34;</span>, <span style="color:#e6db74">&#34;pear&#34;</span>, <span style="color:#e6db74">&#34;plum&#34;</span>}
+
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">Index</span>(<span style="color:#a6e22e">strs</span>, <span style="color:#e6db74">&#34;pear&#34;</span>))
+
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">Include</span>(<span style="color:#a6e22e">strs</span>, <span style="color:#e6db74">&#34;grape&#34;</span>))
+
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">Any</span>(<span style="color:#a6e22e">strs</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">v</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">v</span>, <span style="color:#e6db74">&#34;p&#34;</span>)
+	}))
+
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">All</span>(<span style="color:#a6e22e">strs</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">v</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">v</span>, <span style="color:#e6db74">&#34;p&#34;</span>)
+	}))
+
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">Filter</span>(<span style="color:#a6e22e">strs</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">v</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">bool</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Contains</span>(<span style="color:#a6e22e">v</span>, <span style="color:#e6db74">&#34;e&#34;</span>)
+	}))
+
+	<span style="color:#75715e">// 上面的例子都使用匿名函数，你也可以使用命名函数
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">Map</span>(<span style="color:#a6e22e">strs</span>, <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">ToUpper</span>))
+}
+</code></pre></div><p>运行结果</p>
+<pre><code>2
+false
+true
+false
+[peach apple pear]
+[PEACH APPLE PEAR PLUM]
+</code></pre>
+		</div>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

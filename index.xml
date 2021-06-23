@@ -1,0 +1,780 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>我的博客</title>
+    <link>http://dewey363.github.io/</link>
+    <description>Recent content on 我的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 09 Mar 2019 00:00:00 +0000</lastBuildDate><atom:link href="http://dewey363.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go Base64编码</title>
+      <link>http://dewey363.github.io/post/go-base64%E7%BC%96%E7%A0%81/</link>
+      <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-base64%E7%BC%96%E7%A0%81/</guid>
+      <description>Go Base64编码  Go提供了对base64编码和解码的内置支持  package main // 这种导入包的语法将默认的base64起了一个别名b64，这样 // 我们在下面就可以直接使用b64表示这个包，省点输入量 import b64 &amp;#34;encoding/base64&amp;#34; import &amp;#34;fmt&amp;#34; func main() { // 这里是我们用来演示编码和解码的字符串 	data := &amp;#34;abc123!?$*&amp;amp;()&amp;#39;-=@~&amp;#34; // Go支持标准的和兼容URL的base64编码。 	// 我们这里使用标准的base64编码，这个 	// 函数需要一个`[]byte`参数，所以将这 	// 个字符串转换为字节数组 	sEnc := b64.StdEncoding.EncodeToString([]byte(data)) fmt.Println(sEnc) // 解码一个base64编码可能返回一个错误， 	// 如果你不知道输入是否是正确的base64 	// 编码，你需要检测一些解码错误 	sDec, _ := b64.StdEncoding.DecodeString(sEnc) fmt.Println(string(sDec)) fmt.Println() // 使用兼容URL的base64编码和解码 	uEnc := b64.URLEncoding.EncodeToString([]byte(data)) fmt.Println(uEnc) uDec, _ := b64.URLEncoding.DecodeString(uEnc) fmt.Println(string(uDec)) } 运行结果</description>
+    </item>
+    
+    <item>
+      <title>Go build跨平台交叉编译</title>
+      <link>http://dewey363.github.io/post/go-build-%E4%B8%8D%E5%90%8C%E5%B9%B3%E5%8F%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
+      <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-build-%E4%B8%8D%E5%90%8C%E5%B9%B3%E5%8F%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
+      <description>Golang 支持在一个平台下生成另一个平台可执行程序的交叉编译功能。  Mac下编译Linux, Windows平台的64位可执行程序：  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build test.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build test.go  Linux下编译Mac, Windows平台的64位可执行程序：  CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build test.go CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build test.go  Windows下编译Mac, Linux平台的64位可执行程序：  SET CGO_ENABLED=0 SET GOOS=darwin3 SET GOARCH=amd64 go build main.go SET CGO_ENABLED=0 SET GOOS=linux SET GOARCH=amd64 go build main.go   GOOS：目标可执行程序运行操作系统，支持 darwin，freebsd，linux，windows
+  GOARCH：目标可执行程序操作系统构架，包括 386，amd64，arm
+  Golang version 1.5以前版本在首次交叉编译时还需要配置交叉编译环境：
+  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-for%E5%BE%AA%E7%8E%AF/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-for%E5%BE%AA%E7%8E%AF/</guid>
+      <description>Go for循环 for循环是Go语言唯一的循环结构。这里有三个基本的for循环类型。
+package main import &amp;#34;fmt&amp;#34; func main() { // 最基本的一种，单一条件循环  // 这个可以代替其他语言的while循环  i := 1 for i &amp;lt;= 3 { fmt.Println(i) i = i + 1 } // 经典的循环条件初始化/条件判断/循环后条件变化  for j := 7; j &amp;lt;= 9; j++ { fmt.Println(j) } // 无条件的for循环是死循环，除非你使用break跳出循环或者  // 使用return从函数返回  for { fmt.Println(&amp;#34;loop&amp;#34;) break } } 输出结果
+1 2 3 7 8 9 loop 在后面的例子中，你将会看到其他的循环方式，比如使用range函数循环数组，切片和字典，或者用select函数循环channel通道。</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-json%E6%94%AF%E6%8C%81/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-json%E6%94%AF%E6%8C%81/</guid>
+      <description>Go JSON支持 Go内置了对JSON数据的编码和解码，这些数据的类型包括内置数据类型和自定义数据类型。
+package main import &amp;#34;encoding/json&amp;#34; import &amp;#34;fmt&amp;#34; import &amp;#34;os&amp;#34; // 我们使用两个结构体来演示自定义数据类型的JSON数据编码和解码。 type Response1 struct { Page int Fruits []string } type Response2 struct { Page int `json:&amp;#34;page&amp;#34;` Fruits []string `json:&amp;#34;fruits&amp;#34;` } func main() { // 首先我们看一下将基础数据类型编码为JSON数据 	bolB, _ := json.Marshal(true) fmt.Println(string(bolB)) intB, _ := json.Marshal(1) fmt.Println(string(intB)) fltB, _ := json.Marshal(2.34) fmt.Println(string(fltB)) strB, _ := json.Marshal(&amp;#34;gopher&amp;#34;) fmt.Println(string(strB)) // 这里是将切片和字典编码为JSON数组或对象 	slcD := []string{&amp;#34;apple&amp;#34;, &amp;#34;peach&amp;#34;, &amp;#34;pear&amp;#34;} slcB, _ := json.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-line-filters/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-line-filters/</guid>
+      <description>Go Line Filters Line Filters翻译一下大概是行数据过滤器。简单一点就是一个程序从标准输入stdin读取数据，然后处理一下，将处理的结果输出到标准输出stdout。grep和sed就是常见的行数据过滤器。 这里有一个行数据过滤器的例子，是把一个输入文本转换为大写的文本。你可以使用这种方式来实现你自己的Go Line Filters。
+package main import ( &amp;#34;bufio&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;os&amp;#34; &amp;#34;strings&amp;#34; ) func main() { // 使用缓冲scanner来包裹无缓冲的`os.Stdin`可以让我们 	// 方便地使用`Scan`方法，这个方法会将scanner定位到下 	// 一行的位置 	scanner := bufio.NewScanner(os.Stdin) for scanner.Scan() { // `Text`方法从输入中返回当前行 	ucl := strings.ToUpper(scanner.Text()) // 输出转换为大写的行 	fmt.Println(ucl) } // 在`Scan`过程中，检查错误。文件结束不会被当作一个错误 	if err := scanner.Err(); err != nil { fmt.Fprintln(os.Stderr, &amp;#34;error:&amp;#34;, err) os.Exit(1) } } 运行结果
+hello world HELLO WORLD how are you HOW ARE YOU </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-modules%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-modules%E4%BD%BF%E7%94%A8/</guid>
+      <description># Go Modules使用教程 引入 https://talks.godoc.org/github.com/myitcv/talks/2018-08-15-glug-modules/main.slide#1
+Go Modules介绍 Modules是Go 1.11中新增的实验性功能，基于vgo演变而来，是一个新型的包管理工具。
+常见的包管理工具  govendor dep glide godep  这些包管理工具都是基于GOPATH或者vendor目录，并不能很好的解决不同版本依赖问题。Modules是在GOPATH之外一套新的包管理方式。
+如何激活Modules 首先要把go升级到1.11。
+升级后，可以设置通过一个环境变量GO111MODULE来激活modules：
+ GO111MODULE=off，go命令行将不会支持module功能，寻找依赖包的方式将会沿用旧版本那种通过vendor目录或者GOPATH模式来查找。 GO111MODULE=on，go命令行会使用modules，而一点也不会去GOPATH目录下查找。 GO111MODULE=auto，默认值，go命令行将会根据当前目录来决定是否启用module功能。这种情况下可以分为两种情形：当前目录在GOPATH/src之外且该目录包含go.mod文件，或者当前文件在包含go.mod文件的目录下面。  当module功能启用时，GOPATH在项目构建过程中不再担当import的角色，但它仍然存储下载的依赖包，具体位置在$GOPATH/pkg/mod。
+初始化Modules Go1.11新增了命令go mod来支持Modules的使用。
+&amp;gt; go help mod Go mod provides access to operations on modules. Note that support for modules is built into all the go commands, not just &amp;#39;go mod&amp;#39;. For example, day-to-day adding, removing, upgrading, and downgrading of dependencies should be done using &amp;#39;go get&amp;#39;.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-panic/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-panic/</guid>
+      <description>Go Panic Panic表示的意思就是有些意想不到的错误发生了。通常我们用来表示程序正常运行过程中不应该出现的，或者我们没有处理好的错误。
+package main import &amp;#34;os&amp;#34; func main() { // 我们使用panic来检查预期不到的错误  panic(&amp;#34;a problem&amp;#34;) // Panic的通常使用方法就是如果一个函数  // 返回一个我们不知道怎么处理的错误的  // 时候，直接终止执行。  _, err := os.Create(&amp;#34;/tmp/file&amp;#34;) if err != nil { panic(err) } } 运行结果
+panic: a problem goroutine 1 [running]: runtime.panic(0x44e060, 0xc0840031b0) C:/Users/ADMINI~1/AppData/Local/Temp/2/bindist667667715/go/src/pkg/runtime/panic.c:266 +0xc8 main.main() D:/GoDoc/go_panic.go:8 +0x58 exit status 2 和其他的编程语言不同的是，Go并不使用exception来处理错误，而是通过函数返回值返回错误代码。</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-range%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-range%E5%87%BD%E6%95%B0/</guid>
+      <description>Go range函数 range函数是个神奇而有趣的内置函数，你可以使用它来遍历数组，切片和字典。
+当用于遍历数组和切片的时候，range函数返回索引和元素；
+当用于遍历字典的时候，range函数返回字典的键和值。
+package main import &amp;#34;fmt&amp;#34; func main() { // 这里我们使用range来计算一个切片的所有元素和 	// 这种方法对数组也适用 	nums := []int{2, 3, 4} sum := 0 for _, num := range nums { sum += num } fmt.Println(&amp;#34;sum:&amp;#34;, sum) // range 用来遍历数组和切片的时候返回索引和元素值 	// 如果我们不要关心索引可以使用一个下划线(_)来忽略这个返回值 	// 当然我们有的时候也需要这个索引 	for i, num := range nums { if num == 3 { fmt.Println(&amp;#34;index:&amp;#34;, i) } } // 使用range来遍历字典的时候，返回键值对。 	kvs := map[string]string{&amp;#34;a&amp;#34;: &amp;#34;apple&amp;#34;, &amp;#34;b&amp;#34;: &amp;#34;banana&amp;#34;} for k, v := range kvs { fmt.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-sha1-%E6%95%A3%E5%88%97/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-sha1-%E6%95%A3%E5%88%97/</guid>
+      <description>Go SHA1 散列 SHA1散列经常用来计算二进制或者大文本数据的短标识值。git版本控制系统用SHA1来标识受版本控制的文件和目录。这里介绍Go中如何计算SHA1散列值。 Go在crypto/*包里面实现了几个常用的散列函数。
+package main import &amp;#34;crypto/sha1&amp;#34; import &amp;#34;fmt&amp;#34; func main() { s := &amp;#34;sha1 this string&amp;#34; // 生成一个hash的模式是`sha1.New()`，`sha1.Write(bytes)` 	// 然后是`sha1.Sum([]byte{})`，下面我们开始一个新的hash 	// 示例 	h := sha1.New() // 写入要hash的字节，如果你的参数是字符串，使用`[]byte(s)` 	// 把它强制转换为字节数组 	h.Write([]byte(s)) // 这里计算最终的hash值，Sum的参数是用来追加而外的字节到要 	// 计算的hash字节里面，一般来讲，如果上面已经把需要hash的 	// 字节都写入了，这里就设为nil就可以了 	bs := h.Sum(nil) // SHA1散列值经常以16进制的方式输出，例如git commit就是 	// 这样，所以可以使用`%x`来将散列结果格式化为16进制的字符串 	fmt.Println(s) fmt.Printf(&amp;#34;%x\n&amp;#34;, bs) } 运行结果
+sha1 this string cf23df2207d99a74fbe169e3eba035e633b65d94 </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-string%E4%B8%8Ebyte%E5%88%87%E7%89%87%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-string%E4%B8%8Ebyte%E5%88%87%E7%89%87%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2/</guid>
+      <description>#Go String与Byte切片之间的转换
+String转换到Byte数组时，每个byte(byte类型其实就是uint8)保存字符串对应字节的数值。
+注意Go的字符串是UTF-8编码的，每个字符长度是不确定的，一些字符可能是1、2、3或者4个字节结尾。
+示例1：
+package main import &amp;#34;fmt&amp;#34; func main() { s1 := &amp;#34;abcd&amp;#34; b1 := []byte(s1) fmt.Println(b1) // [97 98 99 100]  s2 := &amp;#34;中文&amp;#34; b2 := []byte(s2) fmt.Println(b2) // [228 184 173 230 150 135], unicode，每个中文字符会由三个byte组成  r1 := []rune(s1) fmt.Println(r1) // [97 98 99 100], 每个字一个数值  r2 := []rune(s2) fmt.Println(r2) // [20013 25991], 每个字一个数值  } </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-switch%E8%AF%AD%E5%8F%A5/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-switch%E8%AF%AD%E5%8F%A5/</guid>
+      <description>Go Switch语句 当条件判断分支太多的时候，我们会使用switch语句来优化逻辑。
+package main import &amp;#34;fmt&amp;#34; import &amp;#34;time&amp;#34; func main() { // 基础的switch用法 	i := 2 fmt.Print(&amp;#34;write &amp;#34;, i, &amp;#34; as &amp;#34;) switch i { case 1: fmt.Println(&amp;#34;one&amp;#34;) case 2: fmt.Println(&amp;#34;two&amp;#34;) case 3: fmt.Println(&amp;#34;three&amp;#34;) } // 你可以使用逗号来在case中分开多个条件。还可以使用default语句， 	// 当上面的case都没有满足的时候执行default所指定的逻辑块。 	switch time.Now().Weekday() { case time.Saturday, time.Sunday: fmt.Println(&amp;#34;it&amp;#39;s the weekend&amp;#34;) default: fmt.Println(&amp;#34;it&amp;#39;s a weekday&amp;#34;) } // 当switch没有跟表达式的时候，功能和if/else相同，这里我们 	// 还可以看到case后面的表达式不一定是常量。 	t := time.Now() switch { case t.Hour() &amp;lt; 12: fmt.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-url%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-url%E8%A7%A3%E6%9E%90/</guid>
+      <description>Go URL解析 URL提供了一种统一访问资源的方式。我们来看一下Go里面如何解析URL。
+package main import &amp;#34;fmt&amp;#34; import &amp;#34;net/url&amp;#34; import &amp;#34;strings&amp;#34; func main() { // 我们将解析这个URL，它包含了模式，验证信息， 	// 主机，端口，路径，查询参数和查询片段 	s := &amp;#34;postgres://user:pass@host.com:5432/path?k=v#f&amp;#34; // 解析URL，并保证没有错误 	u, err := url.Parse(s) if err != nil { panic(err) } // 可以直接访问解析后的模式 	fmt.Println(u.Scheme) // User包含了所有的验证信息，使用 	// Username和Password来获取单独的信息 	fmt.Println(u.User) fmt.Println(u.User.Username()) p, _ := u.User.Password() fmt.Println(p) // Host包含了主机名和端口，如果需要可以 	// 手动分解主机名和端口 	fmt.Println(u.Host) h := strings.Split(u.Host, &amp;#34;:&amp;#34;) fmt.Println(h[0]) fmt.Println(h[1]) // 这里我们解析出路径和`#`后面的片段 	fmt.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E4%BA%92%E6%96%A5/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E4%BA%92%E6%96%A5/</guid>
+      <description>Go 互斥 上面的例子中，我们看过了如何在多个协程之间原子地访问计数器，对于更复杂的例子，我们可以使用Mutex来在多个协程之间安全地访问数据。
+package main import ( &amp;#34;fmt&amp;#34; &amp;#34;math/rand&amp;#34; &amp;#34;runtime&amp;#34; &amp;#34;sync&amp;#34; &amp;#34;sync/atomic&amp;#34; &amp;#34;time&amp;#34; ) func main() { // 这个例子的状态就是一个map  var state = make(map[int]int) // 这个`mutex`将同步对状态的访问  var mutex = &amp;amp;sync.Mutex{} // ops将对状态的操作进行计数  var ops int64 = 0 // 这里我们启动100个协程来不断地读取这个状态  for r := 0; r &amp;lt; 100; r++ { go func() { total := 0 for { // 对于每次读取，我们选取一个key来访问，  // mutex的`Lock`函数用来保证对状态的  // 唯一性访问，访问结束后，使用`Unlock`  // 来解锁，然后增加ops计数器  key := rand.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E4%BF%9D%E7%95%99%E5%B0%8F%E6%95%B0%E7%82%B9/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E4%BF%9D%E7%95%99%E5%B0%8F%E6%95%B0%E7%82%B9/</guid>
+      <description>Go Base64编码 Go提供了对浮点数的处理
+package main import &amp;#34;strconv&amp;#34; import &amp;#34;fmt&amp;#34; func main() { //update by waj 18042593 告警数据精确到小数四位数 	smpl.V, _ = strconv.ParseFloat(fmt.Sprintf(&amp;#34;%.4f&amp;#34;, smpl.V), 64) } 运行结果
+待补充 </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/</guid>
+      <description>Go 信号处理 有的时候我们希望Go能够智能地处理Unix信号。例如我们希望一个server接收到一个SIGTERM的信号时，能够自动地停止；或者一个命令行工具接收到一个SIGINT信号时，能够停止接收输入。现在我们来看下如何使用channel来处理信号。
+package main import &amp;#34;fmt&amp;#34; import &amp;#34;os&amp;#34; import &amp;#34;os/signal&amp;#34; import &amp;#34;syscall&amp;#34; func main() { // Go信号通知通过向一个channel发送``os.Signal`来实现。 	// 我们将创建一个channel来接受这些通知，同时我们还用 	// 一个channel来在程序可以退出的时候通知我们 	sigs := make(chan os.Signal, 1) done := make(chan bool, 1) // `signal.Notify`在给定的channel上面注册该channel 	// 可以接受的信号 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM) // 这个goroutine阻塞等待信号的到来，当信号到来的时候， 	// 输出该信号，然后通知程序可以结束了 	go func() { sig := &amp;lt;-sigs fmt.Println() fmt.Println(sig) done &amp;lt;- true }() // 程序将等待接受信号，然后退出 	fmt.Println(&amp;#34;awaiting signal&amp;#34;) &amp;lt;-done fmt.Println(&amp;#34;exiting&amp;#34;) } 当运行程序的时候，程序将阻塞等待信号的到来，我们可以使用CTRL+C来发送一个SIGINT信号，这样程序就会输出interrupt后退出。</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%85%B3%E9%97%AD%E9%80%9A%E9%81%93/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%85%B3%E9%97%AD%E9%80%9A%E9%81%93/</guid>
+      <description>Go 关闭通道 关闭通道的意思是该通道将不再允许写入数据。这个方法可以让通道数据的接受端知道数据已经全部发送完成了。
+package main import &amp;#34;fmt&amp;#34; // 在这个例子中，我们使用通道jobs在main函数所在的协程和一个数据 // 接收端所在的协程通信。当我们数据发送完成后，我们关闭jobs通道 func main() { jobs := make(chan int, 5) done := make(chan bool) // 这里是数据接收端协程，它重复使用`j, more := &amp;lt;-jobs`来从通道 	// jobs获取数据，这里的more在通道关闭且通道中不再有数据可以接收的 	// 时候为false，我们通过判断more来决定所有的数据是否已经接收完成。 	// 如果所有数据接收完成，那么向done通道写入true 	go func() { for { j, more := &amp;lt;-jobs if more { fmt.Println(&amp;#34;received job&amp;#34;, j) } else { fmt.Println(&amp;#34;received all jobs&amp;#34;) done &amp;lt;- true return } } }() // 这里向jobs通道写入三个数据，然后关闭通道 	for j := 1; j &amp;lt;= 3; j++ { jobs &amp;lt;- j fmt.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6/</guid>
+      <description>Go 写入文件 Go将数据写入文件的方法和上面介绍过的读取文件的方法很类似。
+package main import ( &amp;#34;bufio&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;io/ioutil&amp;#34; &amp;#34;os&amp;#34; ) func check(e error) { if e != nil { panic(e) } } func main() { // 首先看一下如何将一个字符串写入文件 	d1 := []byte(&amp;#34;hello\ngo\n&amp;#34;) err := ioutil.WriteFile(&amp;#34;/tmp/dat1&amp;#34;, d1, 0644) check(err) // 为了实现细颗粒度的写入，打开文件后再写入 	f, err := os.Create(&amp;#34;/tmp/dat2&amp;#34;) check(err) // 在打开文件后通常应该立刻使用defer来调用 	// 打开文件的Close方法，以保证main函数结束 	// 后，文件关闭 	defer f.Close() // 你可以写入字节切片 	d2 := []byte{115, 111, 109, 101, 10} n2, err := f.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%87%BD%E6%95%B0%E5%91%BD%E5%90%8D%E8%BF%94%E5%9B%9E%E5%80%BC/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%87%BD%E6%95%B0%E5%91%BD%E5%90%8D%E8%BF%94%E5%9B%9E%E5%80%BC/</guid>
+      <description>Go 函数命名返回值 函数接受参数。在 Go 中，函数可以返回多个“结果参数”，而不仅仅是一个值。它们可以像变量那样命名和使用。
+如果命名了返回值参数，一个没有参数的return语句，会将当前的值作为返回值返回。注意，如果遇到if等代码块和返回值同名，还需要显示写出返回值。
+package main import &amp;#34;fmt&amp;#34; func split(sum int) (x, y int) { x = sum * 4 / 9 y = sum - x return } func main() { fmt.Println(split(17)) } 运行结果
+7 10 </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%87%BD%E6%95%B0%E5%9B%9E%E8%B0%83/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%87%BD%E6%95%B0%E5%9B%9E%E8%B0%83/</guid>
+      <description>Go 函数回调 Go支持函数回调，你可以把函数名称作为参数传递给另外一个函数，然后在别的地方实现这个函数。
+package main import &amp;#34;fmt&amp;#34; type Callback func(x, y int) int func main() { x, y := 1, 2 fmt.Println(test(x, y, add)) } //提供一个接口，让外部去实现 func test(x, y int, callback Callback) int { return callback(x, y) } func add(x, y int) int { return x + y } 运行结果
+3 </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%87%BD%E6%95%B0%E5%A4%9A%E8%BF%94%E5%9B%9E%E5%80%BC/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%87%BD%E6%95%B0%E5%A4%9A%E8%BF%94%E5%9B%9E%E5%80%BC/</guid>
+      <description>Go 函数多返回值 Go语言内置支持多返回值，这个在Go语言中用的很多，比如一个函数同时返回结果和错误信息。
+package main import &amp;#34;fmt&amp;#34; // 这个函数的返回值为两个int func vals() (int, int) { return 3, 7 } func main() { // 获取函数的两个返回值 	a, b := vals() fmt.Println(a) fmt.Println(b) // 如果你只对多个返回值里面的几个感兴趣 	// 可以使用下划线(_)来忽略其他的返回值 	_, c := vals() fmt.Println(c) } 输出结果为
+3 7 7 </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89/</guid>
+      <description>Go 函数定义 函数是Go语言的重要内容。
+package main import &amp;#34;fmt&amp;#34; // 这个函数计算两个int型输入数据的和，并返回int型的和 func plus(a int, b int) int { // Go需要使用return语句显式地返回值 	return a + b } func main() { // 函数的调用方式很简单 	// &amp;#34;名称(参数列表)&amp;#34; 	res := plus(1, 2) fmt.Println(&amp;#34;1+2 =&amp;#34;, res) } 输出结果为
+1+2 = 3 Go的函数还有很多其他的特性，其中一个就是多返回值，我们下面会看到。</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%88%87%E7%89%87/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%88%87%E7%89%87/</guid>
+      <description>Go 切片 切片是Go语言的关键类型之一，它提供了比数组更多的功能。
+示例1：
+package main import &amp;#34;fmt&amp;#34; func main() { // 和数组不同的是，切片的长度是可变的。 	// 我们可以使用内置函数make来创建一个长度不为零的切片 	// 这里我们创建了一个长度为3，存储字符串的切片，切片元素 	// 默认为零值，对于字符串就是&amp;#34;&amp;#34;。 	s := make([]string, 3) fmt.Println(&amp;#34;emp:&amp;#34;, s) // 可以使用和数组一样的方法来设置元素值或获取元素值 	s[0] = &amp;#34;a&amp;#34; s[1] = &amp;#34;b&amp;#34; s[2] = &amp;#34;c&amp;#34; fmt.Println(&amp;#34;set:&amp;#34;, s) fmt.Println(&amp;#34;get:&amp;#34;, s[2]) // 可以用内置函数len获取切片的长度 	fmt.Println(&amp;#34;len:&amp;#34;, len(s)) // 切片还拥有一些数组所没有的功能。 	// 例如我们可以使用内置函数append给切片追加值，然后 	// 返回一个拥有新切片元素的切片。 	// 注意append函数不会改变原切片，而是生成了一个新切片， 	// 我们需要用原来的切片来接收这个新切片 	s = append(s, &amp;#34;d&amp;#34;) s = append(s, &amp;#34;e&amp;#34;, &amp;#34;f&amp;#34;) fmt.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%8E%9F%E5%AD%90%E8%AE%A1%E6%95%B0%E5%99%A8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%8E%9F%E5%AD%90%E8%AE%A1%E6%95%B0%E5%99%A8/</guid>
+      <description>Go 原子计数器 Go里面的管理协程状态的主要机制就是通道通讯。这些我们上面的例子介绍过。这里还有一些管理状态的机制，下面我们看看多协程原子访问计数器的例子，这个功能是由sync/atomic包提供的函数来实现的。
+package main import &amp;#34;fmt&amp;#34; import &amp;#34;time&amp;#34; import &amp;#34;sync/atomic&amp;#34; import &amp;#34;runtime&amp;#34; func main() { // 我们使用一个无符号整型来代表一个永远为正整数的counter 	var ops uint64 = 0 // 为了模拟并行更新，我们使用50个协程来每隔1毫秒来 	// 增加一下counter值，注意这里的50协程里面的for循环， 	// 也就是说如果主协程不退出，这些协程将永远运行下去 	// 所以这个程序每次输出的值有可能不一样 	for i := 0; i &amp;lt; 50; i++ { go func() { for { // 为了能够保证counter值增加的原子性，我们使用 	// atomic包中的AddUint64方法，将counter的地址和 	// 需要增加的值传递给函数即可 	atomic.AddUint64(&amp;amp;ops, 1) // 允许其他的协程来处理 	runtime.Gosched() } }() } //等待1秒中，让协程有时间运行一段时间 	time.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%8F%98%E9%87%8F/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%8F%98%E9%87%8F/</guid>
+      <description>Go变量 Go是静态类型语言，变量是有明确类型的。编译器会检查函数调用中，变量类型的正确性。
+使用var关键字来定义变量。
+Go 的基本类型有：
+ bool string int int8 int16 int32 int64 uint uint8 uint16 uint32 uint64 uintptr byte // uint8 的别名 rune // int32 的别名 代表一个Unicode码 float32 float64 complex64 complex128  看看下面的例子
+package main import &amp;#34;fmt&amp;#34; func main() { // `var` 关键字用来定义一个或者多个变量 	var a string = &amp;#34;initial&amp;#34; fmt.Println(a) // 你一次可以定义多个变量 	var b, c int = 1, 2 fmt.Println(b, c) // Go会推断出具有初始值的变量的类型 	var d = true fmt.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%8F%AF%E5%8F%98%E9%95%BF%E5%8F%82%E6%95%B0%E5%88%97%E8%A1%A8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%8F%AF%E5%8F%98%E9%95%BF%E5%8F%82%E6%95%B0%E5%88%97%E8%A1%A8/</guid>
+      <description>Go 可变长参数列表 支持可变长参数列表的函数可以支持任意个传入参数，比如fmt.Println函数就是一个支持可变长参数列表的函数。
+package main import &amp;#34;fmt&amp;#34; // 这个函数可以传入任意数量的整型参数 func sum(nums ...int) { fmt.Print(nums, &amp;#34; &amp;#34;) total := 0 for _, num := range nums { total += num } fmt.Println(total) } func main() { // 支持可变长参数的函数调用方法和普通函数一样 	// 也支持只有一个参数的情况 	sum(1, 2) sum(1, 2, 3) // 如果你需要传入的参数在一个切片中，像下面一样 	// &amp;#34;func(slice...)&amp;#34;把切片打散传入 	nums := []int{1, 2, 3, 4} sum(nums...) } 输出结果为
+[1 2] 3 [1 2 3] 6 [1 2 3 4] 10 需要注意的是，可变长参数应该是函数定义的最右边的参数，即最后一个参数。</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/</guid>
+      <description>Go 命令行参数 命令行参数是一种指定程序运行初始参数的常用方式。比如go run hello.go使用run和hello.go参数来执行程序。
+package main import &amp;#34;os&amp;#34; import &amp;#34;fmt&amp;#34; func main() { // `os.Args`提供了对命令行参数的访问，注意该 	// 切片的第一个元素是该程序的运行路径，而 	// `os.Args[1:]`则包含了该程序的所有参数 	argsWithProg := os.Args argsWithoutProg := os.Args[1:] // 你可以使用索引的方式来获取单个参数 	arg := os.Args[3] fmt.Println(argsWithProg) fmt.Println(argsWithoutProg) fmt.Println(arg) } 在运行该程序的时候，需要首先用go build将代码编译为可执行文件，然后提供足够数量的参数。例如
+$ go build command-line-arguments.go $ ./command-line-arguments a b c d [./command-line-arguments a b c d] [a b c d] c </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E6%A0%87%E8%AE%B0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0%E6%A0%87%E8%AE%B0/</guid>
+      <description>Go 命令行参数标记 命令行参数标记是为命令行程序指定选项参数的常用方法。例如，在命令wc -l中，-l就是一个命令行参数标记。
+Go提供了flag包来支持基本的命令行标记解析。我们这里将要使用这个包提供的方法来实现带选项的命令行程序。
+package main import &amp;#34;flag&amp;#34; import &amp;#34;fmt&amp;#34; func main() { // 基础的标记声明适用于string，integer和bool型选项。 	// 这里我们定义了一个标记`word`，默认值为`foo`和一 	// 个简短的描述。`flag.String`函数返回一个字符串指 	// 针（而不是一个字符串值），我们下面将演示如何使 	// 用这个指针 	wordPtr := flag.String(&amp;#34;word&amp;#34;, &amp;#34;foo&amp;#34;, &amp;#34;a string&amp;#34;) // 这里定义了两个标记，一个`numb`，另一个是`fork`， 	// 使用和上面定义`word`标记相似的方法 	numbPtr := flag.Int(&amp;#34;numb&amp;#34;, 42, &amp;#34;an int&amp;#34;) boolPtr := flag.Bool(&amp;#34;fork&amp;#34;, false, &amp;#34;a bool&amp;#34;) // 你也可以程序中任意地方定义的变量来定义选项，只 	// 需要把该变量的地址传递给flag声明函数即可 	var svar string flag.StringVar(&amp;amp;svar, &amp;#34;svar&amp;#34;, &amp;#34;bar&amp;#34;, &amp;#34;a string var&amp;#34;) // 当所有的flag声明完成后，使用`flag.Parse()`来分 	// 解命令行选项 	flag.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%AD%97%E5%85%B8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%AD%97%E5%85%B8/</guid>
+      <description>Go 字典 字典是Go语言内置的关联数据类型。因为数组是索引对应数组元素，而字典是键对应值。
+package main import &amp;#34;fmt&amp;#34; func main() { // 创建一个字典可以使用内置函数make 	// &amp;#34;make(map[键类型]值类型)&amp;#34; 	m := make(map[string]int) // 使用经典的&amp;#34;name[key]=value&amp;#34;来为键设置值 	m[&amp;#34;k1&amp;#34;] = 7 m[&amp;#34;k2&amp;#34;] = 13 // 用Println输出字典，会输出所有的键值对 	fmt.Println(&amp;#34;map:&amp;#34;, m) // 获取一个键的值 &amp;#34;name[key]&amp;#34;. 	v1 := m[&amp;#34;k1&amp;#34;] fmt.Println(&amp;#34;v1: &amp;#34;, v1) // 内置函数返回字典的元素个数 	fmt.Println(&amp;#34;len:&amp;#34;, len(m)) // 内置函数delete从字典删除一个键对应的值 	delete(m, &amp;#34;k2&amp;#34;) fmt.Println(&amp;#34;map:&amp;#34;, m) // 根据键来获取值有一个可选的返回值，这个返回值表示字典中是否 	// 存在该键，如果存在为true，返回对应值，否则为false，返回零值 	// 有的时候需要根据这个返回值来区分返回结果到底是存在的值还是零值 	// 比如字典不存在键x对应的整型值，返回零值就是0，但是恰好字典中有 	// 键y对应的值为0，这个时候需要那个可选返回值来判断是否零值。 	_, ok := m[&amp;#34;k2&amp;#34;] fmt.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0/</guid>
+      <description>Go 字符串操作函数 strings 标准库提供了很多字符串操作相关的函数。这里提供的几个例子是让你先对这个包有个基本了解。
+package main import s &amp;#34;strings&amp;#34; import &amp;#34;fmt&amp;#34; // 这里给fmt.Println起个别名，因为下面我们会多处使用。 var p = fmt.Println func main() { // 下面是strings包里面提供的一些函数实例。注意这里的函数并不是 	// string对象所拥有的方法，这就是说使用这些字符串操作函数的时候 	// 你必须将字符串对象作为第一个参数传递进去。 	p(&amp;#34;Contains: &amp;#34;, s.Contains(&amp;#34;test&amp;#34;, &amp;#34;es&amp;#34;)) p(&amp;#34;Count: &amp;#34;, s.Count(&amp;#34;test&amp;#34;, &amp;#34;t&amp;#34;)) p(&amp;#34;HasPrefix: &amp;#34;, s.HasPrefix(&amp;#34;test&amp;#34;, &amp;#34;te&amp;#34;)) p(&amp;#34;HasSuffix: &amp;#34;, s.HasSuffix(&amp;#34;test&amp;#34;, &amp;#34;st&amp;#34;)) p(&amp;#34;Index: &amp;#34;, s.Index(&amp;#34;test&amp;#34;, &amp;#34;e&amp;#34;)) p(&amp;#34;Join: &amp;#34;, s.Join([]string{&amp;#34;a&amp;#34;, &amp;#34;b&amp;#34;}, &amp;#34;-&amp;#34;)) p(&amp;#34;Repeat: &amp;#34;, s.Repeat(&amp;#34;a&amp;#34;, 5)) p(&amp;#34;Replace: &amp;#34;, s.Replace(&amp;#34;foo&amp;#34;, &amp;#34;o&amp;#34;, &amp;#34;0&amp;#34;, -1)) p(&amp;#34;Replace: &amp;#34;, s.Replace(&amp;#34;foo&amp;#34;, &amp;#34;o&amp;#34;, &amp;#34;0&amp;#34;, 1)) p(&amp;#34;Split: &amp;#34;, s.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9B%BF%E6%8D%A2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9B%BF%E6%8D%A2/</guid>
+      <description>golang 中 strings 包的 Replace 用法介绍笔记 函数申明： func Replace(s, old, new string, n int) string
+官方描述为： 返回将s中前n个不重叠old子串都替换为new的新字符串，如果n&amp;lt;0会替换所有old子串。
+示例代码为： func main() { // non-overlapping: &amp;quot;123&amp;quot; repeat 6 times in s s := &amp;quot;123lafaldsjglad123lkfasdf123djfal123lkdjga123lksjfla123l&amp;quot; old := &amp;quot;123&amp;quot; new := &amp;quot;888&amp;quot; fmt.Println(&amp;quot;non-overlapping: &amp;quot;) // n &amp;lt; 0 ,用 new 替换所有匹配上的 old；n=-1: 888lafaldsjglad888lkfasdf888djfal888lkdjga888lksjfla888l fmt.Println(&amp;quot;n=-1: &amp;quot;, strings.Replace(s, old, new, -1 )) // 不替换任何匹配的 old；n=0: 123lafaldsjglad123lkfasdf123djfal123lkdjga123lksjfla123l fmt.Println(&amp;quot;n=0: &amp;quot;, strings.Replace(s, old, new, 0 )) // 用 new 替换第一个匹配的 old；n=1: 888lafaldsjglad123lkfasdf123djfal123lkdjga123lksjfla123l fmt.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%E5%8C%96/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%E5%8C%96/</guid>
+      <description>Go 字符串格式化 Go对字符串格式化提供了良好的支持。下面我们看些常用的字符串格式化的例子。
+package main import &amp;#34;fmt&amp;#34; import &amp;#34;os&amp;#34; type point struct { x, y int } func main() { // Go提供了几种打印格式，用来格式化一般的Go值，例如 	// 下面的%v打印了一个point结构体的对象的值 	p := point{1, 2} fmt.Printf(&amp;#34;%v\n&amp;#34;, p) // 如果所格式化的值是一个结构体对象，那么`%+v`的格式化输出 	// 将包括结构体的成员名称和值 	fmt.Printf(&amp;#34;%+v\n&amp;#34;, p) // `%#v`格式化输出将输出一个值的Go语法表示方式。 	fmt.Printf(&amp;#34;%#v\n&amp;#34;, p) // 使用`%T`来输出一个值的数据类型 	fmt.Printf(&amp;#34;%T\n&amp;#34;, p) // 格式化布尔型变量 	fmt.Printf(&amp;#34;%t\n&amp;#34;, true) // 有很多的方式可以格式化整型，使用`%d`是一种 	// 标准的以10进制来输出整型的方式 	fmt.Printf(&amp;#34;%d\n&amp;#34;, 123) // 这种方式输出整型的二进制表示方式 	fmt.Printf(&amp;#34;%b\n&amp;#34;, 14) // 这里打印出该整型数值所对应的字符 	fmt.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%B7%A5%E4%BD%9C%E6%B1%A0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%B7%A5%E4%BD%9C%E6%B1%A0/</guid>
+      <description>Go 工作池 在这个例子中，我们来看一下如何使用gorouotine和channel来实现工作池。
+package main import &amp;#34;fmt&amp;#34; import &amp;#34;time&amp;#34; // 我们将在worker函数里面运行几个并行实例，这个函数从jobs通道 // 里面接受任务，然后把运行结果发送到results通道。每个job我们 // 都休眠一会儿，来模拟一个耗时任务。 func worker(id int, jobs &amp;lt;-chan int, results chan&amp;lt;- int) { for j := range jobs { fmt.Println(&amp;#34;worker&amp;#34;, id, &amp;#34;processing job&amp;#34;, j) time.Sleep(time.Second) results &amp;lt;- j * 2 } } func main() { // 为了使用我们的工作池，我们需要发送工作和接受工作的结果，  // 这里我们定义两个通道，一个jobs，一个results  jobs := make(chan int, 100) results := make(chan int, 100) // 这里启动3个worker协程，一开始的时候worker阻塞执行，因为  // jobs通道里面还没有工作任务  for w := 1; w &amp;lt;= 3; w++ { go worker(w, jobs, results) } // 这里我们发送9个任务，然后关闭通道，告知任务发送完成  for j := 1; j &amp;lt;= 9; j++ { jobs &amp;lt;- j } close(jobs) // 然后我们从results里面获得结果  for a := 1; a &amp;lt;= 9; a++ { &amp;lt;-results } 运行结果</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%B8%B8%E9%87%8F/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%B8%B8%E9%87%8F/</guid>
+      <description>Go常量 Go支持定义字符常量，字符串常量，布尔型常量和数值常量。
+使用const关键字来定义常量。
+package main import &amp;#34;fmt&amp;#34; import &amp;#34;math&amp;#34; // &amp;#34;const&amp;#34; 关键字用来定义常量 const s string = &amp;#34;constant&amp;#34; func main() { fmt.Println(s) // &amp;#34;const&amp;#34;关键字可以出现在任何&amp;#34;var&amp;#34;关键字出现的地方 	// 区别是常量必须有初始值 	const n = 500000000 // 常量表达式可以执行任意精度数学计算 	const d = 3e20 / n fmt.Println(d) // 数值型常量没有具体类型，除非指定一个类型 	// 比如显式类型转换 	fmt.Println(int64(d)) // 数值型常量可以在程序的逻辑上下文中获取类型 	// 比如变量赋值或者函数调用。 	// 例如，对于math包中的Sin函数,它需要一个float64类型的变量 	fmt.Println(math.Sin(n)) } 输出结果为
+constant 6e+11 600000000000 -0.28470407323754404 </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%B9%B6%E8%A1%8C%E5%8A%9F%E8%83%BD/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%B9%B6%E8%A1%8C%E5%8A%9F%E8%83%BD/</guid>
+      <description>Go 并行功能 goroutine是一个轻量级的线程。
+package main import &amp;#34;fmt&amp;#34; func f(from string) { for i := 0; i &amp;lt; 3; i++ { fmt.Println(from, &amp;#34;:&amp;#34;, i) } } func main() { // 假设我们有一个函数叫做f(s) 	// 这里我们使用通常的同步调用来调用函数 	f(&amp;#34;direct&amp;#34;) // 为了能够让这个函数以协程(goroutine)方式 	// 运行使用go f(s) 	// 这个协程将和调用它的协程并行执行 	go f(&amp;#34;goroutine&amp;#34;) // 你也可以为匿名函数开启一个协程运行 	go func(msg string) { fmt.Println(msg) }(&amp;#34;going&amp;#34;) // 上面的协程在调用之后就异步执行了，所以程序不用等待它们执行完成 	// 就跳到这里来了，下面的Scanln用来从命令行获取一个输入，然后才 	// 让main函数结束 	// 如果没有下面的Scanln语句，程序到这里会直接退出，而上面的协程还 	// 没有来得及执行完，你将无法看到上面两个协程运行的结果 	var input string fmt.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E5%B9%B6%E8%A1%8C%E9%80%9A%E9%81%93channel/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E5%B9%B6%E8%A1%8C%E9%80%9A%E9%81%93channel/</guid>
+      <description>Go 并行通道Channel Channel是连接并行协程(goroutine)的通道。你可以向一个通道写入数据然后从另外一个通道读取数据。
+package main import &amp;#34;fmt&amp;#34; func main() { // 使用`make(chan 数据类型)`来创建一个Channel 	// Channel的类型就是它们所传递的数据的类型 	messages := make(chan string) // 使用`channel &amp;lt;-`语法来向一个Channel写入数据 	// 这里我们从一个新的协程向messages通道写入数据ping 	go func() { messages &amp;lt;- &amp;#34;ping&amp;#34; }() // 使用`&amp;lt;-channel`语法来从Channel读取数据 	// 这里我们从main函数所在的协程来读取刚刚写入 	// messages通道的数据 	msg := &amp;lt;-messages fmt.Println(msg) } 运行结果
+ping 当我们运行程序的时候，数据ping成功地从一个协程传递到了另外一个协程。 默认情况下，协程之间的通信是同步的，也就是说数据的发送端和接收端必须配对使用。Channel的这种特点使得我们可以不用在程序结尾添加额外的代码也能够获取协程发送端发来的信息。因为程序执行到msg:=&amp;lt;-messages的时候被阻塞了，直到获得发送端发来的信息才继续执行。</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E6%89%93%E7%82%B9%E5%99%A8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E6%89%93%E7%82%B9%E5%99%A8/</guid>
+      <description>Go 打点器 Timer是让你等待一段时间然后去做一件事情，这件事情只会做一次。而Ticker是让你按照一定的时间间隔循环往复地做一件事情，除非你手动停止它。
+package main import &amp;#34;time&amp;#34; import &amp;#34;fmt&amp;#34; func main() { // Ticker使用和Timer相似的机制，同样是使用一个通道来发送数据。 	// 这里我们使用range函数来遍历通道数据，这些数据每隔500毫秒被 	// 发送一次，这样我们就可以接收到 	ticker := time.NewTicker(time.Millisecond * 500) go func() { for t := range ticker.C { fmt.Println(&amp;#34;Tick at&amp;#34;, t) } }() // Ticker和Timer一样可以被停止。一旦Ticker停止后，通道将不再 	// 接收数据，这里我们将在1500毫秒之后停止 	time.Sleep(time.Millisecond * 1500) ticker.Stop() fmt.Println(&amp;#34;Ticker stopped&amp;#34;) } 输出结果
+Tick at 2014-02-18 05:42:50.363640783 +0800 CST Tick at 2014-02-18 05:42:50.863793985 +0800 CST Tick at 2014-02-18 05:42:51.363532887 +0800 CST Ticker stopped 在这个例子中，我们让Ticker一个独立协程上每隔500毫秒执行一次，然后在main函数所在协程上等待1500毫秒，然后停止Ticker。所以只输出了3次Ticker at信息。</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E6%8C%87%E9%92%88/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E6%8C%87%E9%92%88/</guid>
+      <description>Go 指针 Go支持指针，可以用来给函数传递变量的引用。
+package main import &amp;#34;fmt&amp;#34; // 我们用两个不同的例子来演示指针的用法 // zeroval函数有一个int类型参数，这个时候传递给函数的是变量的值 func zeroval(ival int) { ival = 0 } // zeroptr函数的参数是int类型指针，这个时候传递给函数的是变量的地址 // 在函数内部对这个地址所指向的变量的任何修改都会反映到原来的变量上。 func zeroptr(iptr *int) { *iptr = 0 } func main() { i := 1 fmt.Println(&amp;#34;initial:&amp;#34;, i) zeroval(i) fmt.Println(&amp;#34;zeroval:&amp;#34;, i) // &amp;amp;操作符用来取得i变量的地址 	zeroptr(&amp;amp;i) fmt.Println(&amp;#34;zeroptr:&amp;#34;, i) // 指针类型也可以输出 	fmt.Println(&amp;#34;pointer:&amp;#34;, &amp;amp;i) } 输出结果为
+initial: 1 zeroval: 1 zeroptr: 0 pointer: 0xc084000038 </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E6%8E%92%E5%BA%8F/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E6%8E%92%E5%BA%8F/</guid>
+      <description>Go 排序 Go的sort包实现了内置数据类型和用户自定义数据类型的排序功能。我们先看看内置数据类型的排序。
+package main import &amp;#34;fmt&amp;#34; import &amp;#34;sort&amp;#34; func main() { // 这些排序方法都是针对内置数据类型的。 	// 这里的排序方法都是就地排序，也就是说排序改变了 	// 切片内容，而不是返回一个新的切片 	strs := []string{&amp;#34;c&amp;#34;, &amp;#34;a&amp;#34;, &amp;#34;b&amp;#34;} sort.Strings(strs) fmt.Println(&amp;#34;Strings:&amp;#34;, strs) // 对于整型的排序 	ints := []int{7, 2, 4} sort.Ints(ints) fmt.Println(&amp;#34;Ints: &amp;#34;, ints) // 我们还可以检测切片是否已经排序好 	s := sort.IntsAreSorted(ints) fmt.Println(&amp;#34;Sorted: &amp;#34;, s) } 输出结果
+Strings: [a b c] Ints: [2 4 7] Sorted: true </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E6%8E%A5%E5%8F%A3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E6%8E%A5%E5%8F%A3/</guid>
+      <description>Go 接口 接口是一个方法签名的集合。 所谓方法签名，就是指方法的声明，而不包括实现。
+package main import &amp;#34;fmt&amp;#34; import &amp;#34;math&amp;#34; // 这里定义了一个最基本的表示几何形状的方法的接口 type geometry interface { area() float64 perim() float64 } // 这里我们要让正方形square和圆形circle实现这个接口 type square struct { width, height float64 } type circle struct { radius float64 } // 在Go中实现一个接口，只要实现该接口定义的所有方法即可 // 下面是正方形实现的接口 func (s square) area() float64 { return s.width * s.height } func (s square) perim() float64 { return 2*s.width + 2*s.height } // 圆形实现的接口 func (c circle) area() float64 { return math.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E6%95%B0%E5%80%BC/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E6%95%B0%E5%80%BC/</guid>
+      <description>#Go数值
+Go有很多种数据类型，包括字符串类型，整型，浮点型，布尔型等等，这里有几个基础的例子。
+package main import &amp;#34;fmt&amp;#34; func main() { // 字符串可以使用&amp;#34;+&amp;#34;连接 	fmt.Println(&amp;#34;go&amp;#34; + &amp;#34;lang&amp;#34;) //整型和浮点型 	fmt.Println(&amp;#34;1+1 =&amp;#34;, 1+1) fmt.Println(&amp;#34;7.0/3.0 =&amp;#34;, 7.0/3.0) // 布尔型的几种操作符 	fmt.Println(true &amp;amp;&amp;amp; false) fmt.Println(true || false) fmt.Println(!true) } 输出结果为
+golang 1+1 = 2 7.0/3.0 = 2.3333333333333335 false true false </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E6%95%B0%E5%AD%97%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E6%95%B0%E5%AD%97%E8%A7%A3%E6%9E%90/</guid>
+      <description>Go 数字解析 从字符串解析出数字是一个基本的而且很常见的任务。 Go内置的strconv提供了数字解析功能。
+package main import &amp;#34;strconv&amp;#34; import &amp;#34;fmt&amp;#34; func main() { // 使用ParseFloat解析浮点数，64是说明使用多少位 	// 精度来解析 	f, _ := strconv.ParseFloat(&amp;#34;1.234&amp;#34;, 64) fmt.Println(f) // 对于ParseInt函数，0 表示从字符串推断整型进制， 	// 则表示返回结果的位数 	i, _ := strconv.ParseInt(&amp;#34;123&amp;#34;, 0, 64) fmt.Println(i) // ParseInt能够解析出16进制的数字 	d, _ := strconv.ParseInt(&amp;#34;0x1c8&amp;#34;, 0, 64) fmt.Println(d) // 还可以使用ParseUint函数 	u, _ := strconv.ParseUint(&amp;#34;789&amp;#34;, 0, 64) fmt.Println(u) // Atoi是解析10进制整型的快捷方法 	k, _ := strconv.Atoi(&amp;#34;135&amp;#34;) fmt.Println(k) // 解析函数在遇到无法解析的输入时，会返回错误 	_, e := strconv.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E6%95%B0%E7%BB%84/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E6%95%B0%E7%BB%84/</guid>
+      <description>Go 数组  数组是一个具有相同数据类型的元素组成的固定长度的有序集合。 在Go语言中，数组是值类型，长度是类型的组成部分，也就是说&amp;quot;[10]int&amp;ldquo;和“[20]int”是完全不同的两种数组类型。 同类型的两个数组支持&amp;rdquo;==&amp;ldquo;和&amp;rdquo;!=&amp;ldquo;比较，但是不能比较大小。 数组作为参数时，函数内部不改变数组内部的值，除非是传入数组的指针。 数组的指针：*[3]int 指针数组：[2]*int  示例1：
+package main import &amp;#34;fmt&amp;#34; func main() { // 这里我们创建了一个具有5个元素的整型数组 	// 元素的数据类型和数组长度都是数组的一部分 	// 默认情况下，数组元素都是零值 	// 对于整数，零值就是0 	var a [5]int fmt.Println(&amp;#34;emp:&amp;#34;, a) // 我们可以使用索引来设置数组元素的值，就像这样 	// &amp;#34;array[index] = value&amp;#34; 或者使用索引来获取元素值， 	// 就像这样&amp;#34;array[index]&amp;#34; 	a[4] = 100 fmt.Println(&amp;#34;set:&amp;#34;, a) fmt.Println(&amp;#34;get:&amp;#34;, a[4]) // 内置的len函数返回数组的长度 	fmt.Println(&amp;#34;len:&amp;#34;, len(a)) // 这种方法可以同时定义和初始化一个数组 	b := [5]int{1, 2, 3, 4, 5} fmt.Println(&amp;#34;dcl:&amp;#34;, b) // 数组都是一维的，但是你可以把数组的元素定义为一个数组 	// 来获取多维数组结构 	var twoD [2][3]int for i := 0; i &amp;lt; 2; i++ { for j := 0; j &amp;lt; 3; j++ { twoD[i][j] = i + j } } fmt.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E6%96%B9%E6%B3%95/</guid>
+      <description>Go 方法 一般的函数定义叫做函数，定义在结构体上面的函数叫做该结构体的方法。
+示例1：
+package main import &amp;#34;fmt&amp;#34; type rect struct { width, height int } // 这个area方法有一个限定类型*rect， // 表示这个函数是定义在rect结构体上的方法 func (r *rect) area() int { return r.width * r.height } // 方法的定义限定类型可以为结构体类型 // 也可以是结构体指针类型 // 区别在于如果限定类型是结构体指针类型 // 那么在该方法内部可以修改结构体成员信息 func (r rect) perim() int { return 2*r.width + 2*r.height } func main() { r := rect{width: 10, height: 5} // 调用方法 	fmt.Println(&amp;#34;area: &amp;#34;, r.area()) fmt.Println(&amp;#34;perim:&amp;#34;, r.perim()) // Go语言会自动识别方法调用的参数是结构体变量还是 	// 结构体指针，如果你要修改结构体内部成员值，那么使用 	// 结构体指针作为函数限定类型，也就是说参数若是结构体 	//变量，仅仅会发生值拷贝。 	rp := &amp;amp;r fmt.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E6%97%B6%E9%97%B4/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E6%97%B6%E9%97%B4/</guid>
+      <description>Go 时间 Go提供了对时间和一段时间的支持。这里有一些例子。
+package main import &amp;#34;fmt&amp;#34; import &amp;#34;time&amp;#34; func main() { p := fmt.Println // 从获取当前时间开始 	now := time.Now() p(now) // 你可以提供年，月，日等来创建一个时间。当然时间 	// 总是会和地区联系在一起，也就是时区 	then := time.Date(2009, 11, 17, 20, 34, 58, 651387237, time.UTC) p(then) // 你可以获取时间的各个组成部分 	p(then.Year()) p(then.Month()) p(then.Day()) p(then.Hour()) p(then.Minute()) p(then.Second()) p(then.Nanosecond()) p(then.Location()) // 输出当天是周几，Monday-Sunday中的一个 	p(then.Weekday()) // 下面的几个方法判断两个时间的顺序，精确到秒 	p(then.Before(now)) p(then.After(now)) p(then.Equal(now)) // Sub方法返回两个时间的间隔(Duration) 	diff := now.Sub(then) p(diff) // 可以以不同的单位来计算间隔的大小 	p(diff.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E6%97%B6%E9%97%B4%E6%88%B3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E6%97%B6%E9%97%B4%E6%88%B3/</guid>
+      <description>Go 时间戳 程序的一个通常需求是计算从Unix起始时间开始到某个时刻的秒数，毫秒数，微秒数等。 我们来看看Go里面是怎么做的。
+package main import &amp;#34;fmt&amp;#34; import &amp;#34;time&amp;#34; func main() { // 使用Unix和UnixNano来分别获取从Unix起始时间 	// 到现在所经过的秒数和微秒数 	now := time.Now() secs := now.Unix() nanos := now.UnixNano() fmt.Println(now) // 注意这里没有UnixMillis方法，所以我们需要将 	// 微秒手动除以一个数值来获取毫秒 	millis := nanos / 1000000 fmt.Println(secs) fmt.Println(millis) fmt.Println(nanos) // 反过来，你也可以将一个整数秒数或者微秒数转换 	// 为对应的时间 	fmt.Println(time.Unix(secs, 0)) fmt.Println(time.Unix(0, nanos)) } 运行结果
+2014-03-02 23:11:31.118666918 +0800 CST 1393773091 1393773091118 1393773091118666918 2014-03-02 23:11:31 +0800 CST 2014-03-02 23:11:31.118666918 +0800 CST </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%92%8C%E8%A7%A3%E6%9E%90/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%92%8C%E8%A7%A3%E6%9E%90/</guid>
+      <description>Go 时间格式化和解析 Go使用模式匹配的方式来支持日期格式化和解析。
+package main import &amp;#34;fmt&amp;#34; import &amp;#34;time&amp;#34; func main() { p := fmt.Println // 这里有一个根据RFC3339来格式化日期的例子 	t := time.Now() p(t.Format(&amp;#34;2006-01-02T15:04:05Z07:00&amp;#34;)) // Format 函数使用一种基于示例的模式匹配方式， 	// 它使用已经格式化的时间模式来决定所给定参数 	// 的输出格式 	p(t.Format(&amp;#34;3:04PM&amp;#34;)) p(t.Format(&amp;#34;Mon Jan _2 15:04:05 2006&amp;#34;)) p(t.Format(&amp;#34;2006-01-02T15:04:05.999999-07:00&amp;#34;)) // 对于纯数字表示的时间来讲，你也可以使用标准 	// 的格式化字符串的方式来格式化时间 	fmt.Printf(&amp;#34;%d-%02d-%02dT%02d:%02d:%02d-00:00\n&amp;#34;, t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second()) // 时间解析也是采用一样的基于示例的方式 	withNanos := &amp;#34;2006-01-02T15:04:05.999999999-07:00&amp;#34; t1, e := time.Parse( withNanos, &amp;#34;2012-11-01T22:08:41.117442+00:00&amp;#34;) p(t1) kitchen := &amp;#34;3:04PM&amp;#34; t2, e := time.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+      <description>Go 正则表达式 Go内置了对正则表达式的支持，这里是一般的正则表达式常规用法的例子。
+package main import &amp;#34;bytes&amp;#34; import &amp;#34;fmt&amp;#34; import &amp;#34;regexp&amp;#34; func main() { // 测试模式是否匹配字符串，括号里面的意思是 	// 至少有一个a－z之间的字符存在 	match, _ := regexp.MatchString(&amp;#34;p([a-z]+)ch&amp;#34;, &amp;#34;peach&amp;#34;) fmt.Println(match) // 上面我们直接使用了字符串匹配的正则表达式， 	// 但是对于其他的正则匹配任务，你需要使用 	// `Compile`来使用一个优化过的正则对象 	r, _ := regexp.Compile(&amp;#34;p([a-z]+)ch&amp;#34;) // 正则结构体对象有很多方法可以使用，比如上面的例子 	// 也可以像下面这么写 	fmt.Println(r.MatchString(&amp;#34;peach&amp;#34;)) // 这个方法检测字符串参数是否存在正则所约束的匹配 	fmt.Println(r.FindString(&amp;#34;peach punch&amp;#34;)) // 这个方法查找第一次匹配的索引，并返回匹配字符串 	// 的起始索引和结束索引，而不是匹配的字符串 	fmt.Println(r.FindStringIndex(&amp;#34;peach punch&amp;#34;)) // 这个方法返回全局匹配的字符串和局部匹配的字符，比如 	// 这里会返回匹配`p([a-z]+)ch`的字符串 	// 和匹配`([a-z]+)`的字符串 	fmt.Println(r.FindStringSubmatch(&amp;#34;peach punch&amp;#34;)) // 和上面的方法一样，不同的是返回全局匹配和局部匹配的 	// 起始索引和结束索引 	fmt.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E7%8A%B6%E6%80%81%E5%8D%8F%E7%A8%8B/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E7%8A%B6%E6%80%81%E5%8D%8F%E7%A8%8B/</guid>
+      <description>Go 状态协程 在上面的例子中，我们演示了如何通过使用mutex来在多个协程之间共享状态。另外一种方法是使用协程内置的同步机制来实现。这种基于通道的方法和Go的通过消息共享内存，保证每份数据为单独的协程所有的理念是一致的。
+package main import ( &amp;#34;fmt&amp;#34; &amp;#34;math/rand&amp;#34; &amp;#34;sync/atomic&amp;#34; &amp;#34;time&amp;#34; ) // 在这个例子中，将有一个单独的协程拥有这个状态。这样可以 // 保证这个数据不会被并行访问所破坏。为了读写这个状态，其 // 他的协程将向这个协程发送信息并且相应地接受返回信息。 // 这些`readOp`和`writeOp`结构体封装了这些请求和回复 type readOp struct { key int resp chan int } type writeOp struct { key int val int resp chan bool } func main() { // 我们将计算我们执行了多少次操作 	var ops int64 = 0 // reads和writes通道将被其他协程用来从中读取或写入数据 	reads := make(chan *readOp) writes := make(chan *writeOp) // 这个是拥有`state`的协程，`state`是一个协程的私有map 	// 变量。这个协程不断地`select`通道`reads`和`writes`， 	// 当有请求来临的时候进行回复。一旦有请求，首先执行所 	// 请求的操作，然后给`resp`通道发送一个表示请求成功的值。 	go func() { var state = make(map[int]int) for { select { case read := &amp;lt;-reads: read.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/</guid>
+      <description>Go 环境变量 环境变量是一种很普遍的将配置信息传递给Unix程序的机制。
+package main import &amp;#34;os&amp;#34; import &amp;#34;strings&amp;#34; import &amp;#34;fmt&amp;#34; func main() { // 为了设置一个key/value对，使用`os.Setenv` 	// 为了获取一个key的value，使用`os.Getenv` 	// 如果所提供的key在环境变量中没有对应的value， 	// 那么返回空字符串 	os.Setenv(&amp;#34;FOO&amp;#34;, &amp;#34;1&amp;#34;) fmt.Println(&amp;#34;FOO:&amp;#34;, os.Getenv(&amp;#34;FOO&amp;#34;)) fmt.Println(&amp;#34;BAR:&amp;#34;, os.Getenv(&amp;#34;BAR&amp;#34;)) // 使用`os.Environ`来列出环境变量中所有的key/value对 	// 你可以使用`strings.Split`方法来将key和value分开 	// 这里我们打印所有的key 	fmt.Println() for _, e := range os.Environ() { pair := strings.Split(e, &amp;#34;=&amp;#34;) fmt.Println(pair[0]) } } 这里我们设置了FOO环境变量，所以我们取到了它的值，但是没有设置BAR环境变量，所以值为空。另外我们列出了系统的所有环境变量，当然这个输出根据不同的系统设置可能并不相同。
+输出结果
+FOO: 1 BAR: TERM_PROGRAM TERM SHELL TMPDIR Apple_PubSub_Socket_Render OLDPWD USER SSH_AUTH_SOCK __CF_USER_TEXT_ENCODING __CHECKFIX1436934 PATH PWD ITERM_PROFILE SHLVL COLORFGBG HOME ITERM_SESSION_ID LOGNAME LC_CTYPE GOPATH _ FOO </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E7%BB%8F%E5%85%B8hello-world/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E7%BB%8F%E5%85%B8hello-world/</guid>
+      <description>我们的第一个例子是打印经典的“hello world”信息，我们先看下代码。
+package main import &amp;#34;fmt&amp;#34; func main() { fmt.Println(&amp;#34;hello world&amp;#34;) } 输出结果为：
+$ ls el_01_hello_world.go $ go build el_01_hello_world.go $ ls el_01_hello_world	el_01_hello_world.go $ ./el_01_hello_world hello world 为了使一个go文件能够编译为可执行文件，包名必须是main，然后我们导入提供格式化输出的fmt包，该程序的执行入口是func main()函数，在函数里面，我们使用fmt包提供的Println函数来输出&amp;quot;hello world&amp;quot;字符串。
+为了运行这个程序，我们可以使用go run el_01_hello_world.go来运行这个例子，这样是直接输出运行结果而不会产生任何中间文件。但是有的时候我们希望能够将程序编译为二进制文件保存起来，我们可以像上面一样使用go build el_01_hello_world.go来将源代码编译为二进制可执行文件。然后我们可以直接运行这个二进制可执行文件。
+好了，第一个例子就这样结束了。很简单。</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E7%BB%93%E6%9E%84%E4%BD%93/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E7%BB%93%E6%9E%84%E4%BD%93/</guid>
+      <description>Go 结构体 Go语言结构体数据类是将各个类型的变量定义的集合，通常用来表示记录。
+package main import &amp;#34;fmt&amp;#34; // 这个person结构体有name和age成员 type person struct { name string age int } func main() { // 这个语法创建一个新结构体变量 	fmt.Println(person{&amp;#34;Bob&amp;#34;, 20}) // 可以使用&amp;#34;成员:值&amp;#34;的方式来初始化结构体变量 	fmt.Println(person{name: &amp;#34;Alice&amp;#34;, age: 30}) // 未显式赋值的成员初始值为零值 	fmt.Println(person{name: &amp;#34;Fred&amp;#34;}) // 可以使用&amp;amp;来获取结构体变量的地址 	fmt.Println(&amp;amp;person{name: &amp;#34;Ann&amp;#34;, age: 40}) // 使用点号(.)来访问结构体成员 	s := person{name: &amp;#34;Sean&amp;#34;, age: 50} fmt.Println(s.name) // 结构体指针也可以使用点号(.)来访问结构体成员 	// Go语言会自动识别出来 	sp := &amp;amp;s fmt.Println(sp.age) // 结构体成员变量的值是可以改变的 	sp.age = 51 fmt.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E7%BC%96%E5%86%99%E5%8F%AF%E7%BB%B4%E6%8A%A4go%E8%AF%AD%E8%A8%80%E4%BB%A3%E7%A0%81%E5%BB%BA%E8%AE%AE/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E7%BC%96%E5%86%99%E5%8F%AF%E7%BB%B4%E6%8A%A4go%E8%AF%AD%E8%A8%80%E4%BB%A3%E7%A0%81%E5%BB%BA%E8%AE%AE/</guid>
+      <description>Go 语言实战: 编写可维护 Go 语言代码建议 目录   1. 指导原则
+ 1.1 简单性 1.2 可读性 1.3 生产力    2. 标识符
+ 2.1 选择标识是为了清晰, 而不是简洁 2.2 标识符长度 2.3 不要用变量类型命名变量 2.4 使用一致的命名风格 2.5 使用一致的声明样式 2.6 成为团队的合作者    3. 注释
+ 3.1 关于变量和常量的注释应描述其内容而非其目的 3.2 公共符号始终要注释    4. 包的设计
+ 4.1 一个好的包从它的名字开始 4.2 避免使用类似 base 、common 或 util 的包名称 4.3 尽早 return 而不是深度嵌套 4.4 让零值更有用 4.5 避免包级别状态    5.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%92%E5%BA%8F/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%92%E5%BA%8F/</guid>
+      <description>Go 自定义排序 有的时候我们希望排序不是仅仅按照自然顺序排序。例如，我们希望按照字符串的长度来对一个字符串数组排序而不是按照字母顺序来排序。这里我们介绍一下Go的自定义排序。
+package main import &amp;#34;sort&amp;#34; import &amp;#34;fmt&amp;#34; // 为了能够使用自定义函数来排序，我们需要一个 // 对应的排序类型，比如这里我们为内置的字符串 // 数组定义了一个别名ByLength type ByLength []string // 我们实现了sort接口的Len，Less和Swap方法 // 这样我们就可以使用sort包的通用方法Sort // Len和Swap方法的实现在不同的类型之间大致 // 都是相同的，只有Less方法包含了自定义的排序 // 逻辑，这里我们希望以字符串长度升序排序 func (s ByLength) Len() int { return len(s) } func (s ByLength) Swap(i, j int) { s[i], s[j] = s[j], s[i] } func (s ByLength) Less(i, j int) bool { return len(s[i]) &amp;lt; len(s[j]) } // 一切就绪之后，我们就可以把需要进行自定义排序 // 的字符串类型fruits转换为ByLength类型，然后使用 // sort包的Sort方法来排序 func main() { fruits := []string{&amp;#34;peach&amp;#34;, &amp;#34;banana&amp;#34;, &amp;#34;kiwi&amp;#34;} sort.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E8%A7%A3%E5%86%B3%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%ADnull%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E8%A7%A3%E5%86%B3%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%ADnull%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <description>解决数据库中null值的问题 https://blog.csdn.net/qq_15437667/article/details/78780945
+要点 从数据库读取可能为null值得值时，可以选择使用sql.NULL来读取；或者使用IFNULL、COALESCE等命令让数据库查询值返回不为”“或者NULL 若需要往数据库中插入null值，则依然可以使用sql.NULL存储所需的值，然后进行插入NULL值 直接使用sql.NULL***类型容易出现valid遗漏设置等问题，普通int、string与其转换时，请写几个简单的get、set函数 本demo使用的数据库表以及数据如下
+mysql&amp;gt; desc person; +&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;+&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;-+ | Field | Type | Null | Key | Default | Extra | +&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;+&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;-+ | id | int(11) | NO | PRI | NULL | auto_increment | | first_name | varchar(100) | NO | | NULL | | | last_name | varchar(40) | YES | | NULL | | | age | int(11) | YES | | NULL | | +&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;+&amp;mdash;&amp;ndash;+&amp;mdash;&amp;mdash;&amp;mdash;+&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;&amp;mdash;-+</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E8%AE%A1%E6%97%B6%E5%99%A8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E8%AE%A1%E6%97%B6%E5%99%A8/</guid>
+      <description>Go 计时器 我们有的时候希望Go在未来的某个时刻执行或者是以一定的时间间隔重复执行。Go内置的timer和ticker功能使得这些任务变得简单了。我们先看看timer的功能，下一节再看看ticker的功能。
+package main import &amp;#34;time&amp;#34; import &amp;#34;fmt&amp;#34; func main() { // Timer 代表了未来的一个事件，你告诉timer需要等待多久，然后 	// 计时器提供了一个通道，这个通道将在等待的时间结束后得到通知， 	// 这里的timer将等待2秒 	timer1 := time.NewTimer(time.Second * 2) // 这里`&amp;lt;-timer1.C`在timer的通道`C`上面阻塞等待，直到有个值发送给该 	// 通道，通知通道计时器已经等待完成。 	// timer.NewTimer方法获取的timer1的结构体定义为 	// type Ticket struct{ 	// C &amp;lt;-chan Time 	//} 	&amp;lt;-timer1.C fmt.Println(&amp;#34;Timer 1 expired&amp;#34;) // 如果你仅仅需要等待的话，你可以使用`time.Sleep`，而timer的 	// 独特之处在于你可以在timer等待完成之前取消等待。 	timer2 := time.NewTimer(time.Second) go func() { &amp;lt;-timer2.C fmt.Println(&amp;#34;Timer 2 expired&amp;#34;) }() stop2 := timer2.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E9%A2%91%E7%8E%87%E6%8E%A7%E5%88%B6/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E9%A2%91%E7%8E%87%E6%8E%A7%E5%88%B6/</guid>
+      <description>Go 请求处理频率控制 频率控制是控制资源利用和保证服务高质量的重要机制。Go可以使用goroutine，channel和ticker来以优雅的方式支持频率控制。
+package main import &amp;#34;time&amp;#34; import &amp;#34;fmt&amp;#34; func main() { // 首先我们看下基本的频率限制。假设我们得控制请求频率， 	// 我们使用一个通道来处理所有的这些请求，这里向requests 	// 发送5个数据，然后关闭requests通道 	requests := make(chan int, 5) for i := 1; i &amp;lt;= 5; i++ { requests &amp;lt;- i } close(requests) // 这个limiter的Ticker每隔200毫秒结束通道阻塞 	// 这个limiter就是我们频率控制处理器 	limiter := time.Tick(time.Millisecond * 200) // 通过阻塞从limiter通道接受数据，我们将请求处理控制在每隔200毫秒 	// 处理一个请求，注意`&amp;lt;-limiter`的阻塞作用。 	for req := range requests { &amp;lt;-limiter fmt.Println(&amp;#34;request&amp;#34;, req, time.Now()) } // 我们可以保持正常的请求频率限制，但也允许请求短时间内爆发 	// 我们可以通过通道缓存来实现，比如下面的这个burstyLimiter 	// 就允许同时处理3个事件。 	burstyLimiter := make(chan time.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6/</guid>
+      <description>Go 读取文件 读写文件是很多程序的基本任务，下面我们看看Go里面的文件读取。
+package main import ( &amp;#34;bufio&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;io&amp;#34; &amp;#34;io/ioutil&amp;#34; &amp;#34;os&amp;#34; ) // 读取文件的函数调用大多数都需要检查错误， // 使用下面这个错误检查方法可以方便一点 func check(e error) { if e != nil { panic(e) } } func main() { // 最基本的文件读写任务就是把整个文件的内容读取到内存 	dat, err := ioutil.ReadFile(&amp;#34;/tmp/dat&amp;#34;) check(err) fmt.Print(string(dat)) // 有的时候你想更多地控制到底是读取文件的哪个部分，这个 	// 时候你可以使用`os.Open`打开一个文件获取一个`os.File` 	// 对象 	f, err := os.Open(&amp;#34;/tmp/dat&amp;#34;) // 从这个文件中读取一些字节，并且由于字节数组长度所限， 	// 最多读取5个字节，另外还需要注意实际能够读取的字节 	// 数量 	b1 := make([]byte, 5) n1, err := f.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E8%B6%85%E6%97%B6/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E8%B6%85%E6%97%B6/</guid>
+      <description>Go 超时 超时对那些连接外部资源的程序来说是很重要的，否则就需要限定执行时间。在Go里面实现超时很简单。我们可以使用channel和select很容易地做到。
+package main import &amp;#34;time&amp;#34; import &amp;#34;fmt&amp;#34; func main() { // 在这个例子中，假设我们执行了一个外部调用，2秒之后将结果写入c1 	c1 := make(chan string, 1) go func() { time.Sleep(time.Second * 2) c1 &amp;lt;- &amp;#34;result 1&amp;#34; }() // 这里使用select来实现超时，`res := &amp;lt;-c1`等待通道结果， 	// `&amp;lt;- Time.After`则在等待1秒后返回一个值，因为select首先 	// 执行那些不再阻塞的case，所以这里会执行超时程序，如果 	// `res := &amp;lt;-c1`超过1秒没有执行的话 	select { case res := &amp;lt;-c1: fmt.Println(res) case &amp;lt;-time.After(time.Second * 1): fmt.Println(&amp;#34;timeout 1&amp;#34;) } // 如果我们将超时时间设为3秒，这个时候`res := &amp;lt;-c2`将在 	// 超时case之前执行，从而能够输出写入通道c2的值 	c2 := make(chan string, 1) go func() { time.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E8%BF%9B%E7%A8%8B%E6%89%A7%E8%A1%8C/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E8%BF%9B%E7%A8%8B%E6%89%A7%E8%A1%8C/</guid>
+      <description>Go 进程执行 在上面的例子中，我们演示了一下如何去触发执行一个外部的进程。我们这样做的原因是我们希望从Go进程里面可以访问外部进程的信息。但有的时候，我们仅仅希望执行一个外部进程来替代当前的Go进程。这个时候，我们需要使用Go提供的exec函数。
+package main import &amp;#34;syscall&amp;#34; import &amp;#34;os&amp;#34; import &amp;#34;os/exec&amp;#34; func main() { // 本例中，我们使用`ls`来演示。Go需要一个该命令 	// 的完整路径，所以我们使用`exec.LookPath`函数来 	// 找到它 	binary, lookErr := exec.LookPath(&amp;#34;ls&amp;#34;) if lookErr != nil { panic(lookErr) } // `Exec`函数需要一个切片参数，我们给ls命令一些 	// 常见的参数。注意，第一个参数必须是程序名称 	args := []string{&amp;#34;ls&amp;#34;, &amp;#34;-a&amp;#34;, &amp;#34;-l&amp;#34;, &amp;#34;-h&amp;#34;} // `Exec`还需要一些环境变量，这里我们提供当前的 	// 系统环境 	env := os.Environ() // 这里是`os.Exec`调用。如果一切顺利，我们的原 	// 进程将终止，然后启动一个新的ls进程。如果有 	// 错误发生，我们将获得一个返回值 	execErr := syscall.Exec(binary, args, env) if execErr !</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E8%BF%9B%E7%A8%8B%E8%A7%A6%E5%8F%91/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E8%BF%9B%E7%A8%8B%E8%A7%A6%E5%8F%91/</guid>
+      <description>Go 进程触发 有的时候，我们需要从Go程序里面触发一个其他的非Go进程来执行。
+package main import &amp;#34;fmt&amp;#34; import &amp;#34;io/ioutil&amp;#34; import &amp;#34;os/exec&amp;#34; func main() { // 我们从一个简单的命令开始，这个命令不需要任何参数 	// 或者输入，仅仅向stdout输出一些信息。`exec.Command` 	// 函数创建了一个代表外部进程的对象 	dateCmd := exec.Command(&amp;#34;date&amp;#34;) // `Output`是另一个运行命令时用来处理信息的函数，这个 	// 函数等待命令结束，然后收集命令输出。如果没有错误发 	// 生的话，`dateOut`将保存date的信息 	dateOut, err := dateCmd.Output() if err != nil { panic(err) } fmt.Println(&amp;#34;&amp;gt; date&amp;#34;) fmt.Println(string(dateOut)) // 下面我们看一个需要从stdin输入数据的命令，我们将 	// 数据输入传给外部进程的stdin，然后从它输出到stdout 	// 的运行结果收集信息 	grepCmd := exec.Command(&amp;#34;grep&amp;#34;, &amp;#34;hello&amp;#34;) // 这里我们显式地获取input/output管道，启动进程， 	// 向进程写入数据，然后读取输出结果，最后等待进程结束 	grepIn, _ := grepCmd.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0/</guid>
+      <description>Go 递归函数 Go语言支持递归函数，这里是一个经典的斐波拉切数列的列子。
+package main import &amp;#34;fmt&amp;#34; // fact函数不断地调用自身，直到达到基本状态fact(0) func fact(n int) int { if n == 0 { return 1 } return n * fact(n-1) } func main() { fmt.Println(fact(7)) } 输出结果为
+5040 </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E9%80%9A%E9%81%93%E6%96%B9%E5%90%91/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E9%80%9A%E9%81%93%E6%96%B9%E5%90%91/</guid>
+      <description>Go通道方向 当使用通道作为函数的参数时，你可以指定该通道是只读的还是只写的。这种设置有时候会提高程序的参数类型安全。
+package main import &amp;#34;fmt&amp;#34; // 这个ping函数只接收能够发送数据的通道作为参数，试图从这个通道接收数据 // 会导致编译错误，这里只写的定义方式为`chan&amp;lt;- string`表示这个类型为 // 字符串的通道为只写通道 func ping(pings chan&amp;lt;- string, msg string) { pings &amp;lt;- msg } // pong函数接收两个通道参数，一个是只读的pings，使用`&amp;lt;-chan string`定义 // 另外一个是只写的pongs，使用`chan&amp;lt;- string`来定义 func pong(pings &amp;lt;-chan string, pongs chan&amp;lt;- string) { msg := &amp;lt;-pings pongs &amp;lt;- msg } func main() { pings := make(chan string, 1) pongs := make(chan string, 1) ping(pings, &amp;#34;passed message&amp;#34;) pong(pings, pongs) fmt.Println(&amp;lt;-pongs) } 运行结果
+passed message 其实这个例子就是把信息首先写入pings通道里面，然后在pong函数里面再把信息从pings通道里面读出来再写入pongs通道里面，最后在main函数里面将信息从pongs通道里面读出来。 在这里，pings和pongs事实上是可读且可写的，不过作为参数传递的时候，函数参数限定了通道的方向。不过pings和pongs在ping和pong函数里面还是可读且可写的。只是ping和pong函数调用的时候把它们当作了只读或者只写。</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E9%80%9A%E9%81%93%E7%9A%84%E5%90%8C%E6%AD%A5%E5%8A%9F%E8%83%BD/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E9%80%9A%E9%81%93%E7%9A%84%E5%90%8C%E6%AD%A5%E5%8A%9F%E8%83%BD/</guid>
+      <description>Go通道的同步功能 我们使用通道来同步协程之间的执行。 下面的例子是通过获取同步通道数据来阻塞程序执行的方法来等待另一个协程运行结束的。 也就是说main函数所在的协程在运行到&amp;lt;-done语句的时候将一直等待worker函数所在的协程执行完成，向通道写入数据才会（从通道获得数据）继续执行。
+package main import &amp;#34;fmt&amp;#34; import &amp;#34;time&amp;#34; // 这个worker函数将以协程的方式运行 // 通道`done`被用来通知另外一个协程这个worker函数已经执行完成 func worker(done chan bool) { fmt.Print(&amp;#34;working...&amp;#34;) time.Sleep(time.Second) fmt.Println(&amp;#34;done&amp;#34;) // 向通道发送一个数据，表示worker函数已经执行完成 	done &amp;lt;- true } func main() { // 使用协程来调用worker函数，同时将通道`done`传递给协程 	// 以使得协程可以通知别的协程自己已经执行完成 	done := make(chan bool, 1) go worker(done) // 一直阻塞，直到从worker所在协程获得一个worker执行完成的数据 	&amp;lt;-done } 运行结果
+working...done 如果我们从main函数里面移除&amp;lt;-done语句，那么main函数在worker协程开始运行之前就结束了。</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E9%80%9A%E9%81%93%E7%BC%93%E5%86%B2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E9%80%9A%E9%81%93%E7%BC%93%E5%86%B2/</guid>
+      <description>Go通道缓冲 默认情况下，通道是不带缓冲区的。 发送端发送数据，同时必须又接收端相应的接收数据。 而带缓冲区的通道则允许发送端的数据发送和接收端的数据获取处于异步状态，就是说发送端发送的数据可以放在缓冲区里面，可以等待接收端去获取数据，而不是立刻需要接收端去获取数据。 不过由于缓冲区的大小是有限的，所以还是必须有接收端来接收数据的，否则缓冲区一满，数据发送端就无法再发送数据了。
+package main import &amp;#34;fmt&amp;#34; func main() { // 这里我们定义了一个可以存储字符串类型的带缓冲通道 	// 缓冲区大小为2 	messages := make(chan string, 2) // 因为messages是带缓冲的通道，我们可以同时发送两个数据 	// 而不用立刻需要去同步读取数据 	messages &amp;lt;- &amp;#34;buffered&amp;#34; messages &amp;lt;- &amp;#34;channel&amp;#34; // 然后我们和上面例子一样获取这两个数据 	fmt.Println(&amp;lt;-messages) fmt.Println(&amp;lt;-messages) } 运行结果
+buffered channel </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E9%80%9A%E9%81%93%E9%80%89%E6%8B%A9select/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E9%80%9A%E9%81%93%E9%80%89%E6%8B%A9select/</guid>
+      <description>Go 通道选择Select Go的select关键字可以让你同时等待多个通道操作，将协程（goroutine），通道（channel）和select结合起来构成了Go的一个强大特性。
+package main import &amp;#34;time&amp;#34; import &amp;#34;fmt&amp;#34; func main() { // 本例中，我们从两个通道中选择 	c1 := make(chan string) c2 := make(chan string) // 为了模拟并行协程的阻塞操作，我们让每个通道在一段时间后再写入一个值 	go func() { time.Sleep(time.Second * 1) c1 &amp;lt;- &amp;#34;one&amp;#34; }() go func() { time.Sleep(time.Second * 2) c2 &amp;lt;- &amp;#34;two&amp;#34; }() // 我们使用select来等待这两个通道的值，然后输出 	for i := 0; i &amp;lt; 2; i++ { select { case msg1 := &amp;lt;-c1: fmt.Println(&amp;#34;received&amp;#34;, msg1) case msg2 := &amp;lt;-c2: fmt.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E9%81%8D%E5%8E%86%E9%80%9A%E9%81%93/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E9%81%8D%E5%8E%86%E9%80%9A%E9%81%93/</guid>
+      <description>Go 遍历通道 我们知道range函数可以遍历数组，切片，字典等。这里我们还可以使用range函数来遍历通道以接收通道数据。
+package main import &amp;#34;fmt&amp;#34; func main() { // 我们遍历queue通道里面的两个数据 	queue := make(chan string, 2) queue &amp;lt;- &amp;#34;one&amp;#34; queue &amp;lt;- &amp;#34;two&amp;#34; close(queue) // range函数遍历每个从通道接收到的数据，因为queue再发送完两个 	// 数据之后就关闭了通道，所以这里我们range函数在接收到两个数据 	// 之后就结束了。如果上面的queue通道不关闭，那么range函数就不 	// 会结束，从而在接收第三个数据的时候就阻塞了。 	for elem := range queue { fmt.Println(elem) } } 运行结果
+one two 这个例子同时说明了，即使关闭了一个非空通道，我们仍然可以从通道里面接收到值。</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/</guid>
+      <description>Go 错误处理 在Go里面通常采用显式返回错误代码的方式来进行错误处理。这个和Java或者Ruby里面使用异常或者是C里面运行正常返回结果，发生错误返回错误代码的方式不同。Go的这种错误处理的方式使得我们能够很容易看出哪些函数可能返回错误，并且能够像调用那些没有错误返回的函数一样调用。
+package main import &amp;#34;errors&amp;#34; import &amp;#34;fmt&amp;#34; // Go语言里面约定错误代码是函数的最后一个返回值， // 并且类型是error，这是一个内置的接口  func f1(arg int) (int, error) { if arg == 42 { // errors.New使用错误信息作为参数，构建一个基本的错误 	return -1, errors.New(&amp;#34;can&amp;#39;t work with 42&amp;#34;) } // 返回错误为nil表示没有错误 	return arg + 3, nil } // 你可以通过实现error接口的方法Error()来自定义错误 // 下面我们自定义一个错误类型来表示上面例子中的参数错误 type argError struct { arg int prob string } func (e *argError) Error() string { return fmt.Sprintf(&amp;#34;%d - %s&amp;#34;, e.arg, e.prob) } func f2(arg int) (int, error) { if arg == 42 { // 这里我们使用&amp;amp;argError语法来创建一个新的结构体对象， 	// 并且给它的成员赋值 	return -1, &amp;amp;argError{arg, &amp;#34;can&amp;#39;t work with it&amp;#34;} } return arg + 3, nil } func main() { // 下面的两个循环例子用来测试我们的带有错误返回值的函数 	// 在for循环语句里面，使用了if来判断函数返回值是否为nil是 	// Go语言里面的一种约定做法。 	for _, i := range []int{7, 42} { if r, e := f1(i); e !</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E9%97%AD%E5%8C%85%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E9%97%AD%E5%8C%85%E5%87%BD%E6%95%B0/</guid>
+      <description>Go 闭包函数 Go支持匿名函数，匿名函数可以形成闭包。闭包函数可以访问定义闭包的函数定义的内部变量。
+示例1：
+package main import &amp;#34;fmt&amp;#34; // 这个&amp;#34;intSeq&amp;#34;函数返回另外一个在intSeq内部定义的匿名函数， // 这个返回的匿名函数包住了变量i，从而形成了一个闭包 func intSeq() func() int { i := 0 return func() int { i += 1 return i } } func main() { // 我们调用intSeq函数，并且把结果赋值给一个函数nextInt， 	// 这个nextInt函数拥有自己的i变量，这个变量每次调用都被更新。 	// 这里i的初始值是由intSeq调用的时候决定的。 	nextInt := intSeq() // 调用几次nextInt，看看闭包的效果 	fmt.Println(nextInt()) fmt.Println(nextInt()) fmt.Println(nextInt()) // 为了确认闭包的状态是独立于intSeq函数的，再创建一个。 	newInts := intSeq() fmt.Println(newInts()) } 输出结果为
+1 2 3 1 示例2：
+package main import &amp;#34;fmt&amp;#34; func main() { add10 := closure(10)//其实是构造了一个加10函数 	fmt.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E9%9A%8F%E6%9C%BA%E6%95%B0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E9%9A%8F%E6%9C%BA%E6%95%B0/</guid>
+      <description>Go 随机数 Go的math/rand包提供了伪随机数的生成。
+package main import &amp;#34;fmt&amp;#34; import &amp;#34;math/rand&amp;#34; func main() { // 例如`rand.Intn`返回一个整型随机数n，0&amp;lt;=n&amp;lt;100 	fmt.Print(rand.Intn(100), &amp;#34;,&amp;#34;) fmt.Print(rand.Intn(100)) fmt.Println() // `rand.Float64` 返回一个`float64` `f`, 	// `0.0 &amp;lt;= f &amp;lt; 1.0` 	fmt.Println(rand.Float64()) // 这个方法可以用来生成其他数值范围内的随机数， 	// 例如`5.0 &amp;lt;= f &amp;lt; 10.0` 	fmt.Print((rand.Float64()*5)+5, &amp;#34;,&amp;#34;) fmt.Print((rand.Float64() * 5) + 5) fmt.Println() // 为了使随机数生成器具有确定性，可以给它一个seed 	s1 := rand.NewSource(42) r1 := rand.New(s1) fmt.Print(r1.Intn(100), &amp;#34;,&amp;#34;) fmt.Print(r1.Intn(100)) fmt.Println() // 如果源使用一个和上面相同的seed，将生成一样的随机数 	s2 := rand.NewSource(42) r2 := rand.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E9%9B%86%E5%90%88%E5%8A%9F%E8%83%BD/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E9%9B%86%E5%90%88%E5%8A%9F%E8%83%BD/</guid>
+      <description>Go 集合功能 我们经常需要程序去处理一些集合数据，比如选出所有符合条件的数据或者使用一个自定义函数将一个集合元素拷贝到另外一个集合。
+在一些语言里面，通常是使用泛化数据结构或者算法。但是Go不支持泛化类型，在Go里面如果你的程序或者数据类型需要操作集合，那么通常是为集合提供一些操作函数。
+这里演示了一些操作strings切片的集合函数，你可以使用这些例子来构建你自己的函数。注意在有些情况下，使用内联集合操作代码会更清晰，而不是去创建新的帮助函数。
+package main import &amp;#34;strings&amp;#34; import &amp;#34;fmt&amp;#34; // 返回t在vs中第一次出现的索引，如果没有找到t，返回－1 func Index(vs []string, t string) int { for i, v := range vs { if v == t { return i } } return -1 } // 如果t存在于vs中，那么返回true，否则false func Include(vs []string, t string) bool { return Index(vs, t) &amp;gt;= 0 } // 如果使用vs中的任何一个字符串作为函数f的参数可以让f返回true， // 那么返回true，否则false func Any(vs []string, f func(string) bool) bool { for _, v := range vs { if f(v) { return true } } return false } // 如果分别使用vs中所有的字符串作为f的参数都能让f返回true， // 那么返回true，否则返回false func All(vs []string, f func(string) bool) bool { for _, v := range vs { if !</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dewey363.github.io/post/go-%E9%9D%9E%E9%98%BB%E5%A1%9E%E9%80%9A%E9%81%93/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dewey363.github.io/post/go-%E9%9D%9E%E9%98%BB%E5%A1%9E%E9%80%9A%E9%81%93/</guid>
+      <description>Go 非阻塞通道 默认情况下，通道发送和接收数据是阻塞的。然而我们可以使用select的一个default的选项来实现无阻塞发送或接收数据，甚至可以将多个select的case选项和default选项结合起来使用。
+package main import &amp;#34;fmt&amp;#34; func main() { messages := make(chan string) signals := make(chan bool) // 这里是一个非阻塞的从通道接收数据，如果messages通道有数据 	// 可以接收，那么select将运行`&amp;lt;-messages`这个case，否则的话 	// 程序立刻执行default选项后面的语句 	select { case msg := &amp;lt;-messages: fmt.Println(&amp;#34;received message&amp;#34;, msg) default: fmt.Println(&amp;#34;no message received&amp;#34;) } // 非阻塞通道发送数据也是一样的 	msg := &amp;#34;hi&amp;#34; select { case messages &amp;lt;- msg: fmt.Println(&amp;#34;sent message&amp;#34;, msg) default: fmt.Println(&amp;#34;no message sent&amp;#34;) } // 在default前面，我们可以有多个case选项，从而实现多通道 	// 非阻塞的选择，这里我们尝试从messages和signals接收数据 	// 如果有数据可以接收，那么执行对应case后面的逻辑，否则立刻 	// 执行default选项后面的逻辑 	select { case msg := &amp;lt;-messages: fmt.</description>
+    </item>
+    
+  </channel>
+</rss>

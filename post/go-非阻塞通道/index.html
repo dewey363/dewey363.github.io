@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title"></h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="go-非阻塞通道">Go 非阻塞通道</h1>
+<p>默认情况下，通道发送和接收数据是阻塞的。然而我们可以使用select的一个default的选项来实现无阻塞发送或接收数据，甚至可以将多个select的case选项和default选项结合起来使用。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">messages</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
+	<span style="color:#a6e22e">signals</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">bool</span>)
+
+	<span style="color:#75715e">// 这里是一个非阻塞的从通道接收数据，如果messages通道有数据
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 可以接收，那么select将运行`&lt;-messages`这个case，否则的话
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 程序立刻执行default选项后面的语句
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">select</span> {
+	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">msg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">messages</span>:
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;received message&#34;</span>, <span style="color:#a6e22e">msg</span>)
+	<span style="color:#66d9ef">default</span>:
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;no message received&#34;</span>)
+	}
+
+	<span style="color:#75715e">// 非阻塞通道发送数据也是一样的
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">msg</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;hi&#34;</span>
+	<span style="color:#66d9ef">select</span> {
+	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">messages</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">msg</span>:
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;sent message&#34;</span>, <span style="color:#a6e22e">msg</span>)
+	<span style="color:#66d9ef">default</span>:
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;no message sent&#34;</span>)
+	}
+
+	<span style="color:#75715e">// 在default前面，我们可以有多个case选项，从而实现多通道
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 非阻塞的选择，这里我们尝试从messages和signals接收数据
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 如果有数据可以接收，那么执行对应case后面的逻辑，否则立刻
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 执行default选项后面的逻辑
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">select</span> {
+	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">msg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">messages</span>:
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;received message&#34;</span>, <span style="color:#a6e22e">msg</span>)
+	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">sig</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">signals</span>:
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;received signal&#34;</span>, <span style="color:#a6e22e">sig</span>)
+	<span style="color:#66d9ef">default</span>:
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;no activity&#34;</span>)
+	}
+}
+</code></pre></div><p>运行结果</p>
+<pre><code>no message received
+no message sent
+no activity
+</code></pre><p>这个例子中，由于我们使用了default来实现非阻塞的通道，所以开始的时候messages里面没有数据可以接收，直接输出<code>no message received</code>，而第二次由于messages通道没有相应的数据接收方，所以也不会写入数据，直接转到default，输出<code>no message sent</code>，至于第三个就很好理解了，什么也没有，输出<code>no activity</code>。
+其实，我们可以把这个例子修改一下，让messages通道带缓冲区，这样例子或许更好理解一点。定义messages的时候使用<code>messages := make(chan string, 1)</code>。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">messages</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#ae81ff">1</span>)
+	<span style="color:#a6e22e">signals</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">bool</span>)
+
+	<span style="color:#75715e">// 这里是一个非阻塞的从通道接收数据，如果messages通道有数据
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 可以接收，那么select将运行`&lt;-messages`这个case，否则的话
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 程序立刻执行default选项后面的语句
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">select</span> {
+	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">msg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">messages</span>:
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;received message&#34;</span>, <span style="color:#a6e22e">msg</span>)
+	<span style="color:#66d9ef">default</span>:
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;no message received&#34;</span>)
+	}
+
+	<span style="color:#75715e">// 非阻塞通道发送数据也是一样的,但是由于messages带了缓冲区，
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 即使没有数据接受端也可以发送数据，所以这里的`messages&lt;-msg`
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 会被执行，从而不再跳到default去了。
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">msg</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;hi&#34;</span>
+	<span style="color:#66d9ef">select</span> {
+	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">messages</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">msg</span>:
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;sent message&#34;</span>, <span style="color:#a6e22e">msg</span>)
+	<span style="color:#66d9ef">default</span>:
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;no message sent&#34;</span>)
+	}
+
+	<span style="color:#75715e">// 在default前面，我们可以有多个case选项，从而实现多通道
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 非阻塞的选择，这里我们尝试从messages和signals接收数据
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 如果有数据可以接收，那么执行对应case后面的逻辑，否则立刻
+</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 执行default选项后面的逻辑
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">select</span> {
+	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">msg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">messages</span>:
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;received message&#34;</span>, <span style="color:#a6e22e">msg</span>)
+	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">sig</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">signals</span>:
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;received signal&#34;</span>, <span style="color:#a6e22e">sig</span>)
+	<span style="color:#66d9ef">default</span>:
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;no activity&#34;</span>)
+	}
+}
+</code></pre></div><p>运行结果</p>
+<pre><code>no message received
+sent message hi
+received message hi
+</code></pre>
+		</div>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

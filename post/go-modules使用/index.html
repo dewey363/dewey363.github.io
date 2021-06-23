@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title"></h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="-go-modules使用教程"># Go Modules使用教程</h1>
+<h2 id="引入">引入</h2>
+<p><a href="https://talks.godoc.org/github.com/myitcv/talks/2018-08-15-glug-modules/main.slide#1">https://talks.godoc.org/github.com/myitcv/talks/2018-08-15-glug-modules/main.slide#1</a></p>
+<h2 id="go-modules介绍">Go Modules介绍</h2>
+<p>Modules是Go 1.11中新增的实验性功能，基于vgo演变而来，是一个新型的包管理工具。</p>
+<h2 id="常见的包管理工具">常见的包管理工具</h2>
+<ul>
+<li>govendor</li>
+<li>dep</li>
+<li>glide</li>
+<li>godep</li>
+</ul>
+<p>这些包管理工具都是基于<code>GOPATH</code>或者<code>vendor</code>目录，并不能很好的解决不同版本依赖问题。Modules是在<code>GOPATH</code>之外一套新的包管理方式。</p>
+<h2 id="如何激活modules">如何激活Modules</h2>
+<p>首先要把go升级到1.11。</p>
+<p>升级后，可以设置通过一个环境变量<code>GO111MODULE</code>来激活modules：</p>
+<ul>
+<li>GO111MODULE=off，go命令行将不会支持module功能，寻找依赖包的方式将会沿用旧版本那种通过vendor目录或者GOPATH模式来查找。</li>
+<li>GO111MODULE=on，go命令行会使用modules，而一点也不会去GOPATH目录下查找。</li>
+<li>GO111MODULE=auto，默认值，go命令行将会根据当前目录来决定是否启用module功能。这种情况下可以分为两种情形：当前目录在GOPATH/src之外且该目录包含go.mod文件，或者当前文件在包含go.mod文件的目录下面。</li>
+</ul>
+<p>当module功能启用时，<code>GOPATH</code>在项目构建过程中不再担当import的角色，但它仍然存储下载的依赖包，具体位置在<code>$GOPATH/pkg/mod</code>。</p>
+<h2 id="初始化modules">初始化Modules</h2>
+<p>Go1.11新增了命令<code>go mod</code>来支持Modules的使用。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">&gt; <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">help</span> <span style="color:#a6e22e">mod</span>
+<span style="color:#a6e22e">Go</span> <span style="color:#a6e22e">mod</span> <span style="color:#a6e22e">provides</span> <span style="color:#a6e22e">access</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">operations</span> <span style="color:#a6e22e">on</span> <span style="color:#a6e22e">modules</span>.
+
+<span style="color:#a6e22e">Note</span> <span style="color:#a6e22e">that</span> <span style="color:#a6e22e">support</span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">modules</span> <span style="color:#a6e22e">is</span> <span style="color:#a6e22e">built</span> <span style="color:#a6e22e">into</span> <span style="color:#a6e22e">all</span> <span style="color:#a6e22e">the</span> <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">commands</span>,
+<span style="color:#a6e22e">not</span> <span style="color:#a6e22e">just</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#66d9ef">go</span> <span style="color:#a6e22e">mod</span><span style="color:#960050;background-color:#1e0010">&#39;</span>. <span style="color:#a6e22e">For</span> <span style="color:#a6e22e">example</span>, <span style="color:#a6e22e">day</span><span style="color:#f92672">-</span><span style="color:#a6e22e">to</span><span style="color:#f92672">-</span><span style="color:#a6e22e">day</span> <span style="color:#a6e22e">adding</span>, <span style="color:#a6e22e">removing</span>, <span style="color:#a6e22e">upgrading</span>,
+<span style="color:#a6e22e">and</span> <span style="color:#a6e22e">downgrading</span> <span style="color:#a6e22e">of</span> <span style="color:#a6e22e">dependencies</span> <span style="color:#a6e22e">should</span> <span style="color:#a6e22e">be</span> <span style="color:#a6e22e">done</span> <span style="color:#a6e22e">using</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#66d9ef">go</span> <span style="color:#a6e22e">get</span><span style="color:#960050;background-color:#1e0010">&#39;</span>.
+<span style="color:#a6e22e">See</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#66d9ef">go</span> <span style="color:#a6e22e">help</span> <span style="color:#a6e22e">modules</span><span style="color:#960050;background-color:#1e0010">&#39;</span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">an</span> <span style="color:#a6e22e">overview</span> <span style="color:#a6e22e">of</span> <span style="color:#a6e22e">module</span> <span style="color:#a6e22e">functionality</span>.
+
+<span style="color:#a6e22e">Usage</span>:
+
+    <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">mod</span> &lt;<span style="color:#a6e22e">command</span>&gt; [<span style="color:#a6e22e">arguments</span>]
+
+<span style="color:#a6e22e">The</span> <span style="color:#a6e22e">commands</span> <span style="color:#a6e22e">are</span>:
+
+    <span style="color:#a6e22e">download</span>    <span style="color:#a6e22e">download</span> <span style="color:#a6e22e">modules</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">local</span> <span style="color:#a6e22e">cache</span>
+    <span style="color:#a6e22e">edit</span>        <span style="color:#a6e22e">edit</span> <span style="color:#66d9ef">go</span>.<span style="color:#a6e22e">mod</span> <span style="color:#a6e22e">from</span> <span style="color:#a6e22e">tools</span> <span style="color:#a6e22e">or</span> <span style="color:#a6e22e">scripts</span>
+    <span style="color:#a6e22e">graph</span>       <span style="color:#a6e22e">print</span> <span style="color:#a6e22e">module</span> <span style="color:#a6e22e">requirement</span> <span style="color:#a6e22e">graph</span>
+    <span style="color:#a6e22e">init</span>        <span style="color:#a6e22e">initialize</span> <span style="color:#a6e22e">new</span> <span style="color:#a6e22e">module</span> <span style="color:#a6e22e">in</span> <span style="color:#a6e22e">current</span> <span style="color:#a6e22e">directory</span>
+    <span style="color:#a6e22e">tidy</span>        <span style="color:#a6e22e">add</span> <span style="color:#a6e22e">missing</span> <span style="color:#a6e22e">and</span> <span style="color:#a6e22e">remove</span> <span style="color:#a6e22e">unused</span> <span style="color:#a6e22e">modules</span>
+    <span style="color:#a6e22e">vendor</span>      <span style="color:#a6e22e">make</span> <span style="color:#a6e22e">vendored</span> <span style="color:#a6e22e">copy</span> <span style="color:#a6e22e">of</span> <span style="color:#a6e22e">dependencies</span>
+    <span style="color:#a6e22e">verify</span>      <span style="color:#a6e22e">verify</span> <span style="color:#a6e22e">dependencies</span> <span style="color:#a6e22e">have</span> <span style="color:#a6e22e">expected</span> <span style="color:#a6e22e">content</span>
+    <span style="color:#a6e22e">why</span>         <span style="color:#a6e22e">explain</span> <span style="color:#a6e22e">why</span> <span style="color:#a6e22e">packages</span> <span style="color:#a6e22e">or</span> <span style="color:#a6e22e">modules</span> <span style="color:#a6e22e">are</span> <span style="color:#a6e22e">needed</span>
+
+<span style="color:#a6e22e">Use</span> <span style="color:#e6db74">&#34;go help mod &lt;command&gt;&#34;</span> <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">more</span> <span style="color:#a6e22e">information</span> <span style="color:#a6e22e">about</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">command</span>.
+</code></pre></div><p>首先创建一个项目helloworld：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">cd</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">mkdir</span> <span style="color:#a6e22e">helloworld</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">cd</span> <span style="color:#a6e22e">helloworld</span>
+</code></pre></div><p>然后创建文件<code>main.go</code>并写入：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+    <span style="color:#a6e22e">log</span> <span style="color:#e6db74">&#34;github.com/sirupsen/logrus&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">WithFields</span>(<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fields</span>{
+        <span style="color:#e6db74">&#34;animal&#34;</span>: <span style="color:#e6db74">&#34;walrus&#34;</span>,
+    }).<span style="color:#a6e22e">Info</span>(<span style="color:#e6db74">&#34;A walrus appears&#34;</span>)
+}
+</code></pre></div><p>初始化mod:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">go</span> <span style="color:#a6e22e">mod</span> <span style="color:#a6e22e">init</span> <span style="color:#a6e22e">helloworld</span>
+</code></pre></div><p>系统生成了一个<code>go.mod</code>的文件：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">module</span> <span style="color:#a6e22e">helloworld</span>
+</code></pre></div><p>然后执行go build，再次查看go.mod文件发现多了一些内容：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">module</span> <span style="color:#a6e22e">helloworld</span>
+
+<span style="color:#a6e22e">require</span> <span style="color:#a6e22e">github</span>.<span style="color:#a6e22e">com</span><span style="color:#f92672">/</span><span style="color:#a6e22e">sirupsen</span><span style="color:#f92672">/</span><span style="color:#a6e22e">logrus</span> <span style="color:#a6e22e">v1</span><span style="color:#ae81ff">.1.1</span>
+</code></pre></div><p>同时多了一个<code>go.sum</code>的文件：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">github</span>.<span style="color:#a6e22e">com</span><span style="color:#f92672">/</span><span style="color:#a6e22e">davecgh</span><span style="color:#f92672">/</span><span style="color:#66d9ef">go</span><span style="color:#f92672">-</span><span style="color:#a6e22e">spew</span> <span style="color:#a6e22e">v1</span><span style="color:#ae81ff">.1.1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">go</span>.<span style="color:#a6e22e">mod</span> <span style="color:#a6e22e">h1</span>:<span style="color:#a6e22e">J7Y8YcW2NihsgmVo</span><span style="color:#f92672">/</span><span style="color:#a6e22e">mv3lAwl</span><span style="color:#f92672">/</span><span style="color:#a6e22e">skON4iLHjSsI</span><span style="color:#f92672">+</span><span style="color:#a6e22e">c5H38</span>=
+<span style="color:#a6e22e">github</span>.<span style="color:#a6e22e">com</span><span style="color:#f92672">/</span><span style="color:#a6e22e">konsorten</span><span style="color:#f92672">/</span><span style="color:#66d9ef">go</span><span style="color:#f92672">-</span><span style="color:#a6e22e">windows</span><span style="color:#f92672">-</span><span style="color:#a6e22e">terminal</span><span style="color:#f92672">-</span><span style="color:#a6e22e">sequences</span> <span style="color:#a6e22e">v0</span><span style="color:#ae81ff">.0.0</span><span style="color:#f92672">-</span><span style="color:#ae81ff">20180402223658</span><span style="color:#f92672">-</span><span style="color:#a6e22e">b729f2633dfe</span><span style="color:#f92672">/</span><span style="color:#66d9ef">go</span>.<span style="color:#a6e22e">mod</span> <span style="color:#a6e22e">h1</span>:<span style="color:#a6e22e">T0</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span><span style="color:#a6e22e">ngSBFLxvqU3pZ</span><span style="color:#f92672">+</span><span style="color:#a6e22e">m</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span><span style="color:#a6e22e">kptfBszLMUkC4ZK</span><span style="color:#f92672">/</span><span style="color:#a6e22e">EgS</span><span style="color:#f92672">/</span><span style="color:#a6e22e">cQ</span>=
+<span style="color:#a6e22e">github</span>.<span style="color:#a6e22e">com</span><span style="color:#f92672">/</span><span style="color:#a6e22e">pmezard</span><span style="color:#f92672">/</span><span style="color:#66d9ef">go</span><span style="color:#f92672">-</span><span style="color:#a6e22e">difflib</span> <span style="color:#a6e22e">v1</span><span style="color:#ae81ff">.0.0</span><span style="color:#f92672">/</span><span style="color:#66d9ef">go</span>.<span style="color:#a6e22e">mod</span> <span style="color:#a6e22e">h1</span>:<span style="color:#a6e22e">iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ</span><span style="color:#f92672">/</span><span style="color:#ae81ff">4</span>=
+<span style="color:#a6e22e">github</span>.<span style="color:#a6e22e">com</span><span style="color:#f92672">/</span><span style="color:#a6e22e">sirupsen</span><span style="color:#f92672">/</span><span style="color:#a6e22e">logrus</span> <span style="color:#a6e22e">v1</span><span style="color:#ae81ff">.1.1</span> <span style="color:#a6e22e">h1</span>:<span style="color:#a6e22e">VzGj7lhU7KEB9e9gMpAV</span><span style="color:#f92672">/</span><span style="color:#a6e22e">v5XT2NVSvLJhJLCWbnkgXg</span>=
+<span style="color:#a6e22e">github</span>.<span style="color:#a6e22e">com</span><span style="color:#f92672">/</span><span style="color:#a6e22e">sirupsen</span><span style="color:#f92672">/</span><span style="color:#a6e22e">logrus</span> <span style="color:#a6e22e">v1</span><span style="color:#ae81ff">.1.1</span><span style="color:#f92672">/</span><span style="color:#66d9ef">go</span>.<span style="color:#a6e22e">mod</span> <span style="color:#a6e22e">h1</span>:<span style="color:#a6e22e">zrgwTnHtNr00buQ1vSptGe8m1f</span><span style="color:#f92672">/</span><span style="color:#a6e22e">BbgsPukg8qsT7A</span><span style="color:#f92672">+</span><span style="color:#a6e22e">A</span>=
+<span style="color:#a6e22e">github</span>.<span style="color:#a6e22e">com</span><span style="color:#f92672">/</span><span style="color:#a6e22e">stretchr</span><span style="color:#f92672">/</span><span style="color:#a6e22e">testify</span> <span style="color:#a6e22e">v1</span><span style="color:#ae81ff">.2.2</span><span style="color:#f92672">/</span><span style="color:#66d9ef">go</span>.<span style="color:#a6e22e">mod</span> <span style="color:#a6e22e">h1</span>:<span style="color:#a6e22e">a8OnRcib4nhh0OaRAV</span><span style="color:#f92672">+</span><span style="color:#a6e22e">Yts87kKdq0PP7pXfy6kDkUVs</span>=
+<span style="color:#a6e22e">golang</span>.<span style="color:#a6e22e">org</span><span style="color:#f92672">/</span><span style="color:#a6e22e">x</span><span style="color:#f92672">/</span><span style="color:#a6e22e">crypto</span> <span style="color:#a6e22e">v0</span><span style="color:#ae81ff">.0.0</span><span style="color:#f92672">-</span><span style="color:#ae81ff">20180904163835</span><span style="color:#f92672">-</span><span style="color:#ae81ff">070</span><span style="color:#ae81ff">9</span><span style="color:#a6e22e">b304e793</span> <span style="color:#a6e22e">h1</span>:<span style="color:#a6e22e">u</span><span style="color:#f92672">+</span><span style="color:#a6e22e">LnwYTOOW7Ukr</span><span style="color:#f92672">/</span><span style="color:#a6e22e">fppxEb1Nwz0AtPflrblfvUudpo</span><span style="color:#f92672">+</span><span style="color:#a6e22e">I</span>=
+<span style="color:#a6e22e">golang</span>.<span style="color:#a6e22e">org</span><span style="color:#f92672">/</span><span style="color:#a6e22e">x</span><span style="color:#f92672">/</span><span style="color:#a6e22e">crypto</span> <span style="color:#a6e22e">v0</span><span style="color:#ae81ff">.0.0</span><span style="color:#f92672">-</span><span style="color:#ae81ff">20180904163835</span><span style="color:#f92672">-</span><span style="color:#ae81ff">070</span><span style="color:#ae81ff">9</span><span style="color:#a6e22e">b304e793</span><span style="color:#f92672">/</span><span style="color:#66d9ef">go</span>.<span style="color:#a6e22e">mod</span> <span style="color:#a6e22e">h1</span>:<span style="color:#ae81ff">6</span><span style="color:#a6e22e">SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4</span>=
+<span style="color:#a6e22e">golang</span>.<span style="color:#a6e22e">org</span><span style="color:#f92672">/</span><span style="color:#a6e22e">x</span><span style="color:#f92672">/</span><span style="color:#a6e22e">sys</span> <span style="color:#a6e22e">v0</span><span style="color:#ae81ff">.0.0</span><span style="color:#f92672">-</span><span style="color:#ae81ff">20180905080454</span><span style="color:#f92672">-</span><span style="color:#a6e22e">ebe1bf3edb33</span> <span style="color:#a6e22e">h1</span>:<span style="color:#a6e22e">I6FyU15t786LL7oL</span><span style="color:#f92672">/</span><span style="color:#a6e22e">hn43zqTuEGr4PN7F4XJ1p4E3Y8</span>=
+<span style="color:#a6e22e">golang</span>.<span style="color:#a6e22e">org</span><span style="color:#f92672">/</span><span style="color:#a6e22e">x</span><span style="color:#f92672">/</span><span style="color:#a6e22e">sys</span> <span style="color:#a6e22e">v0</span><span style="color:#ae81ff">.0.0</span><span style="color:#f92672">-</span><span style="color:#ae81ff">20180905080454</span><span style="color:#f92672">-</span><span style="color:#a6e22e">ebe1bf3edb33</span><span style="color:#f92672">/</span><span style="color:#66d9ef">go</span>.<span style="color:#a6e22e">mod</span> <span style="color:#a6e22e">h1</span>:<span style="color:#a6e22e">STP8DvDyc</span><span style="color:#f92672">/</span><span style="color:#a6e22e">dI5b8T5hshtkjS</span><span style="color:#f92672">+</span><span style="color:#a6e22e">E42TnysNCUPdjciGhY</span>=
+</code></pre></div><p>go.sum不是一个锁文件，是一个模块版本内容的校验值，用来验证当前缓存的模块。go.sum包含了直接依赖和间接依赖的包的信息，比go.mod要多一些。</p>
+<h2 id="gomod">go.mod</h2>
+<p>有四种指令：module，require，exclude，replace。</p>
+<ul>
+<li>module：模块名称</li>
+<li>require：依赖包列表以及版本</li>
+<li>exclude：禁止依赖包列表（仅在当前模块为主模块时生效）</li>
+<li>replace：替换依赖包列表 （仅在当前模块为主模块时生效）</li>
+</ul>
+<h2 id="其他命令">其他命令</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">go</span> <span style="color:#a6e22e">mod</span> <span style="color:#a6e22e">tidy</span> <span style="color:#75715e">//拉取缺少的模块，移除不用的模块。
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">go</span> <span style="color:#a6e22e">mod</span> <span style="color:#a6e22e">download</span> <span style="color:#75715e">//下载依赖包
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">go</span> <span style="color:#a6e22e">mod</span> <span style="color:#a6e22e">graph</span> <span style="color:#75715e">//打印模块依赖图
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">go</span> <span style="color:#a6e22e">mod</span> <span style="color:#a6e22e">vendor</span> <span style="color:#75715e">//将依赖复制到vendor下
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">go</span> <span style="color:#a6e22e">mod</span> <span style="color:#a6e22e">verify</span> <span style="color:#75715e">//校验依赖
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">go</span> <span style="color:#a6e22e">mod</span> <span style="color:#a6e22e">why</span> <span style="color:#75715e">//解释为什么需要依赖
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">go</span> <span style="color:#a6e22e">list</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">m</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">json</span> <span style="color:#a6e22e">all</span> <span style="color:#75715e">//依赖详情
+</span></code></pre></div>
+		</div>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

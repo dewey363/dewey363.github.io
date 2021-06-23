@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> - 我的博客</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="http://dewey363.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo">
+		<div class="container">
+			<a class="logo__link" href="/" title="我的博客" rel="home">
+				<div class="logo__item logo__text">
+						<div class="logo__title">我的博客</div>
+						
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+<div class="divider"></div>
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title"></h1>
+			
+		</header><div class="content post__content clearfix">
+			<h1 id="golang-中-strings-包的-replace-用法介绍笔记">golang 中 strings 包的 Replace 用法介绍笔记</h1>
+<h3 id="函数申明">函数申明：</h3>
+<p>func Replace(s, old, new string, n int) string</p>
+<h3 id="官方描述为">官方描述为：</h3>
+<p>返回将s中前n个不重叠old子串都替换为new的新字符串，如果n&lt;0会替换所有old子串。</p>
+<h3 id="示例代码为">示例代码为：</h3>
+<pre><code>func main() {
+    // non-overlapping: &quot;123&quot; repeat 6 times in s
+    s := &quot;123lafaldsjglad123lkfasdf123djfal123lkdjga123lksjfla123l&quot;
+    old := &quot;123&quot;
+    new := &quot;888&quot;
+
+fmt.Println(&quot;non-overlapping: &quot;)
+ // n &lt; 0 ,用 new 替换所有匹配上的 old；n=-1:  888lafaldsjglad888lkfasdf888djfal888lkdjga888lksjfla888l
+fmt.Println(&quot;n=-1: &quot;, strings.Replace(s, old, new, -1 ))
+
+// 不替换任何匹配的 old；n=0:  123lafaldsjglad123lkfasdf123djfal123lkdjga123lksjfla123l
+fmt.Println(&quot;n=0: &quot;, strings.Replace(s, old, new, 0 )) 
+
+// 用 new 替换第一个匹配的 old；n=1:  888lafaldsjglad123lkfasdf123djfal123lkdjga123lksjfla123l
+fmt.Println(&quot;n=1: &quot;, strings.Replace(s, old, new, 1 ))
+
+// 用 new 替换前 5 个匹配的 old（实际多于 5 个）；n=5:  888lafaldsjglad888lkfasdf888djfal888lkdjga888lksjfla123l
+fmt.Println(&quot;n=5: &quot;, strings.Replace(s, old, new, 5 )) 
+
+// 用 new 替换前 7 个匹配上的 old（实际没那么多）；n=7:  888lafaldsjglad888lkfasdf888djfal888lkdjga888lksjfla888l
+fmt.Println(&quot;n=7: &quot;, strings.Replace(s, old, new, 7 )) 
+
+// overlapping:
+s = &quot;888888888888888888&quot;
+old = &quot;888&quot;
+new = &quot;666&quot;
+fmt.Println(&quot;overlapping: &quot;)
+
+// n &lt; 0 ,用 new 替换所有匹配上的 old；n=-1:  666666666666666666
+fmt.Println(&quot;n=-1: &quot;, strings.Replace(s, old, new, -1 )) 
+
+// 不替换任何匹配的 old；n=0:  888888888888888888
+fmt.Println(&quot;n=0: &quot;, strings.Replace(s, old, new, 0 )) 
+
+// 用 new 替换第一个匹配的 old；n=1:  666888888888888888
+fmt.Println(&quot;n=1: &quot;, strings.Replace(s, old, new, 1 )) 
+
+ // 用 new 替换前 5 个匹配的 old（实际多于 5 个）；n=5:  666666666666666888
+fmt.Println(&quot;n=5: &quot;, strings.Replace(s, old, new, 5 ))
+
+ // 用 new 替换前 7 个匹配上的 old（实际没那么多）；n=7:  666666666666666666
+fmt.Println(&quot;n=7: &quot;, strings.Replace(s, old, new, 7 ))
+}
+</code></pre>
+		</div>
+	</article>
+</main>
+
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 我的博客.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			
+		</div>
+		
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>
